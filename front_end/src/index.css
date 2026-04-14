@@ -1,4 +1,35 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme {    
+  --font-poppins: "Poppins", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply font-poppins font-normal ;
+    @apply m-0 p-0 box-border;
+    @apply h-screen
+
+  }
+  *,::after, ::before {
+    @apply box-border;
+  }
+
+  button {
+    @apply border-2 rounded-sm  px-3 py-2;
+    @apply cursor-pointer;
+
+
+  }
+}
+
+
+
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

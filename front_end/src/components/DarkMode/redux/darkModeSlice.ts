@@ -10,7 +10,7 @@ const saveedDark = localStorage.getItem('darkMode_Shopping_React_php');
 
 const initialState: IDarkMode = {
     dark: saveedDark ? JSON.parse(saveedDark) : false,
-    loading: true
+    loading: saveedDark ? !JSON.parse(saveedDark) : true
 }
 
 const darkModeSlice =  createSlice({
@@ -18,10 +18,10 @@ const darkModeSlice =  createSlice({
     initialState: initialState, 
     reducers: {
         changeModeDark: (state, ) =>{
-            state.loading = true
+            state.loading = state.dark
             state.dark = !state.dark
             localStorage.setItem('darkMode_Shopping_React_php', JSON.stringify(state.dark))
-            state.loading = false
+            state.loading = state.dark
         }
     },
 })

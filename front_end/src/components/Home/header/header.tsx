@@ -7,9 +7,9 @@ const Header = () => {
         <div className="border-b-2 h-30 flex justify-center items-center flex-col ">
 
             <DarkMode />
-            {/* <Link to = 'validation'>
+            <Link to = 'validation'>
                 <button>auth - validation</button>
-            </Link> */}
+            </Link>
         </div>
     )
 }
