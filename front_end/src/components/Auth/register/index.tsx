@@ -8,9 +8,74 @@ const Register = () => {
     useEffect(() => {
         dispatch(changeAuth({id: 0}))
     }, [])
+    
+    
     return(
-        <div className="">
-            register
+        <div className="mx-auto w-[90%]">
+            <div className="border-2 min-h-screen my-3 rounded-3xl ">
+                <form>
+                    <div className="flex flex-col justify-center items-center my-10">
+
+                        {/* username */}
+                        <div className="flex flex-col w-[50%] gap-3">
+                            <label htmlFor="username">username</label>
+                            <input type="text" id = 'username' className="border-2  p-2"/>
+                            <span>message:  
+                                <span className="text-red-500"></span>
+                            </span>
+                        </div>
+
+                        <div className="border-b-2 w-[50%] my-10"></div>
+
+                        {/* email */}
+                        <div className="flex flex-col w-[50%] gap-3">
+                            <label htmlFor="email">email</label>
+                            <input type="email" id = 'email' className="border-2  p-2"/>
+                            <span>message:  
+                                <span className="text-red-500"></span>
+                            </span>
+                        </div>
+
+                        <div className="border-b-2 w-[50%] my-10"></div>
+
+                        {/* password */}
+                        <div className="flex flex-col w-[50%] gap-3">
+                            <label htmlFor="password">password</label>
+                            <input type="password" id = 'password' className="border-2  p-2"/>
+                            <span>message:  
+                                <span className="text-red-500"></span>
+                            </span>
+                        </div>
+
+                        <div className="border-b-2 w-[50%] my-10"></div>
+
+                        {/* repeat password */}
+                        <div className="flex flex-col w-[50%] gap-3">
+                            <label htmlFor="rep_password">rep-password</label>
+                            <input type="password" id = 'rep_password' className="border-2  p-2"/>
+                            <span>message:  
+                                <span className="text-red-500"></span>
+                            </span>
+                        </div>
+
+                        {/* input view & hidden type password */}
+                        <div className="flex my-8 w-[50%] gap-3">
+                            <label htmlFor="checkbox">show passowrd</label>
+                            <input type = 'checkbox' id  = 'checkbox'></input>
+                        </div>
+
+                    <div className="border-b-2 w-[50%] my-3"></div>
+
+                    {/* input submit */}
+                    <div className="flex my-8 w-[50%] gap-3 justify-center items-center ">
+                        <input type="submit" value = 'register' className="border-2 w-[50%] p-2 rounded-xl cursor-pointer" />
+                    </div>
+
+                    
+                        
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }
