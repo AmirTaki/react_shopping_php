@@ -1,0 +1,24 @@
+.MoonAnimation {
+    animation: moveMoonAnimation.5s linear forwards ;
+}
+
+@keyframes moveMoonAnimation {
+    0%{
+        rotate: 360deg;
+    }   
+    100%{
+        rotate: 0deg;
+    }
+}
+.SunAnimation {
+    animation: moveSunAnimation.5s linear forwards ;
+}
+
+@keyframes moveSunAnimation {
+    0%{
+        rotate: 0deg;
+    }   
+    100%{
+        rotate: 180deg;
+    }
+}
