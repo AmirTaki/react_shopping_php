@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import Validation from "../Auth/validation/validation"
+import Home from "../Home"
 
 const Routh = () => {
     return (
@@ -9,10 +11,13 @@ const Routh = () => {
 
                 {/* AUTH */}
                 <Route>
-                    <Route></Route>
+                    <Route path = 'validation' element = {<Validation />}></Route>
                 </Route>
 
                 {/* HOME */}
+                <Route>
+                    <Route path = '' element = {<Home />}></Route>
+                </Route>
                 
                 {/* SHOPPING */}
                 
