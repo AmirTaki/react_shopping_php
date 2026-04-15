@@ -73,4 +73,24 @@
         }
     }
 
-    // 
+    // register to user table
+    function RegisterUser ($name, $email, $password, $dbName, $table) {
+        try{
+            $connection = connectDataBase($dbName);
+            $sql = "INSERT INTO $table SET name = ?, email = ?, password = ?, created_at = NOW();";
+            $statment = $connection->prepare($sql);
+            $statment->execute([$name, $email, $password]);
+        }
+        catch(PDOException $error){
+            return "warning : " . $error->getMessage();
+        }
+    }
+
+    // read table in database
+    function readTable ($dbName, $query, $single = true, $execute = null){
+        $pdo = connectDataBase($dbName);
+        $statment = $pdo->prepare($query);
+        $execute = null ? $statment->execute() : $statment->execute($execute);
+        $reading  = $single ? $statment->fetch() : $statment->fetchAll();
+        return $reading;
+    }
