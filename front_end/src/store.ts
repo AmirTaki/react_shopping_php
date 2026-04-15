@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import darkModeSlice from "./components/DarkMode/redux/darkModeSlice";
 import validationSlice from "./components/Auth/validation/redux/validationSlice";
+import registerSlice from "./components/Auth/register/redux/registerSlice";
 
 const reducers = combineReducers({
 
@@ -8,7 +9,9 @@ const reducers = combineReducers({
     darkMode: darkModeSlice.reducer,
 
     // validation auth redux
-    validation:  validationSlice.reducer
+    validation:  validationSlice.reducer,
+    // register 
+    register: registerSlice.reducer
 
  })
 

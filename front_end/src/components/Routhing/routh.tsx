@@ -11,25 +11,26 @@ const Routh = () => {
             <BrowserRouter>
                 <Routes>
 
-                {/* AUTH */}
-                <Route>
-                    <Route path = 'validation' element = {<Validation />}>
-                        <Route path = '' element = {<Register />}/>
-                        <Route path = 'register' element = {<Register />}/>
-                        <Route path = 'login' element = {<Login />}/>
-                       
+                    {/* AUTH */}
+                    <Route>
+                        <Route path = 'validation' element = {<Validation />}>
+                            <Route path = '' element = {<Register />}/>
+                            <Route path = 'register' element = {<Register />}/>
+                            <Route path = 'login' element = {<Login />}/>
+                        
+                        </Route>
                     </Route>
-                </Route>
 
-                {/* HOME */}
-                <Route>
-                    <Route path = '' element = {<Home />}></Route>
-                    <Route path = '/home' element = {<Home />}></Route>
-                </Route>
-                
-                {/* SHOPPING */}
-                
-                {/* PANEL ADMIN */}
+                    {/* HOME */}
+                    <Route>
+                        <Route path = '' element = {<Home />}></Route>
+                        <Route path = '/home' element = {<Home />}></Route>
+                    </Route>
+                    
+                    {/* SHOPPING */}
+                    
+                    {/* PANEL ADMIN */}
+
                 </Routes>
             </BrowserRouter>
         </div>
