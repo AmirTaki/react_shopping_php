@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { baseURL } from "../../../../baseURL";
 import { onWarningRegister } from "./registerSlice";
 
-export const registerThunk =  createAsyncThunk<string | boolean, {username: string, email: string, password: string, repPassword: string}, {rejectValue: string}>(
+export const registerThunk =  createAsyncThunk<boolean, {username: string, email: string, password: string, repPassword: string}, {rejectValue: string}>(
     'register_thunk_toolkit',
     async(payload, rejectValue) => {
         try{    
@@ -25,6 +25,12 @@ export const registerThunk =  createAsyncThunk<string | boolean, {username: stri
                 else if (response.status === 500){
                     rejectValue.dispatch(onWarningRegister({
                         email : 'The email is duplicate.',
+                    }))
+                }
+                else if (response.status === 403){
+                    rejectValue.dispatch(onWarningRegister({
+                        password: 'confirm not password !',
+                        repPassowrd : 'confirm not password ! '
                     }))
                 }
                 else {
