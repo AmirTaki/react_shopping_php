@@ -2,19 +2,24 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import type{ AppDispatch, RooState } from "../../../store"
 import { changeAuth } from "../validation/redux/validationSlice"
-import { onCheckboxRegister, onEmailRegister, onPasswordRegister, onRepeatPassowrdRegister, onUsernameRegister } from "./redux/registerSlice"
+import { onLoadingRegister, onSubmitRegister, onCheckboxRegister, onEmailRegister, onPasswordRegister, onRepeatPassowrdRegister, onUsernameRegister } from "./redux/registerSlice"
 import { registerThunk } from "./redux/actonsRegister"
 
 const Register = () => {
-    const {username, email, password, repPassword, checkbox, warningMessage} = useSelector((state: RooState) => state.register)
+    const {username, email, password, repPassword, checkbox, submit} = useSelector((state: RooState) => state.register)
     const dispatch = useDispatch<AppDispatch>()
     useEffect(() => {
         dispatch(changeAuth({id: 0}))
-
-        
+        dispatch(onLoadingRegister())
     }, [])
-    
-    console.log(warningMessage)
+
+    useEffect(() => {
+        if(submit){
+            window.alert("ثبت نام باموفقیت انجام شد")
+            dispatch(onSubmitRegister())
+            dispatch(onLoadingRegister())
+        }
+    }, [submit])
     
     return(
         <div className="mx-auto w-[90%]    ">
@@ -26,12 +31,12 @@ const Register = () => {
                         <div className="flex flex-col w-[50%] gap-3">
                             <label htmlFor="username">username</label>
                             <input 
-                                value = {username}
+                                value = {username.name}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {dispatch(onUsernameRegister({username: e.target.value}))}}
                                 type="text" id = 'username' className="border-2  p-2"
                             />
                             <span>message:  
-                                <span className="text-red-500"></span>
+                                <span className="text-red-500 px-3">{username.warning}</span>
                             </span>
                         </div>
 
@@ -41,12 +46,12 @@ const Register = () => {
                         <div className="flex flex-col w-[50%] gap-3">
                             <label htmlFor="email">email</label>
                             <input 
-                                value = {email}
+                                value = {email.name}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {dispatch(onEmailRegister({email: e.target.value}))}}
                                 type="email" id = 'email' className="border-2  p-2"
                             />
                             <span>message:  
-                                <span className="text-red-500"></span>
+                                <span className="text-red-500 px-3">{email.warning}</span>
                             </span>
                         </div>
 
@@ -56,12 +61,12 @@ const Register = () => {
                         <div className="flex flex-col w-[50%] gap-3">
                             <label htmlFor="password">password</label>
                             <input 
-                                value={password}
+                                value={password.pin}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {dispatch(onPasswordRegister({password: e.target.value}))}}
                                 type={checkbox ? "text": 'password' }  id = 'password' className="border-2  p-2"
                             />
                             <span>message:  
-                                <span className="text-red-500"></span>
+                                <span className="text-red-500 px-3">{password.warning}</span>
                             </span>
                         </div>
 
@@ -71,12 +76,12 @@ const Register = () => {
                         <div className="flex flex-col w-[50%] gap-3">
                             <label htmlFor="rep_password">rep-password</label>
                             <input 
-                                value = {repPassword}
+                                value = {repPassword.pin}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {dispatch(onRepeatPassowrdRegister({repPassword: e.target.value}))}}
                                 type={checkbox ? "text": 'password' } id = 'rep_password' className="border-2  p-2"
                             />
                             <span>message:  
-                                <span className="text-red-500"></span>
+                                <span className="text-red-500 px-3">{repPassword.warning}</span>
                             </span>
                         </div>
 
@@ -98,7 +103,7 @@ const Register = () => {
                                     e.preventDefault()
 
                                     // register thunk
-                                    dispatch(registerThunk({username: username, email: email, password: password, repPassowrd: repPassword}))
+                                    dispatch(registerThunk({username: username.name, email: email.name, password: password.pin, repPassword: repPassword.pin}))
                                 }}
                                 type="submit" value = 'register' className="border-2 w-[50%] p-2 rounded-xl cursor-pointer" 
                             />
