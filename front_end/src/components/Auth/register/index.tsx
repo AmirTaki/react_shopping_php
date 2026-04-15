@@ -3,14 +3,18 @@ import { useDispatch, useSelector } from "react-redux"
 import type{ AppDispatch, RooState } from "../../../store"
 import { changeAuth } from "../validation/redux/validationSlice"
 import { onCheckboxRegister, onEmailRegister, onPasswordRegister, onRepeatPassowrdRegister, onUsernameRegister } from "./redux/registerSlice"
+import { registerThunk } from "./redux/actonsRegister"
 
 const Register = () => {
-    const {username, email, password, repPassword, checkbox} = useSelector((state: RooState) => state.register)
+    const {username, email, password, repPassword, checkbox, warningMessage} = useSelector((state: RooState) => state.register)
     const dispatch = useDispatch<AppDispatch>()
     useEffect(() => {
         dispatch(changeAuth({id: 0}))
+
+        
     }, [])
     
+    console.log(warningMessage)
     
     return(
         <div className="mx-auto w-[90%]    ">
@@ -92,7 +96,9 @@ const Register = () => {
                             <input 
                                 onClick={(e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
                                     e.preventDefault()
-                                    
+
+                                    // register thunk
+                                    dispatch(registerThunk({username: username, email: email, password: password, repPassowrd: repPassword}))
                                 }}
                                 type="submit" value = 'register' className="border-2 w-[50%] p-2 rounded-xl cursor-pointer" 
                             />
