@@ -18,9 +18,11 @@
             else {
                 http_response_code(403);
                 echo json_encode([
-                    "loggedIn" => false
+                    "loggedIn" => false,    
+                    "user" => '' ,
+                    "level" => 'D'
                 ]);
-                redirect('/');
+                // redirect('/');
                 exit();
                 break;
             }

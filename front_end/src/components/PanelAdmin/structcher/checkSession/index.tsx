@@ -1,14 +1,18 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom"
 import { baseURL } from "../../../../baseURL";
+import { useDispatch, useSelector } from "react-redux";
+import {type AppDispatch, type RooState } from "../../../../store";
+import { onSetUserPanelAdmin } from "../redux/panelAdminSlice";
 
 const CheckSession = () => {
     const navigate = useNavigate();
-    
-    useEffect(() => {
-        getSession()
-    }, [])
+    const dispatch = useDispatch<AppDispatch>()
 
+    useEffect(() => {
+        getSession();
+    }, [])
+    
     const getSession = async () => {
         try{
             const response = await fetch (baseURL + 'functions/checkSession.php', {
@@ -20,10 +24,15 @@ const CheckSession = () => {
                 throw new Error ('warning: .....');
             }
             const data = await response.json()
-            console.log(data)
+            dispatch(onSetUserPanelAdmin(data))
+          
+            if(!data.loggedIn){
+                navigate('/validation/login')
+            }
         }
         catch(err: any){
             console.error(err.message)
+            navigate('/validation/login')
         }
     }
     
