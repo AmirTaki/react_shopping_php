@@ -20,7 +20,7 @@ const Login = () => {
         if(login){
             window.alert('your wellcome to panel admin !!!')
             dispatch(onLogin())
-            navigate('/')
+            navigate('/panelAdmin')
         }
     }, [login])
     return (

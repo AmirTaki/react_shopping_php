@@ -29,7 +29,7 @@ const panelAdminSlice =  createSlice({
             })
         } 
     },
-    extraReducers: (builder) => {}
+    extraReducers: () => {}
 })
 
 export default panelAdminSlice
