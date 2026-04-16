@@ -1,6 +1,8 @@
 <?php
     require_once "config.php";
-    // require_once "config.php";
+    require_once "middleware.php";
+
+    checkAuthentication();
 
     if (session_status() === PHP_SESSION_ACTIVE) {
         $_SESSION = [];
@@ -12,3 +14,4 @@
             "user" => '' ,
             "level" => 'D'
         ]);
+        
