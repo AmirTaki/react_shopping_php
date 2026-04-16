@@ -52,7 +52,7 @@ a {
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  /* color: #535bf2; */
 }
 
 body {
@@ -98,4 +98,47 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+
+
+
+body::-webkit-scrollbar{
+    width: 11px;
+    /* height: 5px; */
+    border-radius: 0px;
+    background-color: hsl(0, 0%, 40%);
+}
+
+body::-webkit-scrollbar-thumb{
+    border-radius: 20px;
+    background-color: rgb(168, 0, 0);
+    transition: all 2s;
+}
+body::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(0, 100%, 16%);
+    transition: all 2s;
+    cursor: pointer;
+}
+
+/* Navbar PanelAdmin */
+
+
+
+.navbarPA::-webkit-scrollbar{
+    width: 7px;
+    /* height: 5px; */
+    border-radius: 0px;
+    background-color: hsl(0, 1%, 86%);
+}
+
+.navbarPA::-webkit-scrollbar-thumb{
+    border-radius: 20px;
+    background-color: rgb(11, 145, 227);
+    transition: all 2s;
+}
+.navbarPA::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(250, 93%, 30%);
+    transition: all 2s;
+    cursor: pointer;
 }

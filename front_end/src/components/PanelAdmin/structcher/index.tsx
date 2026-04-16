@@ -1,3 +1,4 @@
+import { Outlet } from "react-router-dom";
 import NavbarPanelAdmin from "./navbar/navbar";
 
 const PanelAdmin = () => {
@@ -9,6 +10,9 @@ const PanelAdmin = () => {
             <NavbarPanelAdmin />
 
             {/* session panel admin */}
+            <div className="min-h-screen pt-30">
+                <Outlet />
+            </div>
         </div>
     )
 }

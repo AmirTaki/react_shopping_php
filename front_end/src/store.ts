@@ -3,6 +3,7 @@ import darkModeSlice from "./components/DarkMode/redux/darkModeSlice";
 import validationSlice from "./components/Auth/validation/redux/validationSlice";
 import registerSlice from "./components/Auth/register/redux/registerSlice";
 import loginSlice from "./components/Auth/login/redux/loginSlice";
+import panelAdminSlice from "./components/PanelAdmin/structcher/redux/panelAdminSlice";
 
 const reducers = combineReducers({
 
@@ -15,7 +16,10 @@ const reducers = combineReducers({
     register: registerSlice.reducer,
     // login
     login: loginSlice.reducer,
-    
+
+// panelAdmin 
+    // navbar
+    panelAdmin: panelAdminSlice.reducer,
 
 
  })

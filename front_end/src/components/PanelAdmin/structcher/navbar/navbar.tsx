@@ -9,10 +9,13 @@ import { RiMenuFoldFill } from "react-icons/ri";
 import { BiSolidExit } from "react-icons/bi";
 import DarkMode from "../../../DarkMode";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type  { AppDispatch, RooState } from "../../../../store";
+import { onChangeSliderPanelAdmin, onOpenSlidePanelAdmin } from "../redux/panelAdminSlice";
 
 const NavbarPanelAdmin = () => {
-    const [openSlide, setOpenSlide] =   useState<boolean>(true)
+    const dispatch = useDispatch<AppDispatch>()
+    const {openSlide, sideList, numberSide } = useSelector((state: RooState) => state.panelAdmin)
     return(
         <div className="h-20 border-b border-[silver] dark:bg-[#242424]! bg-[#cbcbcb]! text-gray-800 dark:text-white border-b-[1px_solid_gray] flex justify-between px-3  items-center fixed w-full">
             
@@ -33,11 +36,11 @@ const NavbarPanelAdmin = () => {
                     <FaHome title="home" className="hover:text-[#00e9d6] duration-300 cursor-pointer"/>
                 </Link>
             
-                <Link to = "/LogOut">
+                <Link to = "">
                     <BiLogOut title ="logout" className="hover:text-[red] duration-300 cursor-pointer"/>
                 </Link>
             
-                <Link to = "/Login">
+                <Link to = "/validation/login">
                     <CiLogin title = "login"  className="hover:text-[blue] duration-300 cursor-pointer"/>
                 </Link>
             
@@ -47,7 +50,7 @@ const NavbarPanelAdmin = () => {
 
                 <div 
                     className=""
-                    // onClick={() => {dispatch(handlerOpenSlide({bool: true}))}}
+                    onClick={() => {dispatch(onOpenSlidePanelAdmin({bool: true}))}}
                 >
                     <RiMenuFoldFill title = "open sidebar" className="text-3xl dark:hover:text-[silver]!  hover:text-blue-500! duration-200 cursor-pointer"/>
                 </div>
@@ -57,31 +60,34 @@ const NavbarPanelAdmin = () => {
 
               {/* sidebar */}
             <div className={`${openSlide ? 'right-0' : 'right-[-500px]'} absolute w-[250px]! dark:bg-[#242424]! bg-[#ebebeb]! text-gray-800 dark:text-white border-[silver] h-screen top-20 border-1  flex flex-col duration-500
-             overflow-y-auto 
+             overflow-y-auto navbarPA
             `}>
                 <div 
                     title = 'close sidebar'
-                    // onClick={() => {dispatch(handlerOpenSlide({bool: false}))}}
-                    className="px-3 h-10 text-lg flex items-center border-b-1 cursor-pointer group"
+                    onClick={() => {dispatch(onOpenSlidePanelAdmin({bool: false}))}}
+                    className="px-3 text-lg flex items-center border-b-1 cursor-pointer group"
                 >
                     <BiSolidExit
-                        className="group-hover:translate-x-[200px] dark:group-hover:text-rose-400! group-hover:text-blue-500! duration-500 "
+                        className="group-hover:translate-x-[200px] h-10 dark:group-hover:text-rose-400! group-hover:text-blue-500! duration-500 "
                     />
                 </div>
-                <div className="flex flex-col  mb-[10%] ">
+                <div className="flex flex-col  pb-[40%] ">
                   
-                    {/* {sideList.map((item) => {
+                    {sideList.map((item) => {
                         return(
                             <Link 
                                 to = {item.link}
                                 key = {item.id} 
-                                className={` flex items-center-safe px-3 text-md hover:tracking-[.2rem] duration-150 cursor-pointer h-10 ${item.id === numberSide && 'dark:text-rose-400! tracking-[.2rem]! text-sky-400!'}`}
-                                onClick={ () => {dispatch(changeNumberSide({id: item.id}))}}
+                                draggable = {false}
+                                className={` flex items-center-safe px-3 text-md hover:tracking-[.2rem] duration-150 cursor-pointer h-10 
+                                    ${item.id === numberSide && 'dark:text-rose-400! tracking-[.2rem]! text-sky-400!'}
+                                `}
+                                onClick={ () => {dispatch(onChangeSliderPanelAdmin({id: item.id}))}}
                             >
                                 {item.name}
                             </Link>
                         )
-                    })} */}
+                    })}
                 </div>
             </div>
         

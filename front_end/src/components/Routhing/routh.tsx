@@ -4,6 +4,7 @@ import Home from "../Home"
 import Register from "../Auth/register"
 import Login from "../Auth/login"
 import PanelAdmin from "../PanelAdmin/structcher"
+import Discription from "../Auth/register/panelAdmin/discription"
 
 const Routh = () => {
     return (
@@ -33,6 +34,9 @@ const Routh = () => {
                     {/* PANEL ADMIN */}
                     <Route path = "panelAdmin" element = {<PanelAdmin />}>
 
+                        {/* description */}
+                        <Route  path = ""  element = {<Discription />} />
+                        <Route  path = "description"  element = {<Discription />} />
                     </Route>
 
                 </Routes>
