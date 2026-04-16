@@ -40,7 +40,6 @@ const Login = () => {
         }
     }
         
-
     useEffect(() => {
         // checksession
         getSession()
@@ -53,6 +52,7 @@ const Login = () => {
             navigate('/panelAdmin')
         }
     }, [login])
+
     return (
        <div className="mx-auto w-[90%]   ">
             <div className="border-2  my-3 rounded-3xl  ">

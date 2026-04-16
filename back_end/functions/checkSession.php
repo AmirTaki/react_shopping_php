@@ -22,7 +22,7 @@
                     "user" => '' ,
                     "level" => 'D'
                 ]);
-                // redirect('/');
+                redirect('/');
                 exit();
                 break;
             }

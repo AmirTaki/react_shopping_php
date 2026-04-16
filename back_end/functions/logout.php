@@ -8,5 +8,7 @@
         }
 
         echo json_encode([
-            "status" => "logged out"
+            "loggedIn" => false,    
+            "user" => '' ,
+            "level" => 'D'
         ]);

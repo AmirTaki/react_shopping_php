@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export type TUser = {loggedIn: boolean, user: string, level: string} | boolean
+export type TUser = {loggedIn: boolean, user: string, level: string}
 
 interface IPanelAdminNavar {
 
@@ -18,7 +18,7 @@ interface IPanelAdminNavar {
 const initialState: IPanelAdminNavar = {
 
     // user login
-    user:  false,
+    user:  {loggedIn: false, user: '', level: 'D'} ,
     warningMessage: '',
 
     // side navbar panelAdmin

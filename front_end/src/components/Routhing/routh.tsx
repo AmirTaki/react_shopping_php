@@ -5,6 +5,7 @@ import Register from "../Auth/register"
 import Login from "../Auth/login"
 import PanelAdmin from "../PanelAdmin/structcher"
 import Discription from "../Auth/register/panelAdmin/discription"
+import LogOut from "../PanelAdmin/structcher/logout"
 
 const Routh = () => {
     return (
@@ -19,6 +20,7 @@ const Routh = () => {
                             <Route path = '' element = {<Register />}/>
                             <Route path = 'register' element = {<Register />}/>
                             <Route path = 'login' element = {<Login />}/>
+                            <Route path = "logout" element = {<LogOut />} />
                         
                         </Route>
                     </Route>
