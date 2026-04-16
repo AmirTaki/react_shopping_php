@@ -26,8 +26,8 @@ const Register = () => {
     }, [username, email, password, repPassword])
     
     return(
-        <div className="mx-auto w-[90%]    ">
-            <div className="border-2  my-3 rounded-3xl  ">
+        <div className="mx-auto  flex justify-center">
+            <div className="border-2 w-[90%] my-3 rounded-3xl  mb-30!">
                 <form>
                     <div className="flex flex-col justify-center items-center my-10 ">
 

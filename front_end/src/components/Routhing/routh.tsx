@@ -3,6 +3,7 @@ import Validation from "../Auth/validation/validation"
 import Home from "../Home"
 import Register from "../Auth/register"
 import Login from "../Auth/login"
+import PanelAdmin from "../PanelAdmin/structcher"
 
 const Routh = () => {
     return (
@@ -30,6 +31,9 @@ const Routh = () => {
                     {/* SHOPPING */}
                     
                     {/* PANEL ADMIN */}
+                    <Route path = "panelAdmin" element = {<PanelAdmin />}>
+
+                    </Route>
 
                 </Routes>
             </BrowserRouter>
