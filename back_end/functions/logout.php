@@ -1,17 +1,22 @@
 <?php
     require_once "config.php";
+
     require_once "middleware.php";
 
     checkAuthentication();
 
-    if (session_status() === PHP_SESSION_ACTIVE) {
-        $_SESSION = [];
-            session_destroy();
-        }
+    $method = $_SERVER['REQUEST_METHOD'];
+    
+    switch($method){
+        case "GET":
+            if (session_status() === PHP_SESSION_ACTIVE) {
+                $_SESSION = [];
+                    session_destroy();
+                }
+                echo json_encode(["loggedIn" => false,"user" => '' , "level" => 'D']);   
+    
+                
+    }
 
-        echo json_encode([
-            "loggedIn" => false,    
-            "user" => '' ,
-            "level" => 'D'
-        ]);
+
         

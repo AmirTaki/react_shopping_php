@@ -1,18 +1,17 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom"
 import { baseURL } from "../../../../baseURL";
-import { useDispatch, useSelector,} from "react-redux";
-import {type AppDispatch, type RooState } from "../../../../store";
+import { useDispatch, useSelector} from "react-redux";
+import {type AppDispatch, type RooState,   } from "../../../../store";
 import { onSetUserPanelAdmin } from "../redux/panelAdminSlice";
 
 const CheckSession = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>()
-
     const {user} = useSelector((state: RooState) => state.panelAdmin)
-    
+
     useEffect(() => {
-        getSession();
+        getSession()
     }, [])
     
     const getSession = async () => {
@@ -39,7 +38,7 @@ const CheckSession = () => {
     }
     
     return(
-        <></>
+        <>check session</>
     )
 
 }

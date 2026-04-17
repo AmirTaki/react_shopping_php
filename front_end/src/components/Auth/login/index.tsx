@@ -6,6 +6,7 @@ import { onCheckboxLogin, onEmailLogin, onLoadingLogin, onLogin, onPasswordLogin
 import { useNavigate } from "react-router-dom"
 import { loginThunk } from "./redux/actionsLogin"
 import { baseURL } from "../../../baseURL"
+import { onSetUserPanelAdmin } from "../../PanelAdmin/structcher/redux/panelAdminSlice"
 
 const Login = () => {
     const {login, email, password, checkbox, } = useSelector((state: RooState) => state.login) 
@@ -30,6 +31,7 @@ const Login = () => {
                 throw new Error ('warning: .....');
             }
             const data = await response.json()
+            // dispatch(onSetUserPanelAdmin(data))
             if(!data.loggedIn){
                 navigate('/validation/login')
             }

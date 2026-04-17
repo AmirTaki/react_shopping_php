@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { baseURL } from "../../../../baseURL";
-import { useDispatch, useSelector } from "react-redux";
-import type{ AppDispatch, RooState } from "../../../../store";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../../../store";
+import { onSetUserPanelAdmin } from "../redux/panelAdminSlice";
 
 const LogOut = () => {
-    const dispatch = useDispatch<AppDispatch>()
-    const {user} = useSelector((state: RooState) => state.panelAdmin)
+
     const navigate = useNavigate()
- 
+    const dispatch = useDispatch<AppDispatch>()
     useEffect(() => {
         requsetLogOut()
     }, [])
@@ -20,10 +20,16 @@ const LogOut = () => {
                 credentials: 'include'
             })
             if(!response.ok){
+            
+            
                 throw new Error('message : ...')
+            
             }
             const data = await response.json()
             data.loggedIn === false && navigate('/')
+            console.log(data, 'logout')
+            // ["loggedIn" => false,"user" => '' , "level" => 'D']
+            dispatch(onSetUserPanelAdmin(data))
             return data
             
         }

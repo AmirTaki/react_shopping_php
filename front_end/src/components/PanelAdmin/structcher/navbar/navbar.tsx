@@ -36,7 +36,7 @@ const NavbarPanelAdmin = () => {
                     <FaHome title="home" className="hover:text-[#00e9d6] duration-300 cursor-pointer"/>
                 </Link>
             
-                <Link to = "">
+                <Link to = "/validation/logout">
                     <BiLogOut title ="logout" className="hover:text-[red] duration-300 cursor-pointer"/>
                 </Link>
             
