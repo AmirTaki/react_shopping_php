@@ -23,3 +23,25 @@ export const getSessionThunk = createAsyncThunk< {loggedIn: boolean, user: strin
         
     }
 )
+
+export const requestLogoutThunk = createAsyncThunk<{loggedIn: boolean, user: string, level: string}, void, {rejectValue: string}>(
+    'requset_api_logout_thunk_',
+    async(_, rejectValue) => {
+        try{
+            const response = await fetch (baseURL + 'functions/logout.php', {
+                method: 'GET',
+                credentials: 'include'
+            })
+            if(!response.ok){
+                rejectValue.dispatch(onCallBackSession())
+            }
+            const data = await response.json();
+            rejectValue.dispatch(onCallBackSession())
+            return data
+        }
+        catch(err: any){
+            rejectValue.dispatch(onCallBackSession())
+
+        }
+    }
+)

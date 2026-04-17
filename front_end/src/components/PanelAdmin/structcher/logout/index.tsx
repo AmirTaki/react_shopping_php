@@ -1,41 +1,27 @@
 import { useEffect } from "react";
-import { baseURL } from "../../../../baseURL";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch } from "../../../../store";
-import { onCallBackSession } from "../redux/panelAdminSlice";
+import { requestLogoutThunk } from "../redux/actionsPanelAdmin";
+import type { RooState } from "../../../../store";
 
 const LogOut = () => {
+    const {callBack} =  useSelector((state: RooState) => state.panelAdmin)
 
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
  
     useEffect(() => {
-        requsetLogOut()
+        // requsetLogOut()
+        dispatch(requestLogoutThunk())
     }, [])
 
-    const requsetLogOut = async () => {
-        try{
-            const response = await fetch (baseURL + `functions/logout.php`, {
-                method: 'GET',
-                credentials: 'include'
-            })
-            if(!response.ok){
-            
-            
-                throw new Error('message : ...')
-            
-            }
-            const data = await response.json()
-            data.loggedIn === false && navigate('/')
-            dispatch(onCallBackSession())
-            return data
-            
+    useEffect(() => {
+        if(callBack){
+            navigate('/validation/login')
         }
-        catch(err: any){
-            console.error(`message: ${err.message}`)
-        }
-    }
+    }, [callBack])
+
     return(
         <>logout</>
     )

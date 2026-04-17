@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getSessionThunk } from "./actionsPanelAdmin";
+import { getSessionThunk, requestLogoutThunk } from "./actionsPanelAdmin";
 
 export type TUser = {loggedIn: boolean, user: string, level: string}
 
@@ -65,6 +65,18 @@ const panelAdminSlice =  createSlice({
             state.callBack = false
         })
         builder.addCase(getSessionThunk.fulfilled, (state, action) => {
+            state.callBack = false
+            state.user = action.payload
+        })
+
+        // request logout thunk api
+        builder.addCase(requestLogoutThunk.pending, (state) => {
+            state.callBack = false
+        })
+        builder.addCase(requestLogoutThunk.rejected, (state) => {
+            state.callBack = false
+        })
+        builder.addCase(requestLogoutThunk.fulfilled, (state, action) => {
             state.callBack = false
             state.user = action.payload
         })

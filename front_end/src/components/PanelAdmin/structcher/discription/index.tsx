@@ -6,7 +6,7 @@ import { useFetcher, useNavigate } from "react-router-dom"
 
 const Discription = () => {
     const dispatch = useDispatch<AppDispatch>()
-    const {allow, user, sideList, } = useSelector((state: RooState) => state.panelAdmin)
+    const {user, sideList, } = useSelector((state: RooState) => state.panelAdmin)
     const navigate = useNavigate()
 
     
