@@ -5,8 +5,7 @@ import { changeAuth } from "../validation/redux/validationSlice"
 import { onCheckboxLogin, onEmailLogin, onLoadingLogin, onLogin, onPasswordLogin } from "./redux/loginSlice"
 import { useNavigate } from "react-router-dom"
 import { loginThunk } from "./redux/actionsLogin"
-import { baseURL } from "../../../baseURL"
-import { onSetUserPanelAdmin } from "../../PanelAdmin/structcher/redux/panelAdminSlice"
+import { getSessionThunk } from "../../PanelAdmin/structcher/redux/actionsPanelAdmin"
 
 const Login = () => {
     const {login, email, password, checkbox, } = useSelector((state: RooState) => state.login) 
@@ -19,32 +18,9 @@ const Login = () => {
 
     }, [])
 
-
-    const getSession = async () => {
-        try{
-            const response = await fetch (baseURL + 'functions/checkSession.php', {
-                method: 'GET',
-                credentials: 'include'
-            })
-
-            if(!response.ok){
-                throw new Error ('warning: .....');
-            }
-            const data = await response.json()
-            // dispatch(onSetUserPanelAdmin(data))
-            if(!data.loggedIn){
-                navigate('/validation/login')
-            }
-        }
-        catch(err: any){
-            console.error(err.message)
-            navigate('/validation/login')
-        }
-    }
-        
     useEffect(() => {
         // checksession
-        getSession()
+        dispatch(getSessionThunk())    
     }, [])
 
     useEffect(() => {

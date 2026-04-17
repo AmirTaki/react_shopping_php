@@ -6,13 +6,16 @@ import { useNavigate } from "react-router-dom"
 
 const Discription = () => {
     const dispatch = useDispatch<AppDispatch>()
-    // const {allow, user, sideList, } = useSelector((state: RooState) => state.panelAdmin)
+    const {allow, user, sideList, } = useSelector((state: RooState) => state.panelAdmin)
     const navigate = useNavigate()
 
+  
+
+    
     useEffect(() => {
         dispatch(onChangeSliderPanelAdmin({id: 0}))
-
     }, [])
+
     return(
         <div className={`flex justify-center items-center flex-col gap-20 `}>
             <h1 className="text-2xl hover:tracking-[.3rem] duration-300">Description</h1> 

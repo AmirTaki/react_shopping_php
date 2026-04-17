@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getSessionThunk } from "./actionsPanelAdmin";
 
 export type TUser = {loggedIn: boolean, user: string, level: string}
 
@@ -12,25 +13,26 @@ interface IPanelAdminNavar {
     sideList: Array<{id: number, name: string, link: string, allowed: any}> ,
     openSlide: boolean,
     numberSide: number,
-    allow: boolean
+    callBack: boolean
+
 }
 
-const savedUsers = localStorage.getItem('react_shopping_session_toolkit')
 const initialState: IPanelAdminNavar = {
 
     // user login
-    user:  savedUsers ? JSON.parse(savedUsers) : {loggedIn: false, user: '', level: 'D'} ,
+    user:  {loggedIn: false, user: '', level: 'D'},
     warningMessage: '',
 
     // side navbar panelAdmin
     sideList: [
-        {id: 0, name: 'descript panel admin', link : "description", allowed: {A: false, B: true, C: true, D: true}},
+        {id: 0, name: 'descript panel admin', link : "description", allowed: {A: true, B: true, C: true, D: true}},
         {id: 1, name: 'users', link : 'users',  allowed:  'A'},
-        {id: 1, name: 'users', link : 'users',  allowed:  'B'},
+        {id: 2, name: 'headers', link : 'users',  allowed:  'B'},
     ],
     openSlide: false,
     numberSide: 0,
-    allow: false
+    callBack: false
+  
 }
 
 const panelAdminSlice =  createSlice({
@@ -41,23 +43,33 @@ const panelAdminSlice =  createSlice({
             state.openSlide = action.payload.bool
         },
         onChangeSliderPanelAdmin: (state, action) => {
-            const level =  state.user.level 
             state.sideList.map((item) => {
                 if (item.id == action.payload.id) {
-
-                    state.numberSide = action.payload.id
-                    state.allow =  item.allowed[level]
+                state.numberSide = action.payload.id
+    
                 }
             })
         }, 
-        onSetUserPanelAdmin: (state, action) => {
-            state.user = action.payload
-            localStorage.setItem('react_shopping_session_toolkit', JSON.stringify(action.payload) )
-        },
-        
+
+        onCallBackSession: (state, ) => {
+            state.callBack = true
+        }
     },
-    extraReducers: (builder) => {}
+    extraReducers: (builder) => {
+
+        // get session thunk api
+        builder.addCase(getSessionThunk.pending, (state) => {
+            state.callBack = false
+        })
+        builder.addCase(getSessionThunk.rejected, (state) => {
+            state.callBack = false
+        })
+        builder.addCase(getSessionThunk.fulfilled, (state, action) => {
+            state.callBack = false
+            state.user = action.payload
+        })
+    }
 })
 
 export default panelAdminSlice
-export const {onOpenSlidePanelAdmin, onChangeSliderPanelAdmin, onSetUserPanelAdmin} = panelAdminSlice.actions
+export const {onOpenSlidePanelAdmin, onChangeSliderPanelAdmin, onCallBackSession} = panelAdminSlice.actions
