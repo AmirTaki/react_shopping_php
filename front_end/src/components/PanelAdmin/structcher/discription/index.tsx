@@ -2,15 +2,21 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { onChangeSliderPanelAdmin } from "../redux/panelAdminSlice"
 import type { AppDispatch, RooState } from "../../../../store"
-import { useNavigate } from "react-router-dom"
+import { useFetcher, useNavigate } from "react-router-dom"
 
 const Discription = () => {
     const dispatch = useDispatch<AppDispatch>()
     const {allow, user, sideList, } = useSelector((state: RooState) => state.panelAdmin)
     const navigate = useNavigate()
 
-  
-
+    
+    useEffect(() => {
+        console.log(user?.level)
+        if(user === undefined)return
+        else if(user?.level !== "D"){
+            window.alert('not allowed')
+        }
+    }, [user])
     
     useEffect(() => {
         dispatch(onChangeSliderPanelAdmin({id: 0}))

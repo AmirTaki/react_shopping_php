@@ -3,12 +3,13 @@ import { baseURL } from "../../../../baseURL";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../../../store";
-import { onSetUserPanelAdmin } from "../redux/panelAdminSlice";
+import { onCallBackSession } from "../redux/panelAdminSlice";
 
 const LogOut = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
+ 
     useEffect(() => {
         requsetLogOut()
     }, [])
@@ -27,9 +28,7 @@ const LogOut = () => {
             }
             const data = await response.json()
             data.loggedIn === false && navigate('/')
-            console.log(data, 'logout')
-            // ["loggedIn" => false,"user" => '' , "level" => 'D']
-            dispatch(onSetUserPanelAdmin(data))
+            dispatch(onCallBackSession())
             return data
             
         }

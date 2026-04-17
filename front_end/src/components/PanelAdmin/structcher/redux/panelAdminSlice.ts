@@ -10,7 +10,7 @@ interface IPanelAdminNavar {
     warningMessage: string,
 
     // side navbar panelAdmin
-    sideList: Array<{id: number, name: string, link: string, allowed: any}> ,
+    sideList: Array<{id: number, name: string, link: string,}> ,
     openSlide: boolean,
     numberSide: number,
     callBack: boolean
@@ -25,14 +25,13 @@ const initialState: IPanelAdminNavar = {
 
     // side navbar panelAdmin
     sideList: [
-        {id: 0, name: 'descript panel admin', link : "description", allowed: {A: true, B: true, C: true, D: true}},
-        {id: 1, name: 'users', link : 'users',  allowed:  'A'},
-        {id: 2, name: 'headers', link : 'users',  allowed:  'B'},
+        {id: 0, name: 'descript panel admin', link : "description",},
+        {id: 1, name: 'users', link : 'users',  },
+        {id: 2, name: 'headers', link : 'users',  },
     ],
     openSlide: false,
     numberSide: 0,
     callBack: false
-  
 }
 
 const panelAdminSlice =  createSlice({
@@ -53,6 +52,7 @@ const panelAdminSlice =  createSlice({
 
         onCallBackSession: (state, ) => {
             state.callBack = true
+            state.user = {loggedIn: false, user: '', level: 'D'}
         }
     },
     extraReducers: (builder) => {
