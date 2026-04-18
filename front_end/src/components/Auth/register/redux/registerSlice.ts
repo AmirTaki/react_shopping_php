@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { registerThunk } from "./actonsRegister";
+import { registerThunk, ReadingUserThunk, editUserThunk } from "./actonsRegister";
 
 // export type TAccountUsers = Array{} 
+type TUSERObject = {id: number, name: string, email: string, status: number, level: string, password: string, created_at: string, updated_at: string}
 
 interface IRegister {
 
@@ -14,6 +15,8 @@ interface IRegister {
     email:  {name: string, warning: string, check: boolean},  
     password:  {pin: string, warning: string, check: boolean}, 
     repPassword: {pin: string, warning: string, check: boolean}, 
+    level: string,
+    levels: Array<{access: string, message: string }>,
     checkbox: boolean,
 
     // check input button register 
@@ -30,6 +33,8 @@ const initialState: IRegister = {
     email:  {name: '', warning: '', check: false},  
     password:  {pin: '', warning: '', check: false}, 
     repPassword: {pin: '', warning: '', check: false}, 
+    level: '',
+    levels: [{access: 'A', message:  'all components, users'}, {access: 'B', message:  'header, session, footer'}, {access: 'C', message:  'shooping, bank'}, {access: 'D', message:  'discription'}],
     checkbox: false, 
     
     // check input button register 
@@ -95,6 +100,9 @@ const registerSlice = createSlice({
             const tick = action.payload.tick
             state.checkbox = tick 
         },
+        onLeavelRegister : (state, action) => {
+            state.level = action.payload.level
+        },
         onWarningRegister: (state, action) => {     
             state.username = {name : '', warning : action.payload.username, check: false},
             state.email = {name : state.email.name, warning : action.payload.email, check: false},
@@ -118,6 +126,7 @@ const registerSlice = createSlice({
 
     },
     extraReducers: (builder) => {
+        
         //  registe user to database
         builder.addCase(registerThunk.pending, (state) => {
             state.submit = false
@@ -129,8 +138,39 @@ const registerSlice = createSlice({
         builder.addCase(registerThunk.fulfilled, (state, action) => {
             state.submit = action.payload == true ? true : false
         })
+
+
+        // reading item users thunk
+        builder.addCase(ReadingUserThunk.pending,(state, ) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(ReadingUserThunk.rejected,(state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(ReadingUserThunk.fulfilled,(state, action) => {
+            state.warningMessage = ''
+            const object = action.payload as TUSERObject 
+            state.username.name = object.name
+            state.email.name = object.email
+            state.level = object.level
+        })
+
+        // edit item users thunk
+        builder.addCase(editUserThunk.pending, (state, ) => {
+            state.submit = false
+        })
+        builder.addCase(editUserThunk.rejected, (state, action) => {
+            state.submit = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(editUserThunk.fulfilled, (state, action) => {
+            state.submit = action.payload == true ? true : false
+            state.warningMessage = ''
+        })
     }
+
+    
 
 })
 export default registerSlice
-export const {onDisabledRegister, onLoadingRegister, onSubmitRegister, onWarningRegister, onCheckboxRegister, onUsernameRegister, onEmailRegister, onPasswordRegister, onRepeatPassowrdRegister,} = registerSlice.actions
+export const {onLeavelRegister, onDisabledRegister, onLoadingRegister, onSubmitRegister, onWarningRegister, onCheckboxRegister, onUsernameRegister, onEmailRegister, onPasswordRegister, onRepeatPassowrdRegister,} = registerSlice.actions

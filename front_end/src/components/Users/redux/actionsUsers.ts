@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { baseURL } from "../../../baseURL";
-import type { TUSER } from "./userSlice";
+import type { TUSER, TUSERObject } from "./userSlice";
 
 
 export const viewUsersThunk =  createAsyncThunk<TUSER, void, {rejectValue: string}>(
@@ -71,3 +71,4 @@ export const deleteUsersThunk = createAsyncThunk<TUSER, {id: number}, {rejectVal
         }
     }
 )
+
