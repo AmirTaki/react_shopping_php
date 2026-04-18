@@ -8,6 +8,7 @@ import LogOut from "../PanelAdmin/structcher/logout"
 import Discription from "../PanelAdmin/structcher/discription"
 import ViewUsersPanelAdmin from "../Users/view"
 import UsersPanelAdmin from "../Users"
+import CreateUsersPanelAdmin from "../Users/create"
 
 const Routh = () => {
     return (
@@ -44,6 +45,7 @@ const Routh = () => {
                         {/* users -> admin */}
                         <Route path = 'users' element = {<ViewUsersPanelAdmin />}>
                             <Route path = "" element = {<UsersPanelAdmin />}/>
+                            <Route path = "create" element = {<CreateUsersPanelAdmin />}/>
                         </Route>
                     </Route>
 

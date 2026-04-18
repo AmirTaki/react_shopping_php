@@ -27,7 +27,7 @@ const ViewUsersPanelAdmin = () => {
     }, [user])
     
     return(
-        <div className={`flex justify-center items-center flex-col gap-10`}>
+        <div className={`flex justify-center items-center flex-col gap-10 ${user?.level !== "A" ? "opacity-10": ""}`}>
             <h1 className="text-2xl hover:tracking-[.3rem] duration-300">Users Tables</h1> 
             <Outlet />
         </div>
