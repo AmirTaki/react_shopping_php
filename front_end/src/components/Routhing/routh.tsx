@@ -10,6 +10,7 @@ import ViewUsersPanelAdmin from "../Users/view"
 import UsersPanelAdmin from "../Users"
 import CreateUsersPanelAdmin from "../Users/create"
 import EditUsersPanelAdmin from "../Users/edit"
+import ViewMenuPanelAdmin from "../Home/header/menus/panelAdmin/view"
 
 const Routh = () => {
     return (
@@ -48,6 +49,10 @@ const Routh = () => {
                             <Route path = "" element = {<UsersPanelAdmin />}/>
                             <Route path = "create" element = {<CreateUsersPanelAdmin />}/>
                             <Route path = "edit/:id" element = {<EditUsersPanelAdmin />}/>
+                        </Route>
+
+                        {/* headers => admin */}
+                        <Route path = "menusHeaders" element = {<ViewMenuPanelAdmin />}>
                         </Route>
                     </Route>
 

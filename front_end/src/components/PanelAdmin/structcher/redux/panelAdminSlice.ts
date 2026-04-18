@@ -27,7 +27,7 @@ const initialState: IPanelAdminNavar = {
     sideList: [
         {id: 0, name: 'descript panel admin', link : "description",},
         {id: 1, name: 'users', link : 'users',  },
-        {id: 2, name: 'headers', link : 'users',  },
+        {id: 2, name: 'headers', link : 'menusHeaders',  },
     ],
     openSlide: false,
     numberSide: 0,
