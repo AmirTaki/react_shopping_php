@@ -5,7 +5,7 @@ import { changeAuth } from "../validation/redux/validationSlice"
 import { onCheckboxLogin, onEmailLogin, onLoadingLogin, onLogin, onPasswordLogin } from "./redux/loginSlice"
 import { useNavigate } from "react-router-dom"
 import { loginThunk } from "./redux/actionsLogin"
-import { getSessionThunk } from "../../PanelAdmin/structcher/redux/actionsPanelAdmin"
+import { getSessionThunk, requestLogoutThunk } from "../../PanelAdmin/structcher/redux/actionsPanelAdmin"
 
 const Login = () => {
     const {login, email, password, checkbox, } = useSelector((state: RooState) => state.login) 
@@ -83,8 +83,9 @@ const Login = () => {
                                 onClick={(e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
                                     e.preventDefault()
 
+                                    // log out thunk 
+                                    dispatch(requestLogoutThunk())
                                     // login thunk
-                                
                                     dispatch(loginThunk({email: email.name, password: password.pin,}))
                                 }}
                                 type="submit" value = 'sing in' 

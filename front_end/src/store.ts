@@ -4,6 +4,7 @@ import validationSlice from "./components/Auth/validation/redux/validationSlice"
 import registerSlice from "./components/Auth/register/redux/registerSlice";
 import loginSlice from "./components/Auth/login/redux/loginSlice";
 import panelAdminSlice from "./components/PanelAdmin/structcher/redux/panelAdminSlice";
+import userSlice from "./components/Users/redux/userSlice";
 
 const reducers = combineReducers({
 
@@ -19,7 +20,11 @@ const reducers = combineReducers({
 
 // panelAdmin 
     // navbar
-    panelAdmin: panelAdminSlice.reducer,
+    panelAdmin: panelAdminSlice.reducer,        // navbar panel admin
+
+    // users 
+    users: userSlice.reducer,                  // users in panel admin
+
 
 
  })

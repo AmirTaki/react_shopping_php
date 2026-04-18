@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { baseURL } from "../../../../baseURL";
 import { onWarningLogin } from "./loginSlice";
+import { onCallBackSession } from "../../../PanelAdmin/structcher/redux/panelAdminSlice";
 
 export const loginThunk =  createAsyncThunk<any, {email: string, password: string}, {rejectValue: string}>(
     'login_user_thunk_toolkit',

@@ -6,6 +6,8 @@ import Login from "../Auth/login"
 import PanelAdmin from "../PanelAdmin/structcher"
 import LogOut from "../PanelAdmin/structcher/logout"
 import Discription from "../PanelAdmin/structcher/discription"
+import ViewUsersPanelAdmin from "../Users/view"
+import UsersPanelAdmin from "../Users"
 
 const Routh = () => {
     return (
@@ -38,6 +40,11 @@ const Routh = () => {
                         {/* description */}
                         <Route  path = ""  element = {<Discription />} />
                         <Route  path = "description"  element = {<Discription />} />
+
+                        {/* users -> admin */}
+                        <Route path = 'users' element = {<ViewUsersPanelAdmin />}>
+                            <Route path = "" element = {<UsersPanelAdmin />}/>
+                        </Route>
                     </Route>
 
                 </Routes>

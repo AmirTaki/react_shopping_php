@@ -104,7 +104,7 @@ button:focus-visible {
 
 
 body::-webkit-scrollbar{
-    width: 11px;
+    width: 8px;
     /* height: 5px; */
     border-radius: 0px;
     background-color: hsl(0, 0%, 40%);
