@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewUsersThunk } from "./actionsUsers";
+import { changeStatusUsersThunk, viewUsersThunk } from "./actionsUsers";
 
 export type TUSER = Array<{id: number, name: string, email: string, status: number, level: string, password: string, created_at: string, updated_at: string}> | string | boolean
 export type TUSERObject = {id: number, name: string, email: string, status: number, level: string, password: string, created_at: string, updated_at: string}
@@ -24,6 +24,7 @@ const userSlice =  createSlice({
     initialState: initialState,
     reducers: {},
     extraReducers: (builder) => {
+        // view users thunk
         builder.addCase(viewUsersThunk.pending, (state) => {
             state.warningMessage = ''
         })
@@ -33,6 +34,22 @@ const userSlice =  createSlice({
         builder.addCase(viewUsersThunk.fulfilled, (state, action) => {
             state.data = action.payload
             state.warningMessage = ''
+        })
+
+        // change status item users thunk
+        builder.addCase(changeStatusUsersThunk.pending, (state) => {
+            state.loading = true
+            state.warningMessage = ''
+        })
+        builder.addCase(changeStatusUsersThunk.rejected, (state, action) => {
+            state.loading = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(changeStatusUsersThunk.fulfilled, (state, action) => {
+            state.loading = false
+            state.warningMessage = ''
+            console.log(action.payload)
+            state.data = action.payload
         })
     }
 })

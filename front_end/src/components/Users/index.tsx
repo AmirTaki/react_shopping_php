@@ -3,7 +3,7 @@ import type { RooState, AppDispatch } from "../../store"
 import { useEffect } from "react"
 // import { changeStatusUsersThunk, deleteUsersThunk, viewUsersThunk } from "./actionsUsers"
 import { Link, } from "react-router-dom"
-import { viewUsersThunk } from "./redux/actionsUsers"
+import { changeStatusUsersThunk, viewUsersThunk } from "./redux/actionsUsers"
 
 const UsersPanelAdmin = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -53,7 +53,7 @@ const UsersPanelAdmin = () => {
                                         
                                         <div 
                                             onClick={() => {
-                                                // dispatch(changeStatusUsersThunk({id: user.id}) );
+                                                dispatch(changeStatusUsersThunk({id: user.id}) );
                                             }}
                                             className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 "
                                         >

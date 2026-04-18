@@ -24,3 +24,27 @@ export const viewUsersThunk =  createAsyncThunk<TUSER, void, {rejectValue: strin
     } 
     
 ) 
+
+export const changeStatusUsersThunk = createAsyncThunk<TUSER, {id: number}, {rejectValue: string}>(
+    'change_status_users_toolkit',
+    async (payload, {rejectWithValue}) => {
+        try{    
+            const response = await fetch (baseURL + `tables/users/status.php/${payload.id}/changeStatus`, {
+                method: 'GET', 
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                // body: JSON.stringify({id: payload.id})
+            })
+            if(!response.ok){
+                throw new Error;
+            }
+            const data = await response.json();
+            return Array.isArray(data) ? data : []
+        }
+        catch(err: any){
+            return rejectWithValue (`warning: , ${err.message}`);
+        }
+    }
+)

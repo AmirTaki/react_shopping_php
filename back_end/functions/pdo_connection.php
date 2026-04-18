@@ -94,3 +94,11 @@
         $reading  = $single ? $statment->fetch() : $statment->fetchAll();
         return $reading;
     }
+
+    // OPERATIONS IN DATE BASE
+    function operationsDatabase($dbName, $query, $execute = null){
+        $pdo = connectDataBase($dbName);
+        $statment = $pdo->prepare($query);
+        $statment = $execute == null ? $statment->execute() : $statment->execute($execute);
+        return $statment;
+    }
