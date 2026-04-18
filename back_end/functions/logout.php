@@ -13,7 +13,7 @@
                 $_SESSION = [];
                     session_destroy();
                 }
-                echo json_encode(["loggedIn" => false,"user" => '' , "level" => 'D']);   
+                echo json_encode(["loggedIn" => false,"user_react_shopping" => '' , "level" => 'D']);   
     
                 
     }

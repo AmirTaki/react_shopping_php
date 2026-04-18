@@ -3,7 +3,7 @@
 
     function checkAuthentication () {
    
-        if(!isset($_SESSION['user'])){
+        if(!isset($_SESSION['user_react_shopping'])){
             http_response_code(401);
             echo json_encode([
                 "loggedIn" => false,

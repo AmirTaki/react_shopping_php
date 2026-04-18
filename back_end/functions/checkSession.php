@@ -7,10 +7,10 @@
     $method = $_SERVER['REQUEST_METHOD'];
     switch($method){
         case "GET":
-            if(isset($_SESSION['user'])){
+            if(isset($_SESSION['user_react_shopping'])){
                 echo json_encode([
                     "loggedIn" => true,
-                    "user" => $_SESSION['user'] ,
+                    "user" => $_SESSION['user_react_shopping'] ,
                     "level" => $_SESSION['level']
                 ]);
                 break;

@@ -15,8 +15,8 @@
     
     switch($method){
         case "POST":
-        if(isset($_SESSION['user'])){
-            unset($_SESSION['user']);
+        if(isset($_SESSION['user_react_shopping'])){
+            unset($_SESSION['user_react_shopping']);
             unset($_SESSION['level']);
         }
 
@@ -36,9 +36,8 @@
                     if($checkUser -> status == 10){
 
                         // set session email & level
-                        $_SESSION['user'] = $checkUser -> email;
+                        $_SESSION['user_react_shopping'] = $checkUser -> email;
                         $_SESSION['level'] = $checkUser -> level;
-
                         echo json_encode(true);
                         break;
                      
