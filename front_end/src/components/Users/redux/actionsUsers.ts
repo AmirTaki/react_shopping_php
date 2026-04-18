@@ -48,3 +48,26 @@ export const changeStatusUsersThunk = createAsyncThunk<TUSER, {id: number}, {rej
         }
     }
 )
+
+
+export const deleteUsersThunk = createAsyncThunk<TUSER, {id: number}, {rejectValue: string}>(
+    'delete_users_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/users/delete.php/${payload.id}/delete `, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            if(!response.ok){
+                throw new Error;
+            }
+            const data = await response.json();
+            return Array.isArray(data) ? data : []
+        }
+        catch(error: any){
+            return rejectWithValue (`warning ${error.message}`);
+        }
+    }
+)

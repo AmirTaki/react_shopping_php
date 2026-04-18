@@ -1,9 +1,8 @@
 import { useDispatch, useSelector } from "react-redux"
 import type { RooState, AppDispatch } from "../../store"
 import { useEffect } from "react"
-// import { changeStatusUsersThunk, deleteUsersThunk, viewUsersThunk } from "./actionsUsers"
 import { Link, } from "react-router-dom"
-import { changeStatusUsersThunk, viewUsersThunk } from "./redux/actionsUsers"
+import { changeStatusUsersThunk, viewUsersThunk, deleteUsersThunk } from "./redux/actionsUsers"
 
 const UsersPanelAdmin = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -68,7 +67,7 @@ const UsersPanelAdmin = () => {
                                         
                                         <div 
                                             onClick={() => {
-                                                // dispatch(deleteUsersThunk({id: user.id}))
+                                                dispatch(deleteUsersThunk({id: user.id}))
                                             }}
                                             className="text-rose-500 cursor-pointer duration-200 hover:text-red-700!"
                                         >
