@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import type { TMenusHeader } from "./menusSlice";
+import { onWarningTitleMenus, type TMenusHeader } from "./menusSlice";
 import { baseURL } from "../../../../../baseURL";
 
 export const viewMenusHeaders  = createAsyncThunk<TMenusHeader, void, {rejectValue: string}>(
@@ -22,6 +22,39 @@ export const viewMenusHeaders  = createAsyncThunk<TMenusHeader, void, {rejectVal
         }
         catch(err: any){
             return rejectWithValue (`warning: ${err.message}`)
+        }
+    }
+)
+
+
+export const createMenusHeaders = createAsyncThunk<TMenusHeader, {title: string}, {rejectValue: string}>(
+    'create_menus_headers_toolkit',
+    async(payload, rejectValue) => {
+        try{
+            const response = await fetch (baseURL + `tables/megaMenu/menus/add.php`, {
+                method: "POST",
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({title: payload.title})
+            })
+            if(!response.ok){
+                if(response.status === 400){
+                    rejectValue.dispatch(onWarningTitleMenus({title : 'title not is empty!!'}))
+                }
+                else if(response.status === 409){
+                    rejectValue.dispatch(onWarningTitleMenus({title : 'title is repeat change name title'}))
+                }
+                else {
+                    throw new Error ('message');
+                }
+            }
+            const data = await response.json();
+            return data
+        }
+        catch(err: any){
+            return (`warning: ${err.message}`)
         }
     }
 )

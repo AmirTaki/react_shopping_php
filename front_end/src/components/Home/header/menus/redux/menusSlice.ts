@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { viewMenusHeaders } from "./actionsMenus"
+import { createMenusHeaders, viewMenusHeaders } from "./actionsMenus"
 
 export type TMenusHeader = Array<{id: number, title: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 
@@ -9,8 +9,7 @@ export interface IMegaMenu {
     warningMessage: string
 
     // create 
-    title: string,
-    warningTitle: string
+    title: {name: string, warning: string},
     addItems: boolean
 
 }
@@ -21,8 +20,7 @@ const initialState: IMegaMenu = {
     warningMessage: '',
 
     // create 
-    title: '',
-    warningTitle: '',
+    title: {name: '', warning: ''},
     addItems: false
 }
 
@@ -33,14 +31,13 @@ const menusSlice =  createSlice({
     initialState: initialState,
     reducers: {
         onTitleMenus: (state, action) => {
-            state.title = action.payload.title
+            state.title.name = action.payload.title
         },
         onWarningTitleMenus: (state, action) => {
-            state.warningTitle = action.payload.title
+            state.title.warning = action.payload.title
         },
         onLoadingMenus: (state) => {
-            state.title = ''
-            state.warningTitle = ''
+            state.title = {name: '', warning: ''}
         },
         onAddItemsMenus: (state,) => {
             state.addItems = false
@@ -58,7 +55,19 @@ const menusSlice =  createSlice({
             state.Menus = action.payload
             state.warningMessage = ''
         })
+
+        // create item menus header
+        builder.addCase(createMenusHeaders.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(createMenusHeaders.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(createMenusHeaders.fulfilled, (state, action) => {
+            state.addItems = action.payload === true ? true : false
+        })
+
     }
 })
 export default menusSlice
-export const {} = menusSlice.actions
+export const {onAddItemsMenus, onLoadingMenus, onTitleMenus, onWarningTitleMenus} = menusSlice.actions
