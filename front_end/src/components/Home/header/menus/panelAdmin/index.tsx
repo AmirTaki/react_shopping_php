@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { AppDispatch, RooState } from "../../../../../store";
 import { useEffect } from "react";
-import { viewMenusHeaders } from "../redux/actionsMenus";
+import { changeStatusMenuHeaders, viewMenusHeaders } from "../redux/actionsMenus";
 
 
 const MenusHeaderPanelAdmin = () => {
@@ -49,7 +49,7 @@ const MenusHeaderPanelAdmin = () => {
                                         
                                         <div 
                                             onClick={() => {
-                                                // dispatch(changeStatusMenuHeaders({id: item.id}) );
+                                                dispatch(changeStatusMenuHeaders({id: item.id}) );
                                             }}
                                             className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 "
                                         >

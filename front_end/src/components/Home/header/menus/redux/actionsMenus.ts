@@ -58,3 +58,29 @@ export const createMenusHeaders = createAsyncThunk<TMenusHeader, {title: string}
         }
     }
 )
+
+
+export const changeStatusMenuHeaders = createAsyncThunk<TMenusHeader, {id: number}, {rejectValue: string}>(
+    "menus_status_toolkit",
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/megaMenu/menus/status.php/${payload.id}`, {
+                method: 'GET', 
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },  
+            })
+
+            if(!response.ok){
+                throw new Error('message : warning:')
+            }
+
+            const data = await response.json();
+            return Array.isArray(data) ? data : []
+        }
+        catch(err: any){
+            return rejectWithValue (`warning: ${err.message}`)
+        }
+    }
+)
