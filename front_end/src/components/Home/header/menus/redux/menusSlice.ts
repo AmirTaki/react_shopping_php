@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { deleteItemMenusHeaders, changeStatusMenuHeaders, createMenusHeaders, viewMenusHeaders } from "./actionsMenus"
+import { editItemsMenuHeaders, readItemMenuHeaders, deleteItemMenusHeaders, changeStatusMenuHeaders, createMenusHeaders, viewMenusHeaders } from "./actionsMenus"
 
 export type TMenusHeader = Array<{id: number, title: string, status: number, created_at: string, updated_at: string }> | boolean  | string
+export type TMenusHeaderObject = {id: number, title: string, status: number, created_at: string, updated_at: string }
 
 export interface IMegaMenu {
     Menus: TMenusHeader | []
@@ -96,6 +97,34 @@ const menusSlice =  createSlice({
             state.warningMessage = ''
             state.loading = false
         })
+
+        // readint item menu headers
+        builder.addCase(readItemMenuHeaders.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(readItemMenuHeaders.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(readItemMenuHeaders.fulfilled, (state, action) => {
+            const object = action.payload as TMenusHeaderObject
+            state.title.name = object.title
+        })
+
+        // edit items menuHeaders
+        builder.addCase(editItemsMenuHeaders.pending, (state) => {
+            state.warningMessage = ''
+            state.addItems = false
+        })
+        builder.addCase(editItemsMenuHeaders.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.addItems = false
+        })
+        builder.addCase(editItemsMenuHeaders.fulfilled, (state, action) => {
+            state.addItems = action.payload == true ? true : false 
+        })
+
+
+
 
     }
 })

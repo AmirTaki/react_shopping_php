@@ -13,6 +13,7 @@ import EditUsersPanelAdmin from "../Users/edit"
 import ViewMenuPanelAdmin from "../Home/header/menus/panelAdmin/view"
 import MenusHeaderPanelAdmin from "../Home/header/menus/panelAdmin"
 import CreateMenusPanelAdmin from "../Home/header/menus/panelAdmin/create"
+import EditMenusHeadersPA from "../Home/header/menus/panelAdmin/edit"
 
 const Routh = () => {
     return (
@@ -57,6 +58,7 @@ const Routh = () => {
                         <Route path = "menusHeaders" element = {<ViewMenuPanelAdmin />}>
                             <Route path = "" element = {<MenusHeaderPanelAdmin />}/>
                             <Route path = "create" element = {<CreateMenusPanelAdmin />}/>
+                            <Route path = "edit/:id" element = {<EditMenusHeadersPA />}/>
                         </Route>
                     </Route>
 
