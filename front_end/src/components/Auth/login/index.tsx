@@ -34,7 +34,7 @@ const Login = () => {
     }, [login])
 
     return (
-       <div className=" box top-130! ">
+       <div className=" box top-130! mb-7">
             <header className="signup-header">
                 <h1>Sign in</h1>
             </header>
@@ -42,12 +42,12 @@ const Login = () => {
                 <form>  
                     {/* email */}
                     <p className="">
-                        <label htmlFor="email">email</label>
+                        <label htmlFor="email">Email</label>
                         <input 
                             value = {email.name}
                             onChange={(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {dispatch(onEmailLogin({email: e.target.value}))}}
-                            type="email" id = 'email' className=""
-                            placeholder=""
+                            type="email" id = 'email' className="" 
+                            placeholder="xyz@gmail.com"
                         />
                         <span className="">message:  
                             <span className = {`${email.check ? "text-green-500" : "text-red-500"} px-3 `}>{email.warning}</span>
@@ -57,11 +57,12 @@ const Login = () => {
 
                     {/* password */}
                     <p className="f">
-                        <label htmlFor="password">password</label>
+                        <label htmlFor="password">Password</label>
                         <input 
                             value={password.pin}
                             onChange={(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {dispatch(onPasswordLogin({password: e.target.value}))}}
-                            type={checkbox ? "text": 'password' }  id = 'password' className="border-2  p-2"
+                            type={checkbox ? "text": 'password' }  id = 'password' 
+                            placeholder="at last 8 characters" 
                         />
                         <span>message:  
                             <span className = {`${password.check ? "text-green-500 " : "text-red-500 "} px-3`}>{password.warning}</span>
@@ -69,7 +70,7 @@ const Login = () => {
 
                     {/* input view & hidden type password */}
                         <p className="flex ">
-                            <label htmlFor="checkbox" className="text-sm!  w-35">
+                            <label htmlFor="checkbox" className="text-sm!  w-31 " >
                                 {checkbox ? 'hidden password' : 'show passowrd'}
                              </label>
                             <input 

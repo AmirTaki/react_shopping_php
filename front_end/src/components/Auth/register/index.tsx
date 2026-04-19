@@ -4,10 +4,13 @@ import type{ AppDispatch, RooState } from "../../../store"
 import { changeAuth } from "../validation/redux/validationSlice"
 import { onDisabledRegister, onLoadingRegister, onSubmitRegister, onCheckboxRegister, onEmailRegister, onPasswordRegister, onRepeatPassowrdRegister, onUsernameRegister } from "./redux/registerSlice"
 import { registerThunk } from "./redux/actonsRegister"
+import "../validation/styles.css"
+import { useNavigate } from "react-router-dom"
 
 const Register = () => {
     const {username, email, password, repPassword, checkbox, submit, disabled} = useSelector((state: RooState) => state.register)
     const dispatch = useDispatch<AppDispatch>()
+    const navigate = useNavigate()
     useEffect(() => {
         dispatch(changeAuth({id: 0}))
         dispatch(onLoadingRegister())
@@ -18,6 +21,7 @@ const Register = () => {
             window.alert("ثبت نام باموفقیت انجام شد")
             dispatch(onSubmitRegister())
             dispatch(onLoadingRegister())
+            navigate('/validation/login')
         }
     }, [submit])
 
@@ -26,98 +30,94 @@ const Register = () => {
     }, [username, email, password, repPassword])
     
     return(
-        <div className="mx-auto  flex justify-center">
-            <div className="border-2 w-[90%] my-3 rounded-3xl  mb-30!">
+        <div className="box mb-7">
+            <header className="signup-header">
+                <h1>Sign up</h1>
+            </header>
+            <div className="signup-body">
                 <form>
-                    <div className="flex flex-col justify-center items-center my-10 ">
 
-                        {/* username */}
-                        <div className="flex flex-col w-[50%] gap-3">
-                            <label htmlFor="username">name</label>
-                            <input 
-                                value = {username.name}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {dispatch(onUsernameRegister({username: e.target.value}))}}
-                                type="text" id = 'username' className="border-2  p-2"
-                            />
-                            <span>message:  
-                                <span className = {`${username.check ? "text-green-500 " : "text-red-500 "} px-3`}>{username.warning}</span>
-                            </span>
-                        </div>
+                    {/* username */}
+                    <p className="">
+                        <label htmlFor="username">name</label>
+                        <input 
+                            value = {username.name}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {dispatch(onUsernameRegister({username: e.target.value}))}}
+                            type="text" id = 'username' className="" placeholder="Type Name Here"
+                        />
+                        <span>message:  
+                            <span className = {`${username.check ? "text-green-500 " : "text-red-500 "} px-3`}>{username.warning}</span>
+                        </span>
+                    </p>
 
-                        <div className="border-b-2 w-[50%] my-10"></div>
 
-                        {/* email */}
-                        <div className="flex flex-col w-[50%] gap-3">
-                            <label htmlFor="email">email</label>
-                            <input 
-                                value = {email.name}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {dispatch(onEmailRegister({email: e.target.value}))}}
-                                type="email" id = 'email' className="border-2  p-2"
-                            />
-                            <span>message:  
-                                <span className = {`${email.check ? "text-green-500 " : "text-red-500 "} px-3`}>{email.warning}</span>
-                            </span>
-                        </div>
+                    {/* email */}
+                    <p >
+                        <label htmlFor="email">email</label>
+                        <input 
+                            value = {email.name}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {dispatch(onEmailRegister({email: e.target.value}))}}
+                            type="email" id = 'email'  placeholder="xyz@gmail.com"
+                        />
+                        <span>message:  
+                            <span className = {`${email.check ? "text-green-500 " : "text-red-500 "} px-3`}>{email.warning}</span>
+                        </span>
+                    </p>
 
-                        <div className="border-b-2 w-[50%] my-10"></div>
+                    {/* password */}
+                    <p>
+                        <label htmlFor="password">password</label>
+                        <input 
+                            value={password.pin}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {dispatch(onPasswordRegister({password: e.target.value}))}}
+                            type={checkbox ? "text": 'password' }  id = 'password' placeholder="at last 8 characters" 
+                        />
+                        <span>message:  
+                            <span className = {`${password.check ? "text-green-500 " : "text-red-500 "} px-3`}>{password.warning}</span>
+                        </span>
+                    </p>
 
-                        {/* password */}
-                        <div className="flex flex-col w-[50%] gap-3">
-                            <label htmlFor="password">password</label>
-                            <input 
-                                value={password.pin}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {dispatch(onPasswordRegister({password: e.target.value}))}}
-                                type={checkbox ? "text": 'password' }  id = 'password' className="border-2  p-2"
-                            />
-                            <span>message:  
-                                <span className = {`${password.check ? "text-green-500 " : "text-red-500 "} px-3`}>{password.warning}</span>
-                            </span>
-                        </div>
+                    {/* repeat password */}
+                    <p>
+                        <label htmlFor="rep_password">rep-password</label>
+                        <input 
+                            value = {repPassword.pin}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {dispatch(onRepeatPassowrdRegister({repPassword: e.target.value}))}}
+                            type={checkbox ? "text": 'password' } id = 'rep_password' placeholder="at last 8 characters" 
+                        />
+                        <span>message:  
+                            <span className = {`${repPassword.check ? "text-green-500 " : "text-red-500 "} px-3`}>{repPassword.warning}</span>
+                        </span>
+                    </p>
 
-                        <div className="border-b-2 w-[50%] my-10"></div>
+                    {/* input view & hidden type password */}
+                    <p className="flex">
+                        <label htmlFor="checkbox" className="text-sm!  w-31 " >
+                            {checkbox ? 'hidden password' : 'show passowrd'}  
+                        </label>
+                        <input
+                            className="w-4! " 
+                            onChange={(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {dispatch(onCheckboxRegister({tick: e.target.checked}))}}
+                            type = 'checkbox' id  = 'checkbox'
+                        ></input>
+                    </p>
 
-                        {/* repeat password */}
-                        <div className="flex flex-col w-[50%] gap-3">
-                            <label htmlFor="rep_password">rep-password</label>
-                            <input 
-                                value = {repPassword.pin}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {dispatch(onRepeatPassowrdRegister({repPassword: e.target.value}))}}
-                                type={checkbox ? "text": 'password' } id = 'rep_password' className="border-2  p-2"
-                            />
-                            <span>message:  
-                                <span className = {`${repPassword.check ? "text-green-500 " : "text-red-500 "} px-3`}>{repPassword.warning}</span>
-                            </span>
-                        </div>
+                    {/* input submit */}
+                    <p className=" ">
+                        <input
+                            disabled = {disabled} 
+                            onClick={(e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+                                e.preventDefault()
 
-                        {/* input view & hidden type password */}
-                        <div className="flex my-8 w-[50%] gap-3">
-                            <label htmlFor="checkbox">{checkbox ? 'hidden password' : 'show passowrd'} </label>
-                            <input 
-                                onChange={(e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {dispatch(onCheckboxRegister({tick: e.target.checked}))}}
-                                type = 'checkbox' id  = 'checkbox'
-                            ></input>
-                        </div>
-
-                        <div className="border-b-2 w-[50%] my-3"></div>
-
-                        {/* input submit */}
-                        <div className="flex my-8 w-[50%] gap-3 justify-center items-center ">
-                            <input
-                                disabled = {disabled} 
-                                onClick={(e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
-                                    e.preventDefault()
-
-                                    // register thunk
-                                    dispatch(registerThunk({username: username.name, email: email.name, password: password.pin, repPassword: repPassword.pin}))
-                                }}
-                                type="submit" value = 'register' 
-                                className={`border-2 w-[50%] p-2 rounded-xl 
-                                    ${disabled ? "opacity-40" : 'opacity-100 cursor-pointer'}
-                                `} 
-                            />
-                        </div>
-
-                    </div>
+                                // register thunk
+                                dispatch(registerThunk({username: username.name, email: email.name, password: password.pin, repPassword: repPassword.pin}))
+                            }}
+                            type="submit" value = 'Sing Up' 
+                            className={`
+                                ${disabled ? "opacity-40" : 'opacity-100 cursor-pointer'}
+                            `} 
+                        />
+                    </p>
                 </form>
             </div>
         </div>

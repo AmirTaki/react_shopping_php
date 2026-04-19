@@ -33,20 +33,22 @@
     font-size: 22px;
 }
 .signup-body p span {
-    font-size: 18px;
+    font-size: 13px;
     font-weight: 600;
     /* color : #90ee90 */
+    user-select: none;
 }
 
 .signup-body p label {
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
+    user-select: none;
 }
 
 .signup-body p input {
     width: 100%;
-    padding: 10px;
+    padding: 9px;
     border-radius: 4px;
     margin-block: 4px ;
     /* border: none; */
@@ -61,7 +63,7 @@
     
     font-size: 20px;
     font-weight : 700 ;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 .signup-body p input[type= "submit"]:hover {
