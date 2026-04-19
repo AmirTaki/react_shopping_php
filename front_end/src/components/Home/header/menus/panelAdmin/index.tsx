@@ -2,14 +2,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { AppDispatch, RooState } from "../../../../../store";
 import { useEffect } from "react";
-// import { changeStatusMenuHeaders, deleteItemMenusHeaders, viewMenusHeaders } from "./actionsMenusHeader";
+import { viewMenusHeaders } from "../redux/actionsMenus";
 
 
 const MenusHeaderPanelAdmin = () => {
     const dispatch =  useDispatch<AppDispatch>()
     const {Menus, loading} = useSelector((state: RooState) => (state.menus))
     useEffect(() => {
-        // dispatch(viewMenusHeaders())
+        dispatch(viewMenusHeaders())
     }, [loading])
 
     return(

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { viewMenusHeaders } from "./actionsMenus"
 
 export type TMenusHeader = Array<{id: number, title: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 
@@ -46,7 +47,17 @@ const menusSlice =  createSlice({
         }
     },
     extraReducers: (builder) => {
-       
+       // view item menus 
+        builder.addCase(viewMenusHeaders.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(viewMenusHeaders.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(viewMenusHeaders.fulfilled, (state, action) => {
+            state.Menus = action.payload
+            state.warningMessage = ''
+        })
     }
 })
 export default menusSlice
