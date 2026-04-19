@@ -7,14 +7,19 @@ import panelAdminSlice from "./components/PanelAdmin/structcher/redux/panelAdmin
 import userSlice from "./components/Users/redux/userSlice";
 import menusSlice from "./components/Home/header/menus/redux/menusSlice";
 import headerSlice from "./components/Home/header/redux/headerSlice";
+import responseSlice from "./components/Response/redux/responseSlice";
 
 const reducers = combineReducers({
 
-// dark mode for all projects
-    darkMode: darkModeSlice.reducer,
+// component  for all projects
+    darkMode: darkModeSlice.reducer,    // dark mode
+    response: responseSlice.reducer, // response 
 
-// header => home
-    header:  headerSlice.reducer, // header home
+
+// ------------------------------------------------------
+// COMPONENT HOME 
+    header:  headerSlice.reducer,   // header 
+
 
 //  ----------------------------------------------
 // validation auth redux

@@ -1,15 +1,23 @@
 import { Link,  } from "react-router-dom"
 import DarkMode from "../../DarkMode"
+import { hideScrollTop } from "./redux/headerSlice"
+import { IoLogoBuffer } from "react-icons/io";
+import { FaUserAlt } from "react-icons/fa";
+import { RiAdminFill } from "react-icons/ri";
+import { ImSearch } from "react-icons/im";
+import { SlBasket } from "react-icons/sl";
+import { TfiMenuAlt } from "react-icons/tfi";
 import { useDispatch, useSelector } from "react-redux"
 import {type AppDispatch, type RooState } from "../../../store"
 import "./styles/styles.css"
 import { useEffect } from "react"
-import { hideScrollTop } from "./redux/headerSlice"
 import Search from "./search"
+
 
 const Header = () => {
     const {dark} =  useSelector((state: RooState) => state.darkMode)
     const {scrollHide, search} = useSelector((state: RooState) => state.header)
+    const {response} = useSelector((state: RooState) => state.response)
     const dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
@@ -49,6 +57,42 @@ const Header = () => {
                     ${search ? "opacity-0 " : "opacity-100 duration-[4500ms]"}
                 `}
             >
+                <div className={` gap-5 flex items-center `}>
+
+                    <TfiMenuAlt
+                        className={`
+                            ${response ? 'flex' : 'hidden'}
+                            cursor-pointer hover:scale-120! duration-150 text-xl   
+                            ${dark ? "hover:text-[silver]!" : "hover:text-blue-800!"}
+                            `}            
+                        // onClick={() => {dispatch(openSidebar({sidebar: true}))}}
+                    />
+
+                    {/* logo */}
+                    <Link to  = "/panelAdmin">
+                        <IoLogoBuffer className={`text-2xl cursor-pointer hover:scale-120! duration-150  ${response ? 'flex': 'flex'}`}/>
+                    </Link>
+                                          
+                    {/* regiseter */}
+                    <Link to = "/Register">
+                        <FaUserAlt className={`
+                            ${response ? '' : 'flex'}
+                            cursor-pointer hover:scale-120 duration-150 
+                        `}/>
+                    </Link>
+                    
+                    {/* login */}
+                    <Link to = "/Login">
+                        <RiAdminFill   
+                            className={`
+                                ${response ? '' : 'flex'}
+                                cursor-pointer hover:scale-120 duration-150 text-xl    
+                            `}
+                        />
+                    </Link>
+
+
+                </div>
 
                 <div className="w-11">
 
