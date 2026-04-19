@@ -1,12 +1,14 @@
 import { useSelector } from "react-redux"
 import { Link, Outlet } from "react-router-dom"
 import type { RooState } from "../../../store"
+import './styles.css'
 
 const Validation = () => {
     const {linkValidation, numberAuth} = useSelector((state: RooState) => state.validation)
 
     return (
-        <div className="min-h-screen">
+        <div className={`min-h-screen  backgroundValidation`}
+        >
             {/* navbar validation */}
             <div className="h-20 border-b text-2xl flex justify-center items-center gap-4">
                 {linkValidation.map((item, ) => {

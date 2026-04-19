@@ -32,7 +32,7 @@ const Login = () => {
     }, [login])
 
     return (
-       <div className="mx-auto w-[90%]   ">
+       <div className="mx-auto w-[90%]    ">
             <div className="border-2  my-3 rounded-3xl  ">
                 <form>
                     <div className="flex flex-col justify-center items-center my-10 ">
