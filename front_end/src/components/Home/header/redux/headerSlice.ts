@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface IHeader {
-    scrollHide: boolean   
+    scrollHide: boolean,
+    search: boolean | null  
 }
 
 const initialState: IHeader = {
-    scrollHide: true
+    scrollHide: true,
+    search: null
+
 }
 
 const headerSlice = createSlice({
@@ -14,9 +17,12 @@ const headerSlice = createSlice({
     reducers: {
         hideScrollTop: (state, action) => {
             state.scrollHide = action.payload.target
+        },
+        onSearchHandler: (state, action) => {
+            state.search = action.payload.search
         }
     }
 })
 
 export default headerSlice
-export const {hideScrollTop} = headerSlice.actions
+export const {hideScrollTop, onSearchHandler} = headerSlice.actions

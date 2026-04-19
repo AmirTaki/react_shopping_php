@@ -15,3 +15,30 @@
 
 
 
+.openSearch {
+    animation: openSearch 1s linear forwards;
+}
+
+@keyframes openSearch {
+    0%{
+        display: flex;
+        width: 0;
+    }
+    100%{
+        width: 100%;
+    }
+}
+
+.closeSearch {
+    animation: closeSearch 1s linear forwards;
+    
+}
+@keyframes closeSearch {
+    0%{
+        width:  100%;
+    }
+    100%{
+        width: 0;
+        display: none;
+    }
+}
