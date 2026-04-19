@@ -64,7 +64,7 @@ const MenusHeaderPanelAdmin = () => {
                                         
                                         <div 
                                             onClick={() => {
-                                                dispatch(deleteItemMenusHeaders({id: item.id}))
+                                                window.confirm('Do you want it to be deleted ? ')  && dispatch(deleteItemMenusHeaders({id: item.id}))
                                             }}
                                             className="text-rose-500 cursor-pointer duration-200 hover:text-red-700!"
                                         >

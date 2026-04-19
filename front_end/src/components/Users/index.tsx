@@ -67,7 +67,7 @@ const UsersPanelAdmin = () => {
                                         
                                         <div 
                                             onClick={() => {
-                                                dispatch(deleteUsersThunk({id: user.id}))
+                                                window.confirm('Do you want it to be deleted ? ')   && dispatch(deleteUsersThunk({id: user.id}))
                                             }}
                                             className="text-rose-500 cursor-pointer duration-200 hover:text-red-700!"
                                         >
