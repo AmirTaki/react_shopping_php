@@ -6,12 +6,17 @@ import loginSlice from "./components/Auth/login/redux/loginSlice";
 import panelAdminSlice from "./components/PanelAdmin/structcher/redux/panelAdminSlice";
 import userSlice from "./components/Users/redux/userSlice";
 import menusSlice from "./components/Home/header/menus/redux/menusSlice";
+import headerSlice from "./components/Home/header/redux/headerSlice";
 
 const reducers = combineReducers({
 
 // dark mode for all projects
     darkMode: darkModeSlice.reducer,
 
+// header => home
+    header:  headerSlice.reducer, // header home
+
+//  ----------------------------------------------
 // validation auth redux
     validation:  validationSlice.reducer,
     // register 
@@ -19,6 +24,7 @@ const reducers = combineReducers({
     // login
     login: loginSlice.reducer,
 
+// -------------------------------------------------------------
 // panelAdmin 
     // navbar
     panelAdmin: panelAdminSlice.reducer,        // navbar panel admin
