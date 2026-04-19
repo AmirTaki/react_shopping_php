@@ -84,3 +84,27 @@ export const changeStatusMenuHeaders = createAsyncThunk<TMenusHeader, {id: numbe
         }
     }
 )
+
+
+export const deleteItemMenusHeaders = createAsyncThunk<TMenusHeader, {id: number}, {rejectValue: string}>(
+    'delete_item_menus_headers_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/megaMenu/menus/delete.php/${payload.id}/delete`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            if(!response.ok){
+                throw new Error;
+            }
+
+            const data = await response.json()
+            return Array.isArray(data) ? data : []
+        }
+        catch(err: any){
+            return rejectWithValue (`wanring ${err.message}`)
+        }
+    }
+)

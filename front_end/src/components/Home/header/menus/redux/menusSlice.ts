@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { changeStatusMenuHeaders, createMenusHeaders, viewMenusHeaders } from "./actionsMenus"
+import { deleteItemMenusHeaders, changeStatusMenuHeaders, createMenusHeaders, viewMenusHeaders } from "./actionsMenus"
 
 export type TMenusHeader = Array<{id: number, title: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 
@@ -67,7 +67,7 @@ const menusSlice =  createSlice({
             state.addItems = action.payload === true ? true : false
         })
 
-        // change status menu headers
+        // change status item menu headers
         builder.addCase(changeStatusMenuHeaders.pending, (state) => {
             state.warningMessage = ''
             state.loading = true
@@ -77,6 +77,21 @@ const menusSlice =  createSlice({
             state.loading = false
         })
         builder.addCase(changeStatusMenuHeaders.fulfilled, (state, action) => {
+            state.Menus = action.payload
+            state.warningMessage = ''
+            state.loading = false
+        })
+
+        // delete item menu headers
+        builder.addCase(deleteItemMenusHeaders.pending, (state) => {
+            state.warningMessage = ''
+            state.loading = true
+        })
+        builder.addCase(deleteItemMenusHeaders.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.loading = false
+        })
+        builder.addCase(deleteItemMenusHeaders.fulfilled, (state, action) => {
             state.Menus = action.payload
             state.warningMessage = ''
             state.loading = false
