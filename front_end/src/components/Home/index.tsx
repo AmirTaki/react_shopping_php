@@ -4,7 +4,7 @@ import Session from "./session/session"
 
 const Home = () => {
     return(
-        <div className="h-[2000px]">
+        <div className="min-h-screen">
             <Header />
             <Session/>
             <Footer />

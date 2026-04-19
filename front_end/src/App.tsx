@@ -7,19 +7,21 @@ import { onSetResponse } from './components/Response/redux/responseSlice'
 import { onCloseSideToSide } from './components/Home/header/redux/headerSlice'
 
 function App() {
-  const {dark} =  useSelector((state: RooState) => state.darkMode)
-  const {sidebar} =  useSelector((state: RooState) => state.header)
+  const {dark} =  useSelector((state: RooState) => state.darkMode)  // dark mode
+  const {sidebar} =  useSelector((state: RooState) => state.header) // header : sidebar
   const dispatch = useDispatch<AppDispatch>()
 
 
   useEffect(() => {
     const handlerResize = () => {
+      // hander resize while response inner width
       dispatch(onSetResponse())
 
       // close sidebar with resize inner width
       if(window.innerWidth > 750 ){
         dispatch(onCloseSideToSide())
       }
+
     }
     handlerResize()
     window.addEventListener('resize', handlerResize)

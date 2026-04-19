@@ -67,10 +67,7 @@ const Header = () => {
                         onClick={() => {dispatch(onSidebarHandler({sidebar: true}))}}
                     />
 
-                    {/* logo */}
-                    <Link to  = "/panelAdmin">
-                        <IoLogoBuffer title = {'panelAdmin'} className={`text-2xl cursor-pointer hover:scale-120! duration-150  ${response ? 'flex': 'flex'}`}/>
-                    </Link>
+                 
                                           
                     {/* regiseter */}
                     <Link to = "/validation/register">
@@ -119,6 +116,11 @@ const Header = () => {
                         > 
                             {/* {allQauntity > 0 && allQauntity} */}
                         </div>
+                    </Link>
+
+                    {/* logo */}
+                    <Link to  = "/panelAdmin">
+                        <IoLogoBuffer title = {'panelAdmin'} className={`text-2xl cursor-pointer hover:scale-120! duration-150  ${response ? 'flex': 'flex'}`}/>
                     </Link>
                     
                     {/* dark mode */}
