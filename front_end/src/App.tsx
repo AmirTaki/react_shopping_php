@@ -17,6 +17,7 @@ function App() {
     window.addEventListener('resize', handlerResize)
     return () => window.removeEventListener('resize', handlerResize)
   }, [])
+  
   return (
     <div 
       data-theme = {`${dark ? "dark" : ''}`}

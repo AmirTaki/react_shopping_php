@@ -1,6 +1,6 @@
 import { Link,  } from "react-router-dom"
 import DarkMode from "../../DarkMode"
-import { hideScrollTop } from "./redux/headerSlice"
+import { hideScrollTop, onSearchHandler } from "./redux/headerSlice"
 import { IoLogoBuffer } from "react-icons/io";
 import { FaUserAlt } from "react-icons/fa";
 import { RiAdminFill } from "react-icons/ri";
@@ -42,9 +42,6 @@ const Header = () => {
     }, [])
 
     return(
-    
-        // 
-    
         <div className={` 
             ${dark ? "navbarDark" : "navbarWhite"} 
             ${scrollHide ?   'translate-y-0' : 'translate-y-[-100%]'}    
@@ -60,6 +57,7 @@ const Header = () => {
                 <div className={` gap-5 flex items-center `}>
 
                     <TfiMenuAlt
+                        title = {'sidebar'}
                         className={`
                             ${response ? 'flex' : 'hidden'}
                             cursor-pointer hover:scale-120! duration-150 text-xl   
@@ -70,20 +68,24 @@ const Header = () => {
 
                     {/* logo */}
                     <Link to  = "/panelAdmin">
-                        <IoLogoBuffer className={`text-2xl cursor-pointer hover:scale-120! duration-150  ${response ? 'flex': 'flex'}`}/>
+                        <IoLogoBuffer title = {'panelAdmin'} className={`text-2xl cursor-pointer hover:scale-120! duration-150  ${response ? 'flex': 'flex'}`}/>
                     </Link>
                                           
                     {/* regiseter */}
-                    <Link to = "/Register">
-                        <FaUserAlt className={`
-                            ${response ? '' : 'flex'}
-                            cursor-pointer hover:scale-120 duration-150 
-                        `}/>
+                    <Link to = "/validation/register">
+                        <FaUserAlt 
+                            title = {'sign up'}
+                            className={`
+                                ${response ? '' : 'flex'}
+                                cursor-pointer hover:scale-120 duration-150 
+                            `}
+                        />
                     </Link>
                     
                     {/* login */}
-                    <Link to = "/Login">
+                    <Link to = "/validation/login">
                         <RiAdminFill   
+                            title = {'sign in'}
                             className={`
                                 ${response ? '' : 'flex'}
                                 cursor-pointer hover:scale-120 duration-150 text-xl    
@@ -94,9 +96,34 @@ const Header = () => {
 
                 </div>
 
-                <div className="w-11">
+                {/*  menus item & megamenu & sidebar -> menus, list, category, series, image */}
+                {/*  */}
 
-                    <DarkMode />
+
+                {/* user admin serach */}
+                <div className="flex items-center gap-5">
+            
+                    {/* search */}
+                    <ImSearch  
+                        title = "search"
+                        onClick={() => {dispatch(onSearchHandler({search: !search}))}}
+                        className="cursor-pointer hover:scale-120 duration-300"
+                    />
+                    
+                    {/* page stroe */}
+                    <Link to="/">
+                        <SlBasket title = "shop-page" className="cursor-pointer hover:scale-150 duration-150 "/>
+                        <div 
+                            className="absolute text-blue-500 text-[15px]  dark:text-green-500 p-1 overflow-hidden rounded-full  right-26 bottom-7"
+                        > 
+                            {/* {allQauntity > 0 && allQauntity} */}
+                        </div>
+                    </Link>
+                    
+                    {/* dark mode */}
+                    <div title = 'darkMode'>
+                        <DarkMode />
+                    </div>
                 </div>
             </div>
 
@@ -105,15 +132,6 @@ const Header = () => {
                 <Search />
             </div>
 
-
-
-
-            {/* <Link to = 'validation'>
-                <button>auth - validation</button>
-            </Link>
-            <Link to = 'panelAdmin'>
-                <button>panelAdmin</button>
-            </Link> */}
             
         </div>
     )
