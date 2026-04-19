@@ -28,6 +28,7 @@ const initialState: IPanelAdminNavar = {
         {id: 0, name: 'descript panel admin', link : "description",},
         {id: 1, name: 'users', link : 'users',  },
         {id: 2, name: 'headers', link : 'menusHeaders',  },
+        {id: 3, name: 'megaMenu List', link: 'megaMenuList'},
     ],
     openSlide: false,
     numberSide: 0,
