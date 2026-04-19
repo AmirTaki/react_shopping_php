@@ -7,10 +7,10 @@ const Validation = () => {
     const {linkValidation, numberAuth} = useSelector((state: RooState) => state.validation)
 
     return (
-        <div className={`min-h-screen  backgroundValidation`}
+        <div className={`min-h-screen  backgroundValidation flex flex-col items-center `}
         >
             {/* navbar validation */}
-            <div className="h-20 border-b text-2xl flex justify-center items-center gap-4">
+            <div className="h-20 border-b text-2xl flex justify-center items-center w-full gap-4 mb-10">
                 {linkValidation.map((item, ) => {
                     return(
                         <Link 
