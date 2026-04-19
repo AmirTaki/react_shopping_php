@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface IResponse {
-    response: boolean
+    response: boolean,
+
 }
 
 const initialState: IResponse = {
-    response: false
+    response: false,
+    
 }
 
 const responseSlice = createSlice({

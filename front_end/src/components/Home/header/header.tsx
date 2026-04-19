@@ -1,6 +1,6 @@
 import { Link,  } from "react-router-dom"
 import DarkMode from "../../DarkMode"
-import { hideScrollTop, onSearchHandler } from "./redux/headerSlice"
+import { hideScrollTop, onSearchHandler, onSidebarHandler } from "./redux/headerSlice"
 import { IoLogoBuffer } from "react-icons/io";
 import { FaUserAlt } from "react-icons/fa";
 import { RiAdminFill } from "react-icons/ri";
@@ -12,6 +12,7 @@ import {type AppDispatch, type RooState } from "../../../store"
 import "./styles/styles.css"
 import { useEffect } from "react"
 import Search from "./search"
+import MenusSideBar from "./menus/menus";
 
 
 const Header = () => {
@@ -63,7 +64,7 @@ const Header = () => {
                             cursor-pointer hover:scale-120! duration-150 text-xl   
                             ${dark ? "hover:text-[silver]!" : "hover:text-blue-800!"}
                             `}            
-                        // onClick={() => {dispatch(openSidebar({sidebar: true}))}}
+                        onClick={() => {dispatch(onSidebarHandler({sidebar: true}))}}
                     />
 
                     {/* logo */}
@@ -97,7 +98,7 @@ const Header = () => {
                 </div>
 
                 {/*  menus item & megamenu & sidebar -> menus, list, category, series, image */}
-                {/*  */}
+                <MenusSideBar />
 
 
                 {/* user admin serach */}

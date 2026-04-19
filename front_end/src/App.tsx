@@ -4,6 +4,7 @@ import Routh from './components/Routhing/routh'
 import {type AppDispatch, type RooState } from './store'
 import { useEffect } from 'react'
 import { onSetResponse } from './components/Response/redux/responseSlice'
+import { onCloseSideToSide } from './components/Home/header/redux/headerSlice'
 
 function App() {
   const {dark} =  useSelector((state: RooState) => state.darkMode)
@@ -12,6 +13,10 @@ function App() {
   useEffect(() => {
     const handlerResize = () => {
       dispatch(onSetResponse())
+
+      if(window.innerWidth > 750 ){
+        dispatch(onCloseSideToSide())
+      }
     }
     handlerResize()
     window.addEventListener('resize', handlerResize)
