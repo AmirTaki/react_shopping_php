@@ -1,5 +1,24 @@
 // back end 
-
+    folders -> 
+        1- auth    
+            a. login
+            b. register
+        
+        2- functions
+            a. checkSession
+            b. config
+            c. configEdit
+            d. connection
+            e. helpers
+            f. logout
+            g. middleware
+            h. pdo_connection
+        
+        3- tables
+            1. users -> curd
+            2. mgeaMenus 
+                a. menus -> curd
+                b. menuList -> curd
 
 // front end 
     component -> 
@@ -41,6 +60,35 @@
                                     a. category.tsx
                                     b. panel Admin
                                     c. redux
+                                
+                                2. menuSeries
+
+                                3. menuImage
+                        
 
                     c. Session
                     d. index
+
+                4- PanelAdmin 
+                    a. structcher
+                        a. checkSession
+                        b. discription
+                        c. logout
+                        d. navbar
+                        e. redux
+                        f. index
+
+                5. Response 
+                    a. redux
+
+                6. Routing
+                    a.routh.tsx
+                
+                7. Shopping
+
+                8.  Users
+                    a. redux
+                    b. create.tsx
+                    c. edit.tsx
+                    d. index
+                    e.view.tsx
