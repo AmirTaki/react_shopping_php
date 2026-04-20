@@ -8,11 +8,9 @@ import { foundItemsListHeadersThunk, viewListHeadersThunk } from "../../redux/ac
 import { createProductHeadersThunk } from "../redux/actionsMenuSeries"
 
 const CreateMegaMenuProductPA = () => {
-    // const {series, warningSeries, title, warningTitle, list, warningList, callback, addItems} = useSelector((state: RootState) => state.ProductsMenu)
     const {Menus, } = useSelector((state: RooState) => state.menus)
     const {Lists } = useSelector((state: RooState) => state.lists)
     const {series, title, list, callback, addItems, } = useSelector((state: RooState) => state.sereies)
-    // const {Lists } = useSelector((state: RootState) => (state.ListMegaMenu))
     
     const dispatch = useDispatch<AppDispatch>()
     const navigate = useNavigate();

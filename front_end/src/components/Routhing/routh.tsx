@@ -25,6 +25,7 @@ import EditCategoryHeadersPA from "../Home/header/menus/menuList/menuCategory/pa
 import ViewMenuProductPA from "../Home/header/menus/menuList/menuSeries/panelAdmin/view"
 import MenuProeductHeadresPA from "../Home/header/menus/menuList/menuSeries/panelAdmin"
 import CreateMegaMenuProductPA from "../Home/header/menus/menuList/menuSeries/panelAdmin/create"
+import EditProductHeadersPA from "../Home/header/menus/menuList/menuSeries/panelAdmin/edit"
 
 const Routh = () => {
     return (
@@ -90,7 +91,7 @@ const Routh = () => {
                         <Route path="megaMenuProduct" element = {<ViewMenuProductPA />}>
                             <Route path = "" element = {<MenuProeductHeadresPA />}/>
                             <Route path = "create" element = {<CreateMegaMenuProductPA />}/>
-                            {/* <Route path = "edit/:id" element = {<EditCategoryHeadersPA />}/> */}
+                            <Route path = "edit/:id" element = {<EditProductHeadersPA />}/>
                         </Route>
 
                     </Route>

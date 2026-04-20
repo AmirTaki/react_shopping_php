@@ -17,8 +17,8 @@ const EditCategoryHeadersPA = () => {
     const dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
-        dispatch(readingItemCategoryHeadersThunk({id: Number(id)}))
         dispatch(onLoadingCategory())
+        dispatch(readingItemCategoryHeadersThunk({id: Number(id)}))
         dispatch(viewListHeadersThunk())
         dispatch(viewMenusHeaders())
     }, [])

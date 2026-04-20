@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { changeStatusItemProductThunk, viewProductHeadresThunk, createProductHeadersThunk, deleteItemsProductHeadersThunk } from "./actionsMenuSeries";
+import { editItemsProdcutHeadersThunk, readingItemProdcutHeadersThunk, changeStatusItemProductThunk, viewProductHeadresThunk, createProductHeadersThunk, deleteItemsProductHeadersThunk } from "./actionsMenuSeries";
 
 export type TProductMenuHeader =  Array<{id: number, series: string,  list: string, title: string,  status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TProductMenusHeaderObject = {id: number, series: string,  list: string, title: string,  status: number, created_at: string, updated_at: string }
@@ -122,6 +122,35 @@ const sereisSlice =  createSlice({
             state.loading = false
             state.warningMessage = ''
             state.products = action.payload
+        })
+             
+        // readign item series menu headers
+        builder.addCase(readingItemProdcutHeadersThunk.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(readingItemProdcutHeadersThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(readingItemProdcutHeadersThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            const answer = action.payload as TProductMenusHeaderObject
+            state.list = {name: answer.list, warning : ''}
+            state.title = {name: answer.title, warning: ''}
+            state.series = {name: answer.series, warning: ''}
+        })
+
+        // edit item category menu headers
+        builder.addCase(editItemsProdcutHeadersThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.callback = false
+        })
+        builder.addCase(editItemsProdcutHeadersThunk.rejected, (state, action) => {
+            state.callback = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(editItemsProdcutHeadersThunk.fulfilled, (state, action) => {
+            state.addItems = action.payload === true ? true : false
+            state.callback = false
         })
     }
 })
