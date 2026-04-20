@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { changeStatusImageMenuThunk, deleteImageMenuHeadersThunk, viewImageMenuHeadresThunk, createImageMenuHeadersThunk } from "./actionsImageMenu";
+import {editImageMenuHeadersThunk, readingItemImageMenuThunk, changeStatusImageMenuThunk, deleteImageMenuHeadersThunk, viewImageMenuHeadresThunk, createImageMenuHeadersThunk } from "./actionsImageMenu";
+import { imgURL } from "../../../../../../../baseURL";
 
 export type TImageMenuHeader =  Array<{id: number, image: string,  list: string, title: string, body: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TImageMenuHeaderObject = {id: number, image: string,  list: string, title: string, body: string, status: number, created_at: string, updated_at: string }
@@ -134,6 +135,38 @@ const imageMenuSlice = createSlice({
             state.warningMessage  = ''
             state.images = action.payload
         }) 
+
+          // reading itemms image menu headers
+        builder.addCase(readingItemImageMenuThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.urlImage = ''
+        })
+        builder.addCase(readingItemImageMenuThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(readingItemImageMenuThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            const answer = action.payload as TImageMenuHeaderObject
+            state.image = {name: imgURL + answer.image , warning: ''},
+            state.body = {name: answer.body, warning: ''},
+            state.title = {name: answer.title, warning: ''},
+            state.list = {name: answer.list, warning: ''}
+        })
+
+        // edit items image menu headers
+        builder.addCase(editImageMenuHeadersThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.callback = false
+        })
+        builder.addCase(editImageMenuHeadersThunk.rejected, (state, action) => {
+            state.callback = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(editImageMenuHeadersThunk.fulfilled, (state, action) => {
+            state.addItems = action.payload === true ? true : false
+            state.callback = false
+        })
+
     }
 })
 

@@ -29,6 +29,7 @@ import EditProductHeadersPA from "../Home/header/menus/menuList/menuSeries/panel
 import ViewImageMegaMenuPA from "../Home/header/menus/menuList/menuImage/panelAdmin/view"
 import MenuImageHeadersPA from "../Home/header/menus/menuList/menuImage/panelAdmin"
 import CreateMegaMenuImagePA from "../Home/header/menus/menuList/menuImage/panelAdmin/create"
+import EditMegaMenuImagePA from "../Home/header/menus/menuList/menuImage/panelAdmin/edit"
 
 const Routh = () => {
     return (
@@ -101,7 +102,7 @@ const Routh = () => {
                         <Route path="megaMenuImage" element = {<ViewImageMegaMenuPA />}>
                             <Route path = "" element = {<MenuImageHeadersPA />}/>
                             <Route path = "create" element = {<CreateMegaMenuImagePA />}/>
-                            {/* <Route path = "edit/:id" element = {<EditProductHeadersPA />}/> */}
+                            <Route path = "edit/:id" element = {<EditMegaMenuImagePA />}/>
                         </Route>
 
                     </Route>
