@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { AppDispatch, RooState } from "../../../../../../../store";
 import { useEffect } from "react";
-import { viewImageMenuHeadresThunk } from "../redux/actionsImageMenu";
+import { deleteImageMenuHeadersThunk, viewImageMenuHeadresThunk } from "../redux/actionsImageMenu";
 import { imgURL } from "../../../../../../../baseURL";
 
 const MenuImageHeadersPA = () => {
@@ -74,7 +74,7 @@ const MenuImageHeadersPA = () => {
                                         
                                         <div 
                                             onClick={() => {
-                                            //    window.confirm('Do you want it to be deleted ? ')  && dispatch(deleteItemListHeadersThunk({id: item.id}))                                            
+                                               window.confirm('Do you want it to be deleted ? ')  && dispatch(deleteImageMenuHeadersThunk({id: item.id}))                                            
                                             }}
                                             className="text-rose-500 cursor-pointer duration-200 hover:text-red-700! py-1"
                                         >

@@ -71,3 +71,25 @@ export const createImageMenuHeadersThunk = createAsyncThunk<TImageMenuHeader, Fo
         }
     }
 )
+
+export const deleteImageMenuHeadersThunk = createAsyncThunk<TImageMenuHeader, {id: number}, {rejectValue: string}>(
+    'delete_item_imageMenu_toolkit', 
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/megaMenu/menuImage/delete.php/${payload.id}/delete`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }  ,
+            })
+            if(!response.ok){
+                throw new Error('message warning')
+            }
+            const data = await response.json();
+            return Array.isArray(data) ? data : []
+        }   
+        catch(error: any){
+            return rejectWithValue (`warning: ${error.message}`)
+        }
+    }
+)
