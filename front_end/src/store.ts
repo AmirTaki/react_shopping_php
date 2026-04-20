@@ -11,6 +11,7 @@ import responseSlice from "./components/Response/redux/responseSlice";
 import listMenusSlice from "./components/Home/header/menus/menuList/redux/sliceMenuList";
 import categorySlice from "./components/Home/header/menus/menuList/menuCategory/redux/sliceCategory";
 import sereisSlice from "./components/Home/header/menus/menuList/menuSeries/redux/sliceMenuSeries";
+import imageMenuSlice from "./components/Home/header/menus/menuList/menuImage/redux/sliceImageMenus";
 
 const reducers = combineReducers({
 
@@ -47,7 +48,9 @@ const reducers = combineReducers({
     // category
     categoreis: categorySlice.reducer,      // category menus header in panel admin
     // series (product)
-    sereies: sereisSlice.reducer   // sereis (products) menus header in panel admin  
+    sereies: sereisSlice.reducer,   // sereis (products) menus header in panel admin
+    // images 
+    imagesMenus: imageMenuSlice.reducer,     // images menus header in panel Admin
 
 
 

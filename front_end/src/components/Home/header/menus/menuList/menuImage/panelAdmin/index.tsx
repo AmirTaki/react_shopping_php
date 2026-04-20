@@ -2,15 +2,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { AppDispatch, RooState } from "../../../../../../../store";
 import { useEffect } from "react";
-import { changeStatusItemListHeadersThunk, deleteItemListHeadersThunk, viewListHeadersThunk } from "../redux/actionsMenuList";
+import { viewImageMenuHeadresThunk } from "../redux/actionsImageMenu";
+import { imgURL } from "../../../../../../../baseURL";
 
 const MenuImageHeadersPA = () => {
-    // const {Lists, loading} = useSelector((state: RooState) => state.lists)
+    const {images, loading} = useSelector((state: RooState) => state.imagesMenus)
    
     const dispatch = useDispatch<AppDispatch>()
     useEffect(() => {
-        // dispatch(viewListHeadersThunk())
+        dispatch(viewImageMenuHeadresThunk())
     }, [loading]) 
+
     return(
         <div className={`flex w-full flex-col gap-5`}>
             
@@ -18,7 +20,7 @@ const MenuImageHeadersPA = () => {
                 className="text-center text-4xl my-3 cursor-pointer hover:text-sky-500 duration-200 hover:tracking-[.3rem]"
                 to = "create" 
             >
-                create list item
+                create image item
             </Link>
             
             <div className="w-[90%] mx-auto flex flex-col my-3 overflow-x-auto " >
@@ -27,7 +29,7 @@ const MenuImageHeadersPA = () => {
                     <thead >
                         <tr >
                             <th>#</th>
-                                <th >Image</th>
+                            <th>Image</th>
                             <th>List</th>
                             <th>Title</th>
                             <th>Caption</th>
@@ -36,16 +38,19 @@ const MenuImageHeadersPA = () => {
                         </tr>
                     </thead>
                     <tbody >
-                        {/* {Array.isArray(Lists) && Lists.map((item, ind) => { 
+                        {Array.isArray(images) && images.map((item, ind) => {
                             return(
                                 <tr key = {ind} className=" " >
                                     
                                     <th className="">{ind + 1}</th>
                                     
-                                    <th></th>
+                                    <th className=" ">
+                                        <img src = {imgURL + item.image} className="mx-auto h-[100px] " alt="" />
+                                    </th>
                                                             
                                     <th>{item.list}</th>
                                     <th>{item.title}</th>
+                                    <th>{item.body}</th>
 
                                     <th className = {`${item.status == 10 ? "text-green-400" : 'text-rose-400'  } `}>
                                         {item.status == 10 ? 'enable' : 'disable'}
@@ -54,7 +59,7 @@ const MenuImageHeadersPA = () => {
                                     <th>
                                         <div 
                                             onClick={() => {
-                                                dispatch(changeStatusItemListHeadersThunk({id: item.id}) );
+                                                // dispatch(changeStatusItemListHeadersThunk({id: item.id}) );
                                             }}
                                             className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 py-1 "
                                         >
@@ -69,7 +74,7 @@ const MenuImageHeadersPA = () => {
                                         
                                         <div 
                                             onClick={() => {
-                                               window.confirm('Do you want it to be deleted ? ')  && dispatch(deleteItemListHeadersThunk({id: item.id}))                                            
+                                            //    window.confirm('Do you want it to be deleted ? ')  && dispatch(deleteItemListHeadersThunk({id: item.id}))                                            
                                             }}
                                             className="text-rose-500 cursor-pointer duration-200 hover:text-red-700! py-1"
                                         >
@@ -78,7 +83,7 @@ const MenuImageHeadersPA = () => {
                                     </th>
                                 </tr>
                             )
-                        })} */}
+                        })}
 
                     </tbody>
                 </table>

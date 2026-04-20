@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { viewImageMenuHeadresThunk } from "./actionsImageMenu";
 
 export type TImageMenuHeader =  Array<{id: number, image: string,  list: string, title: string, body: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TImageMenuHeaderObject = {id: number, image: string,  list: string, title: string, body: string, status: number, created_at: string, updated_at: string }
@@ -78,7 +79,18 @@ const imageMenuSlice = createSlice({
         }
 
     },
-    extraReducers: (builder) => {}
+    extraReducers: (builder) => {
+        // view image menu headers
+        builder.addCase(viewImageMenuHeadresThunk.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(viewImageMenuHeadresThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(viewImageMenuHeadresThunk.fulfilled, (state, action) => {
+            state.images = action.payload 
+        })
+    }
 })
 
 export default imageMenuSlice
