@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewCategoryHeadresThunk } from "./actionCategory";
+import { viewCategoryHeadresThunk, createCategoryHeadersThunk } from "./actionCategory";
 
 export type TCategoryMenuHeader =  Array<{id: number, category: string,  list: string, title: string, sign: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TCategoryMenusHeaderObject = {id: number, category: string,  list: string, title: string, sign: string, status: number, created_at: string, updated_at: string }
@@ -48,12 +48,15 @@ const categorySlice = createSlice({
         onTitleCategory: (state, action) => {
             state.title = {name: action.payload.title, warning: ''}
         },
+        onSignCategory: (state, action) => {
+            state.sign = {name: action.payload.sign, warning: ''}
+        },
         onWarningCategory: (state, action) => {
             state.category = {name: state.category.name, warning: action.payload.category}
             state.list = {name: state.list.name, warning: action.payload.list}
             state.title = {name: state.title.name, warning: action.payload.title}
         },
-        onCallBackCategory: (state, action) => {
+        onCallBackCategory: (state) => {
             state.callback = false
         },
         onAddItemsCategory: (state) => {
@@ -79,8 +82,24 @@ const categorySlice = createSlice({
             state.categories = action.payload
         })
 
+        // create category item menu headers
+        builder.addCase(createCategoryHeadersThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.callback = false
+            state.addItems = false
+        })
+        builder.addCase(createCategoryHeadersThunk.rejected, (state, action) => {
+            state.callback = false
+            state.addItems = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(createCategoryHeadersThunk.fulfilled, (state, action) => {
+            state.callback = false
+            state.addItems = action.payload === true ? true : false
+        })
+
     }
 })
 
 export default categorySlice
-export const {} = categorySlice.actions
+export const {onSignCategory, onLoadingCategory, onAddItemsCategory, onCallBackCategory, onCategoryMenus,    onListCategory,    onTitleCategory,   onWarningCategory, } = categorySlice.actions

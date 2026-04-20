@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import type { AppDispatch, RooState } from "../../../../../../../store";
 import { useEffect } from "react";
 import { viewCategoryHeadresThunk } from "../redux/actionCategory";
-// import { changeStatusItemListHeadersThunk, deleteItemListHeadersThunk, viewListHeadersThunk } from "../redux/actionsMenuList";
 
 const MenuCategoryHeadresPA = () => {
     const {categories, loading} = useSelector((state: RooState) => state.categoreis)

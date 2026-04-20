@@ -187,27 +187,27 @@ export const editItemsListHeadersThunk = createAsyncThunk<TListMenusHeader, {id:
 )
 
 
-// export const foundITemsListHeadersThunk = createAsyncThunk<TListMenusHeader, {title: string}, {rejectValue: string}>(
-//     `found_item_list_toolkit`,
-//     async(payload, {rejectWithValue}) => {
+export const foundItemsListHeadersThunk = createAsyncThunk<TListMenusHeader, {title: string}, {rejectValue: string}>(
+    `found_item_list_toolkit`,
+    async(payload, {rejectWithValue}) => {
 
-//         try{
-//             const response = await fetch (baseURL + 'tables/megaMenu/menuList/list.php', {
-//                 method: "POST",
-//                 headers: {
-//                     'Content-Type': 'application/json'
-//                 },
-//                 body: JSON.stringify({title: payload.title, })
-//             })
-//             if (!response.ok){
-//                 throw new Error('message warning .....');
-//             }
-//             const data = await response.json();
-//             return Array.isArray(data) ? data : []
+        try{
+            const response = await fetch (baseURL + 'tables/megaMenu/menuList/list.php', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({title: payload.title, })
+            })
+            if (!response.ok){
+                throw new Error('message warning .....');
+            }
+            const data = await response.json();
+            return Array.isArray(data) ? data : []
 
-//         }
-//         catch(err: any){
-//             return rejectWithValue (`warning: ${err.message}`)
-//         }
-//     }
-// )
+        }
+        catch(err: any){
+            return rejectWithValue (`warning: ${err.message}`)
+        }
+    }
+)

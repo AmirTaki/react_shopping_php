@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { editItemsListHeadersThunk, readingItemListHeadersThunk, changeStatusItemListHeadersThunk, viewListHeadersThunk, createListHeadersThunk, deleteItemListHeadersThunk } from "./actionsMenuList";
+import { foundItemsListHeadersThunk, editItemsListHeadersThunk, readingItemListHeadersThunk, changeStatusItemListHeadersThunk, viewListHeadersThunk, createListHeadersThunk, deleteItemListHeadersThunk } from "./actionsMenuList";
 
 export type TListMenusHeader = Array<{id: number,list: string, title: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TListMenusHeaderObject = {id: number,list: string, title: string, status: number, created_at: string, updated_at: string }
@@ -149,15 +149,15 @@ const listMenusSlice =  createSlice({
 
 
         // found list in title 
-        // builder.addCase(foundITemsListHeadersThunk.pending, (state) => {
-        //     state.warningMessage = ''
-        // })
-        // builder.addCase(foundITemsListHeadersThunk.rejected, (state, action) => {
-        //     state.warningMessage = action.payload as string
-        // })
-        // builder.addCase(foundITemsListHeadersThunk.fulfilled, (state, action) => {
-        //     state.Lists = action.payload
-        // })
+        builder.addCase(foundItemsListHeadersThunk.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(foundItemsListHeadersThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(foundItemsListHeadersThunk.fulfilled, (state, action) => {
+            state.Lists = action.payload
+        })
     }
 })
 

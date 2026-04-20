@@ -20,6 +20,7 @@ import CreateMegaMenuListPA from "../Home/header/menus/menuList/panelAdmin/creat
 import EditListMenuHeadersPA from "../Home/header/menus/menuList/panelAdmin/edit"
 import ViewMenuCategoryPA from "../Home/header/menus/menuList/menuCategory/panelAdmin/view"
 import MenuCategoryHeadresPA from "../Home/header/menus/menuList/menuCategory/panelAdmin"
+import CreateMegaMenuCategoryPA from "../Home/header/menus/menuList/menuCategory/panelAdmin/create"
 
 const Routh = () => {
     return (
@@ -77,7 +78,7 @@ const Routh = () => {
                         {/* headers -> category */}
                         <Route path="megaMenuCategory" element = {<ViewMenuCategoryPA />}>
                             <Route path = "" element = {<MenuCategoryHeadresPA />}/>
-                            {/* <Route path = "create" element = {<CreateMegaMenuListPA />}/> */}
+                            <Route path = "create" element = {<CreateMegaMenuCategoryPA />}/>
                             {/* <Route path = "edit/:id" element = {<EditListMenuHeadersPA />}/> */}
                         </Route>
                     </Route>
