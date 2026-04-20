@@ -93,3 +93,28 @@ export const deleteItemsProductHeadersThunk = createAsyncThunk<TProductMenuHeade
         }
     }
 )
+
+
+export const changeStatusItemProductThunk = createAsyncThunk<TProductMenuHeader, {id: number},{rejectValue: string}>(
+    'change_status_item_product_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/megaMenu/menuProduct/status.php/${payload.id}/changeStatus`, {
+                method: 'GET', 
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },  
+
+            })
+            if(!response.ok){
+                throw new Error('warning: ');
+            }
+            const data = await response.json()
+            return Array.isArray(data) ? data : []
+        }
+        catch(error: any){
+            return rejectWithValue (`warning: ${error.message}`)
+        }
+    }
+)

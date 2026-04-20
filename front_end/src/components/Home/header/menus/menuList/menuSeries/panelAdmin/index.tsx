@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { AppDispatch, RooState } from "../../../../../../../store";
 import { useEffect } from "react";
-import { deleteItemsProductHeadersThunk, viewProductHeadresThunk } from "../redux/actionsMenuSeries";
+import { changeStatusItemProductThunk, deleteItemsProductHeadersThunk, viewProductHeadresThunk } from "../redux/actionsMenuSeries";
 
 const MenuProeductHeadresPA = () => {
     const {products, loading} = useSelector((state: RooState) => state.sereies)
@@ -55,7 +55,7 @@ const MenuProeductHeadresPA = () => {
                                     <th>
                                         <div 
                                             onClick={() => {
-                                                // dispatch(changeStatusItemCategoryThunk({id: item.id}) );
+                                                dispatch(changeStatusItemProductThunk({id: item.id}) );
                                             }}
                                             className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 py-1 "
                                         >
