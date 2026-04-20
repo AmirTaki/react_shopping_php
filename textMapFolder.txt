@@ -62,7 +62,10 @@
                                     b. panel Admin
                                     c. redux
                                 
-                                2. menuSeries
+                                2. menuSeries (product)
+                                    a. series.tsx
+                                    b. panel Admin
+                                    c. redux
 
                                 3. menuImage
                         

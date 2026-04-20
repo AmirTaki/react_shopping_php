@@ -141,7 +141,6 @@ const categorySlice = createSlice({
             state.category =  {name: answer.category, warning : ''}
             state.sign = {name: answer.sign, warning : ''}
         })
-
         
         // edit item category menu headers
         builder.addCase(editItemsCategoryHeadersThunk.pending, (state) => {
