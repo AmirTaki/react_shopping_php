@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { onCallBackCategory, onWarningCategory, type TCategoryMenuHeader } from "./sliceCategory";
+import { onCallBackCategory, onWarningCategory, type TCategoryMenuHeader, type TCategoryMenusHeaderObject } from "./sliceCategory";
 import { baseURL } from "../../../../../../../baseURL";
 
 export const viewCategoryHeadresThunk = createAsyncThunk<TCategoryMenuHeader, void, {rejectValue: string}>(
@@ -114,6 +114,76 @@ export const changeStatusItemCategoryThunk = createAsyncThunk<TCategoryMenuHeade
         }
         catch(error: any){
             return rejectWithValue (`warning: ${error.message}`)
+        }
+    }
+)
+
+export const readingItemCategoryHeadersThunk = createAsyncThunk<TCategoryMenusHeaderObject, {id: number},{rejectValue: string}> (
+    'reading_item_menuList_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/megaMenu/menuCategory/category.php/${payload.id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                } ,
+                // credentials: 'include',
+            })
+            if(!response.ok){
+                throw new Error('message');
+            }
+
+            const data =  await response.json()
+            return data
+   
+        }
+        catch(err: any){
+            return rejectWithValue (`warning: ${err.message}`)
+        }
+    }
+)
+
+
+export const editItemsCategoryHeadersThunk = createAsyncThunk<TCategoryMenuHeader, {id: number, title: string, list: string, category: string, sign: string}, {rejectValue: string}>(
+    'updatae_items_menuList_toolkit',
+    async(payload, rejected) => {
+        try{
+            const response = await fetch (baseURL + `tables/megaMenu/menuCategory/edit.php/${payload.id}`, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({title: payload.title, list: payload.list,category: payload.category, sign: payload.sign, id: payload.id })
+            })
+            if(!response.ok){
+                if(response.status === 400){
+                    rejected.dispatch((onWarningCategory({
+                        title: 'title is requierd!',
+                        list: 'list is requierd!',
+                        category: 'category is requierd!'
+                    })))
+                }
+                else if (response.status === 405){
+                    rejected.dispatch(onCallBackCategory())
+                }
+
+                else if (response.status === 415){
+                    rejected.dispatch((onWarningCategory({
+                        title: '',
+                        category: 'name category repeat ??? change name category !!!',
+                        list: ''
+                    })))                
+                }
+
+                else {
+                    throw new Error(`warning: ...`)
+                }
+            }
+            const data = await response.json()
+            return data
+        }
+        catch(err: any){
+            return `warning: ${err.message}`
         }
     }
 )

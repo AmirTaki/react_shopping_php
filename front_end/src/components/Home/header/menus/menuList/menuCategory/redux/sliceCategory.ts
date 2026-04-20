@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { changeStatusItemCategoryThunk, viewCategoryHeadresThunk, createCategoryHeadersThunk, deleteItemsCategoryHeadersThunk } from "./actionCategory";
+import { editItemsCategoryHeadersThunk, readingItemCategoryHeadersThunk, changeStatusItemCategoryThunk, viewCategoryHeadresThunk, createCategoryHeadersThunk, deleteItemsCategoryHeadersThunk } from "./actionCategory";
 
 export type TCategoryMenuHeader =  Array<{id: number, category: string,  list: string, title: string, sign: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TCategoryMenusHeaderObject = {id: number, category: string,  list: string, title: string, sign: string, status: number, created_at: string, updated_at: string }
@@ -124,6 +124,37 @@ const categorySlice = createSlice({
             state.loading = false
             state.warningMessage = ''
             state.categories = action.payload
+        })
+
+        // readign item category menu headers
+        builder.addCase(readingItemCategoryHeadersThunk.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(readingItemCategoryHeadersThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(readingItemCategoryHeadersThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            const answer = action.payload as TCategoryMenusHeaderObject
+            state.list = {name: answer.list, warning : ''}
+            state.title = {name: answer.title, warning : ''}
+            state.category =  {name: answer.category, warning : ''}
+            state.sign = {name: answer.sign, warning : ''}
+        })
+
+        
+        // edit item category menu headers
+        builder.addCase(editItemsCategoryHeadersThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.callback = false
+        })
+        builder.addCase(editItemsCategoryHeadersThunk.rejected, (state, action) => {
+            state.callback = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(editItemsCategoryHeadersThunk.fulfilled, (state, action) => {
+            state.addItems = action.payload === true ? true : false
+            state.callback = false
         })
 
 
