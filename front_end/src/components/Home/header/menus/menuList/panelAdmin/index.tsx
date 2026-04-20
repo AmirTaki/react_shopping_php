@@ -2,8 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { AppDispatch, RooState } from "../../../../../../store";
 import { useEffect } from "react";
-import { deleteItemListHeadersThunk, viewListHeadersThunk } from "../redux/actionsMenuList";
-
+import { changeStatusItemListHeadersThunk, deleteItemListHeadersThunk, viewListHeadersThunk } from "../redux/actionsMenuList";
 
 const MenuListHeadersPA = () => {
     const {Lists, loading} = useSelector((state: RooState) => state.lists)
@@ -52,7 +51,7 @@ const MenuListHeadersPA = () => {
                                     <th>
                                         <div 
                                             onClick={() => {
-                                                // dispatch(changeStatusImageAdvertSessionThunk({id: item.id}) );
+                                                dispatch(changeStatusItemListHeadersThunk({id: item.id}) );
                                             }}
                                             className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 py-1 "
                                         >

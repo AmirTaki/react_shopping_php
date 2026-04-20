@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewListHeadersThunk, createListHeadersThunk, deleteItemListHeadersThunk } from "./actionsMenuList";
+import { changeStatusItemListHeadersThunk, viewListHeadersThunk, createListHeadersThunk, deleteItemListHeadersThunk } from "./actionsMenuList";
 
 export type TListMenusHeader = Array<{id: number,list: string, title: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TListMenusHeaderObject = {id: number,list: string, title: string, status: number, created_at: string, updated_at: string }
@@ -99,6 +99,20 @@ const listMenus =  createSlice({
             state.warningMessage = action.payload as string
         })
         builder.addCase(deleteItemListHeadersThunk.fulfilled, (state, action) => {
+            state.loading = false
+            state.warningMessage  = ''
+            state.Lists = action.payload
+        })
+
+          // change status item list menu headers
+        builder.addCase(changeStatusItemListHeadersThunk.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(changeStatusItemListHeadersThunk.rejected, (state, action) => {
+            state.loading = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(changeStatusItemListHeadersThunk.fulfilled, (state, action) => {
             state.loading = false
             state.warningMessage  = ''
             state.Lists = action.payload
