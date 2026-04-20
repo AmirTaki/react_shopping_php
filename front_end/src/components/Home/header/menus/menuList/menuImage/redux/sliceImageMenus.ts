@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteImageMenuHeadersThunk, viewImageMenuHeadresThunk, createImageMenuHeadersThunk } from "./actionsImageMenu";
+import { changeStatusImageMenuThunk, deleteImageMenuHeadersThunk, viewImageMenuHeadresThunk, createImageMenuHeadersThunk } from "./actionsImageMenu";
 
 export type TImageMenuHeader =  Array<{id: number, image: string,  list: string, title: string, body: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TImageMenuHeaderObject = {id: number, image: string,  list: string, title: string, body: string, status: number, created_at: string, updated_at: string }
@@ -116,6 +116,20 @@ const imageMenuSlice = createSlice({
             state.warningMessage = action.payload as string
         }) 
         builder.addCase(deleteImageMenuHeadersThunk.fulfilled, (state, action) => {
+            state.loading = false 
+            state.warningMessage  = ''
+            state.images = action.payload
+        }) 
+
+        // status items image menu headers
+        builder.addCase(changeStatusImageMenuThunk.pending, (state) => {
+            state.loading = true
+        }) 
+        builder.addCase(changeStatusImageMenuThunk.rejected, (state, action) => {
+            state.loading = false
+            state.warningMessage = action.payload as string
+        }) 
+        builder.addCase(changeStatusImageMenuThunk.fulfilled, (state, action) => {
             state.loading = false 
             state.warningMessage  = ''
             state.images = action.payload

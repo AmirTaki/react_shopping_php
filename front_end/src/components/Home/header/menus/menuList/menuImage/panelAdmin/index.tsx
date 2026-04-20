@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { AppDispatch, RooState } from "../../../../../../../store";
 import { useEffect } from "react";
-import { deleteImageMenuHeadersThunk, viewImageMenuHeadresThunk } from "../redux/actionsImageMenu";
+import { changeStatusImageMenuThunk, deleteImageMenuHeadersThunk, viewImageMenuHeadresThunk } from "../redux/actionsImageMenu";
 import { imgURL } from "../../../../../../../baseURL";
 
 const MenuImageHeadersPA = () => {
@@ -59,7 +59,7 @@ const MenuImageHeadersPA = () => {
                                     <th>
                                         <div 
                                             onClick={() => {
-                                                // dispatch(changeStatusItemListHeadersThunk({id: item.id}) );
+                                                dispatch(changeStatusImageMenuThunk({id: item.id}) );
                                             }}
                                             className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 py-1 "
                                         >
