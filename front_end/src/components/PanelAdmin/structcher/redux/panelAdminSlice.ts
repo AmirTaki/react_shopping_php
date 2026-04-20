@@ -31,7 +31,8 @@ const initialState: IPanelAdminNavar = {
         {id: 3, name: 'megaMenu List', link: 'megaMenuList'},
         {id: 4, name: 'megaMenu Category', link : `megaMenuCategory`},
         {id: 5, name: 'megaMenu Product', link : `megaMenuProduct`},
- 
+        {id: 6, name: 'megaMenu Image', link : `megaMenuImage`},
+        
     ],
     openSlide: false,
     numberSide: 0,

@@ -22,7 +22,7 @@
                 b. menuList -> curd
                 c. menuCategory -> curd
                 d. menuProduct -> curd
-                e.
+                e. menuImage -> curd & uppload
 
 // front end 
     component -> 
@@ -71,8 +71,10 @@
                                     c. redux
 
                                 3. menuImage
+                                    a. image.tsx
+                                    b. panel Admin
+                                    c. redux
                         
-
                     c. Session
                     d. index
 
