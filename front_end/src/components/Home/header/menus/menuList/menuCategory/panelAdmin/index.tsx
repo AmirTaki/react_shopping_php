@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { AppDispatch, RooState } from "../../../../../../../store";
 import { useEffect } from "react";
-import { deleteItemsCategoryHeadersThunk, viewCategoryHeadresThunk,  } from "../redux/actionCategory";
+import { deleteItemsCategoryHeadersThunk, viewCategoryHeadresThunk, changeStatusItemCategoryThunk  } from "../redux/actionCategory";
 
 const MenuCategoryHeadresPA = () => {
     const {categories, loading} = useSelector((state: RooState) => state.categoreis)
@@ -11,6 +11,7 @@ const MenuCategoryHeadresPA = () => {
     useEffect(() => {
         dispatch(viewCategoryHeadresThunk())
     }, [loading]) 
+
     return(
         <div className={`flex w-full flex-col gap-5`}>
             
@@ -48,16 +49,16 @@ const MenuCategoryHeadresPA = () => {
                                     
                                     <th>{item.title}</th>
 
-                                    <th><i className={`${item.sign}`}>{item.sign}</i></th>
+                                    <th>{item.sign}</th>
 
                                     <th className = {`${item.status == 10 ? "text-green-400" : 'text-rose-400'  } `}>
                                         {item.status == 10 ? 'enable' : 'disable'}
                                     </th>
-
+                    
                                     <th>
                                         <div 
                                             onClick={() => {
-                                                // dispatch(changeStatusItemListHeadersThunk({id: item.id}) );
+                                                dispatch(changeStatusItemCategoryThunk({id: item.id}) );
                                             }}
                                             className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 py-1 "
                                         >

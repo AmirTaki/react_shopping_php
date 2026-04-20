@@ -3,7 +3,7 @@ import { onCallBackCategory, onWarningCategory, type TCategoryMenuHeader } from 
 import { baseURL } from "../../../../../../../baseURL";
 
 export const viewCategoryHeadresThunk = createAsyncThunk<TCategoryMenuHeader, void, {rejectValue: string}>(
-    'category_headers_toolkit',
+    'category_headers_toolkit_thunk',
         async(_, {rejectWithValue}) => {
             try{
                 const response = await fetch (baseURL + `tables/megaMenu/menuCategory/category.php`, {
@@ -87,6 +87,31 @@ export const deleteItemsCategoryHeadersThunk = createAsyncThunk<TCategoryMenuHea
             const data = await response.json();
             return Array.isArray(data) ? data : []
         }   
+        catch(error: any){
+            return rejectWithValue (`warning: ${error.message}`)
+        }
+    }
+)
+
+
+export const changeStatusItemCategoryThunk = createAsyncThunk<TCategoryMenuHeader, {id: number},{rejectValue: string}>(
+    'change_status_item_category_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/megaMenu/menuCategory/status.php/${payload.id}/changeStatus`, {
+                method: 'GET', 
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },  
+
+            })
+            if(!response.ok){
+                throw new Error('warning: ');
+            }
+            const data = await response.json()
+            return Array.isArray(data) ? data : []
+        }
         catch(error: any){
             return rejectWithValue (`warning: ${error.message}`)
         }
