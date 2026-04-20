@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewProductHeadresThunk } from "./actionsMenuSeries";
+import { viewProductHeadresThunk, createProductHeadersThunk } from "./actionsMenuSeries";
 
 export type TProductMenuHeader =  Array<{id: number, series: string,  list: string, title: string,  status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TProductMenusHeaderObject = {id: number, series: string,  list: string, title: string,  status: number, created_at: string, updated_at: string }
@@ -77,6 +77,23 @@ const sereisSlice =  createSlice({
         })
         builder.addCase(viewProductHeadresThunk.fulfilled, (state, action) => {
             state.products = action.payload
+        })
+
+        // create item series menu headers
+        builder.addCase(createProductHeadersThunk.pending, (state) => {
+            state.warningMessage  = ''
+            state.addItems  = false
+            state.callback = false
+        })
+        builder.addCase(createProductHeadersThunk.rejected, (state, action) => {
+            state.callback = false
+            state.addItems = false  
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(createProductHeadersThunk.fulfilled, (state, action) => {
+            state.callback =  false;
+            state.addItems = action.payload === true ? true : false;
+
         })
     }
 })

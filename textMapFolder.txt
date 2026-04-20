@@ -20,6 +20,9 @@
             2. mgeaMenus 
                 a. menus -> curd
                 b. menuList -> curd
+                c. menuCategory -> curd
+                d. menuProduct -> curd
+                e.
 
 // front end 
     component -> 
