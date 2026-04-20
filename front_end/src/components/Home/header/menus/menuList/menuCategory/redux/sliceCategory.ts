@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewCategoryHeadresThunk, createCategoryHeadersThunk } from "./actionCategory";
+import { viewCategoryHeadresThunk, createCategoryHeadersThunk, deleteItemsCategoryHeadersThunk } from "./actionCategory";
 
 export type TCategoryMenuHeader =  Array<{id: number, category: string,  list: string, title: string, sign: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TCategoryMenusHeaderObject = {id: number, category: string,  list: string, title: string, sign: string, status: number, created_at: string, updated_at: string }
@@ -97,6 +97,21 @@ const categorySlice = createSlice({
             state.callback = false
             state.addItems = action.payload === true ? true : false
         })
+
+        // delete item category menu headers
+        builder.addCase(deleteItemsCategoryHeadersThunk.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(deleteItemsCategoryHeadersThunk.rejected, (state, action) => {
+            state.loading = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(deleteItemsCategoryHeadersThunk.fulfilled, (state, action) => {
+            state.loading = false;
+            state.warningMessage = ''
+            state.categories = action.payload
+        })
+
 
     }
 })

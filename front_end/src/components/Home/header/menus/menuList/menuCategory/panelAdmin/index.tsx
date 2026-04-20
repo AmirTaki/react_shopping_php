@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { AppDispatch, RooState } from "../../../../../../../store";
 import { useEffect } from "react";
-import { viewCategoryHeadresThunk } from "../redux/actionCategory";
+import { deleteItemsCategoryHeadersThunk, viewCategoryHeadresThunk,  } from "../redux/actionCategory";
 
 const MenuCategoryHeadresPA = () => {
     const {categories, loading} = useSelector((state: RooState) => state.categoreis)
@@ -72,7 +72,7 @@ const MenuCategoryHeadresPA = () => {
                                         
                                         <div 
                                             onClick={() => {
-                                            //    window.confirm('Do you want it to be deleted ? ')  && dispatch(deleteItemListHeadersThunk({id: item.id}))                                            
+                                               window.confirm('Do you want it to be deleted ? ')  && dispatch(deleteItemsCategoryHeadersThunk({id: item.id}))                                            
                                             }}
                                             className="text-rose-500 cursor-pointer duration-200 hover:text-red-700! py-1"
                                         >
