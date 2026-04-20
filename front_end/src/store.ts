@@ -8,6 +8,7 @@ import userSlice from "./components/Users/redux/userSlice";
 import menusSlice from "./components/Home/header/menus/redux/menusSlice";
 import headerSlice from "./components/Home/header/redux/headerSlice";
 import responseSlice from "./components/Response/redux/responseSlice";
+import listMenus from "./components/Home/header/menus/menuList/redux/sliceMenuList";
 
 const reducers = combineReducers({
 
@@ -33,12 +34,13 @@ const reducers = combineReducers({
 // panelAdmin 
     // navbar
     panelAdmin: panelAdminSlice.reducer,        // navbar panel admin
-
     // users 
     users: userSlice.reducer,                  // users in panel admin
-
     // headers 
     menus: menusSlice.reducer,              // menus header in panel admin
+    // list 
+    lists: listMenus.reducer,               // list menus header in panel admin
+
 
 
 

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { viewListHeadersThunk } from "./actionsMenuList";
 
 export type TListMenusHeader = Array<{id: number,list: string, title: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TListMenusHeaderObject = {id: number,list: string, title: string, status: number, created_at: string, updated_at: string }
@@ -54,7 +55,18 @@ const listMenus =  createSlice({
             state.addItems = false
         }
     },
-    extraReducers: (builder) => {}
+    extraReducers: (builder) => {
+        // view items menu list headers
+        builder.addCase(viewListHeadersThunk.pending, (state) =>{
+            state.warningMessage = ''
+        })
+        builder.addCase(viewListHeadersThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(viewListHeadersThunk.fulfilled, (state, action) => {
+            state.Lists = action.payload
+        })
+    }
 })
 
 export default listMenus

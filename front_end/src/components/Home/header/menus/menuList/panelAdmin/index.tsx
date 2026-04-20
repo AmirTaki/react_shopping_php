@@ -2,14 +2,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { AppDispatch, RooState } from "../../../../../../store";
 import { useEffect } from "react";
+import { viewListHeadersThunk } from "../redux/actionsMenuList";
 
 
 const MenuListHeadersPA = () => {
-    // const {Lists, loading} = useSelector((state: RooState) => state.ListMegaMenu)
+    const {Lists, loading} = useSelector((state: RooState) => state.lists)
     const dispatch = useDispatch<AppDispatch>()
-    // useEffect(() => {
-    //     dispatch(viewListHeadersThunk())
-    // }, [loading]) 
+    useEffect(() => {
+        dispatch(viewListHeadersThunk())
+    }, [loading]) 
     return(
         <div className={`flex w-full flex-col gap-5`}>
             
@@ -33,7 +34,7 @@ const MenuListHeadersPA = () => {
                         </tr>
                     </thead>
                     <tbody >
-                        {/* {Array.isArray(boxses) && boxses.map((item, ind) => { 
+                        {Array.isArray(Lists) && Lists.map((item, ind) => { 
                             return(
                                 <tr key = {ind} className=" " >
                                     
@@ -41,9 +42,9 @@ const MenuListHeadersPA = () => {
                                     
                                     <th></th>
                                                             
+                                    <th>{item.list}</th>
                                     <th>{item.title}</th>
 
-                                    <th>{item.body}</th>
                                     <th className = {`${item.status == 10 ? "text-green-400" : 'text-rose-400'  } `}>
                                         {item.status == 10 ? 'enable' : 'disable'}
                                     </th>
@@ -51,7 +52,7 @@ const MenuListHeadersPA = () => {
                                     <th>
                                         <div 
                                             onClick={() => {
-                                                dispatch(changeStatusImageAdvertSessionThunk({id: item.id}) );
+                                                // dispatch(changeStatusImageAdvertSessionThunk({id: item.id}) );
                                             }}
                                             className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 py-1 "
                                         >
@@ -66,7 +67,7 @@ const MenuListHeadersPA = () => {
                                         
                                         <div 
                                             onClick={() => {
-                                                dispatch(deleteImageAdvertSessionThunk({id: item.id}))                                            
+                                            //    window.confirm('Do you want it to be deleted ? ')  && dispatch(deleteImageAdvertSessionThunk({id: item.id}))                                            
                                             }}
                                             className="text-rose-500 cursor-pointer duration-200 hover:text-red-700! py-1"
                                         >
@@ -75,7 +76,7 @@ const MenuListHeadersPA = () => {
                                     </th>
                                 </tr>
                             )
-                        })} */}
+                        })}
 
                     </tbody>
                 </table>
