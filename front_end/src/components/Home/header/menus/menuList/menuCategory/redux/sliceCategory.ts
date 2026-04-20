@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { viewCategoryHeadresThunk } from "./actionCategory";
 
 export type TCategoryMenuHeader =  Array<{id: number, category: string,  list: string, title: string, sign: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TCategoryMenusHeaderObject = {id: number, category: string,  list: string, title: string, sign: string, status: number, created_at: string, updated_at: string }
@@ -67,7 +67,19 @@ const categorySlice = createSlice({
         }
 
     },
-    extraReducers: (builder) => {}
+    extraReducers: (builder) => {
+        // view category menu headers
+        builder.addCase(viewCategoryHeadresThunk.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(viewCategoryHeadresThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(viewCategoryHeadresThunk.fulfilled, (state, action) => {
+            state.categories = action.payload
+        })
+
+    }
 })
 
 export default categorySlice

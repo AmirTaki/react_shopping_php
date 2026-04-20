@@ -2,14 +2,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { AppDispatch, RooState } from "../../../../../../../store";
 import { useEffect } from "react";
+import { viewCategoryHeadresThunk } from "../redux/actionCategory";
 // import { changeStatusItemListHeadersThunk, deleteItemListHeadersThunk, viewListHeadersThunk } from "../redux/actionsMenuList";
 
 const MenuCategoryHeadresPA = () => {
-    const {Lists, loading} = useSelector((state: RooState) => state.lists)
+    const {categories, loading} = useSelector((state: RooState) => state.categoreis)
     const dispatch = useDispatch<AppDispatch>()
     
     useEffect(() => {
-        // dispatch(viewListHeadersThunk())
+        dispatch(viewCategoryHeadresThunk())
     }, [loading]) 
     return(
         <div className={`flex w-full flex-col gap-5`}>
@@ -36,16 +37,19 @@ const MenuCategoryHeadresPA = () => {
                         </tr>
                     </thead>
                     <tbody >
-                        {/* {Array.isArray(categories) && categories.map((item, ind) => { 
+                        {Array.isArray(categories) && categories.map((item, ind) => { 
                             return(
                                 <tr key = {ind} className=" " >
                                     
                                     <th className="">{ind + 1}</th>
                                     
-                                    <th></th>
+                                    <th>{item.category}</th>
                                                             
                                     <th>{item.list}</th>
+                                    
                                     <th>{item.title}</th>
+
+                                    <th><i className={`${item.sign}`}>{item.sign}</i></th>
 
                                     <th className = {`${item.status == 10 ? "text-green-400" : 'text-rose-400'  } `}>
                                         {item.status == 10 ? 'enable' : 'disable'}
@@ -78,7 +82,7 @@ const MenuCategoryHeadresPA = () => {
                                     </th>
                                 </tr>
                             )
-                        })} */}
+                        })}
 
                     </tbody>
                 </table>

@@ -8,7 +8,8 @@ import userSlice from "./components/Users/redux/userSlice";
 import menusSlice from "./components/Home/header/menus/redux/menusSlice";
 import headerSlice from "./components/Home/header/redux/headerSlice";
 import responseSlice from "./components/Response/redux/responseSlice";
-import listMenus from "./components/Home/header/menus/menuList/redux/sliceMenuList";
+import listMenusSlice from "./components/Home/header/menus/menuList/redux/sliceMenuList";
+import categorySlice from "./components/Home/header/menus/menuList/menuCategory/redux/sliceCategory";
 
 const reducers = combineReducers({
 
@@ -39,7 +40,10 @@ const reducers = combineReducers({
     // headers 
     menus: menusSlice.reducer,              // menus header in panel admin
     // list 
-    lists: listMenus.reducer,               // list menus header in panel admin
+    lists: listMenusSlice.reducer,               // list menus header in panel admin
+    // category
+    categoreis: categorySlice.reducer,      // category menus header in panel admin
+    
 
 
 

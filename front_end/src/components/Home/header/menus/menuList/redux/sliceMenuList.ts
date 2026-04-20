@@ -34,7 +34,7 @@ const initialState: IList = {
     loading: false   
 }
 
-const listMenus =  createSlice({
+const listMenusSlice =  createSlice({
     name: 'list_menus_toolkit_slice',
     initialState: initialState,
     reducers: {
@@ -161,5 +161,5 @@ const listMenus =  createSlice({
     }
 })
 
-export default listMenus
-export const {onLoadingListMenus, onAddItemsListMenus, onCallBackListMenus, onListMenus, onTitleListMenus, onWarningListMenus, } = listMenus.actions
+export default listMenusSlice
+export const {onLoadingListMenus, onAddItemsListMenus, onCallBackListMenus, onListMenus, onTitleListMenus, onWarningListMenus, } = listMenusSlice.actions
