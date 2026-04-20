@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { changeStatusItemListHeadersThunk, viewListHeadersThunk, createListHeadersThunk, deleteItemListHeadersThunk } from "./actionsMenuList";
+import { editItemsListHeadersThunk, readingItemListHeadersThunk, changeStatusItemListHeadersThunk, viewListHeadersThunk, createListHeadersThunk, deleteItemListHeadersThunk } from "./actionsMenuList";
 
 export type TListMenusHeader = Array<{id: number,list: string, title: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TListMenusHeaderObject = {id: number,list: string, title: string, status: number, created_at: string, updated_at: string }
@@ -104,7 +104,7 @@ const listMenus =  createSlice({
             state.Lists = action.payload
         })
 
-          // change status item list menu headers
+        // change status item list menu headers
         builder.addCase(changeStatusItemListHeadersThunk.pending, (state) => {
             state.loading = true
         })
@@ -117,6 +117,47 @@ const listMenus =  createSlice({
             state.warningMessage  = ''
             state.Lists = action.payload
         })
+
+        // reading item list menu Headers 
+        builder.addCase(readingItemListHeadersThunk.pending, (state) => {
+            state.warningMessage = ''
+        })        
+        builder.addCase(readingItemListHeadersThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })        
+        builder.addCase(readingItemListHeadersThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            const answer =  action.payload as TListMenusHeaderObject
+            state.list = {name: answer.list, warning: ''},
+            state.title = {name: answer.title, warning: ''}
+            
+        })        
+
+        // edit item list menu Headrs
+        builder.addCase(editItemsListHeadersThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.callback = false
+        })
+        builder.addCase(editItemsListHeadersThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.callback = false
+        })
+        builder.addCase(editItemsListHeadersThunk.fulfilled, (state, action) => {
+            state.addItems = action.payload === true ? true : false
+            state.callback = false   
+        })
+
+
+        // found list in title 
+        // builder.addCase(foundITemsListHeadersThunk.pending, (state) => {
+        //     state.warningMessage = ''
+        // })
+        // builder.addCase(foundITemsListHeadersThunk.rejected, (state, action) => {
+        //     state.warningMessage = action.payload as string
+        // })
+        // builder.addCase(foundITemsListHeadersThunk.fulfilled, (state, action) => {
+        //     state.Lists = action.payload
+        // })
     }
 })
 

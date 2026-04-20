@@ -17,6 +17,7 @@ import EditMenusHeadersPA from "../Home/header/menus/panelAdmin/edit"
 import ViewMenuListPA from "../Home/header/menus/menuList/panelAdmin/view"
 import MenuListHeadersPA from "../Home/header/menus/menuList/panelAdmin"
 import CreateMegaMenuListPA from "../Home/header/menus/menuList/panelAdmin/create"
+import EditListMenuHeadersPA from "../Home/header/menus/menuList/panelAdmin/edit"
 
 const Routh = () => {
     return (
@@ -68,7 +69,7 @@ const Routh = () => {
                         <Route path="megaMenuList" element = {<ViewMenuListPA />}>
                             <Route path = "" element = {<MenuListHeadersPA />}/>
                             <Route path = "create" element = {<CreateMegaMenuListPA />}/>
-
+                            <Route path = "edit/:id" element = {<EditListMenuHeadersPA />}/>
                         </Route>
                     </Route>
 
