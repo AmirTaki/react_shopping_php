@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewListHeadersThunk } from "./actionsMenuList";
+import { viewListHeadersThunk, createListHeadersThunk } from "./actionsMenuList";
 
 export type TListMenusHeader = Array<{id: number,list: string, title: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TListMenusHeaderObject = {id: number,list: string, title: string, status: number, created_at: string, updated_at: string }
@@ -53,7 +53,11 @@ const listMenus =  createSlice({
         },
         onAddItemsListMenus: (state) => {
             state.addItems = false
-        }
+        },
+        onLoadingListMenus: (state) => {
+            state.list = {name: '', warning: ''},
+            state.title = {name: '', warning: ''}
+        },
     },
     extraReducers: (builder) => {
         // view items menu list headers
@@ -66,8 +70,26 @@ const listMenus =  createSlice({
         builder.addCase(viewListHeadersThunk.fulfilled, (state, action) => {
             state.Lists = action.payload
         })
+
+        
+        // create item list menu headers
+        builder.addCase(createListHeadersThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.callback = false
+            state.addItems = false
+        })
+        builder.addCase(createListHeadersThunk.rejected, (state, action) => {
+            state.callback = false
+            state.addItems = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(createListHeadersThunk.fulfilled, (state, action) => {
+            state.callback = false
+            state.addItems = action.payload === true ? true : false     
+                  
+        })
     }
 })
 
 export default listMenus
-export const {onAddItemsListMenus, onCallBackListMenus, onListMenus, onTitleListMenus, onWarningListMenus, } = listMenus.actions
+export const {onLoadingListMenus, onAddItemsListMenus, onCallBackListMenus, onListMenus, onTitleListMenus, onWarningListMenus, } = listMenus.actions
