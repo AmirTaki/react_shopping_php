@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewImageMenuHeadresThunk } from "./actionsImageMenu";
+import { viewImageMenuHeadresThunk, createImageMenuHeadersThunk } from "./actionsImageMenu";
 
 export type TImageMenuHeader =  Array<{id: number, image: string,  list: string, title: string, body: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TImageMenuHeaderObject = {id: number, image: string,  list: string, title: string, body: string, status: number, created_at: string, updated_at: string }
@@ -89,6 +89,22 @@ const imageMenuSlice = createSlice({
         })
         builder.addCase(viewImageMenuHeadresThunk.fulfilled, (state, action) => {
             state.images = action.payload 
+        })
+
+        // create item image menu headers 
+        builder.addCase(createImageMenuHeadersThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.callback = false
+            state.addItems = false
+        })
+        builder.addCase(createImageMenuHeadersThunk.rejected, (state, action) => {
+            state.callback = false
+            state.addItems = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(createImageMenuHeadersThunk.fulfilled, (state, action) => {
+            state.callback = false
+            state.addItems = action.payload === true ? true : false
         })
     }
 })

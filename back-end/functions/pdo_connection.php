@@ -102,3 +102,36 @@
         $statment = $execute == null ? $statment->execute() : $statment->execute($execute);
         return $statment;
     }
+
+
+    //  check image ->  'Content-Type': 'multipart/form-data'
+function checkImageMultipart ($image) {
+    $allowed_file_types = array('jpg', 'jpeg', 'png', 'gif', 'bmp', 'avf', 'webp', 'avif');
+    $file_name = basename($_FILES[$image]['name']);
+    $file_tmp = $_FILES[$image]['tmp_name'];
+    $file_type = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+    return in_array($file_type, $allowed_file_types);
+}
+
+// upload image ->  'Content-Type': 'multipart/form-data'
+function uploadImageMultipart ($image, $path){
+    $basePath = dirname(dirname(__DIR__)); 
+    $filename = date("Y_m_d_H_i_s"). '.' . 'avif';
+    $uploadDir = ".\\uploadImage\\";
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
+    }
+    $location = $basePath . $path . $filename;
+    $image_upload  = move_uploaded_file($_FILES[$image]['tmp_name'], $location);
+    
+    return $image_upload ? $path . $filename : false;
+}
+
+
+// delete image files 
+function deleteFiles ($path){
+    $basePath = dirname(dirname(__DIR__)); 
+    if (file_exists($basePath  . $path)){
+        unlink ($basePath  . $path);
+    }
+}   

@@ -1,25 +1,73 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { baseURL } from "../../../../../../../baseURL";
-import type { TImageMenuHeader } from "./sliceImageMenus";
+import { onCallBackImage, onWarningImage, type TImageMenuHeader } from "./sliceImageMenus";
 
 export const viewImageMenuHeadresThunk = createAsyncThunk<TImageMenuHeader, void, {rejectValue: string}>(
     'view_image_menu_headers_toolkit',
-        async(_, {rejectWithValue}) => {
-            try{
-                const response = await fetch (baseURL + `tables/megaMenu/menuImage/image.php`, {
-                    method: 'GET', 
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                })
-                if(!response.ok){
-                    throw new Error('warning: ');
+    async(_, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/megaMenu/menuImage/image.php`, {
+                method: 'GET', 
+                headers: {
+                    'Content-Type': 'application/json'
                 }
-                const data = await response.json();
-                return Array.isArray(data) ? data : []
+            })
+            if(!response.ok){
+                throw new Error('warning: ');
             }
-            catch(err: any){
-                return rejectWithValue (`warning: ${err.message}`)
-            }
+            const data = await response.json();
+            return Array.isArray(data) ? data : []
         }
+        catch(err: any){
+            return rejectWithValue (`warning: ${err.message}`)
+        }
+    }
+)
+
+
+export const createImageMenuHeadersThunk = createAsyncThunk<TImageMenuHeader, FormData , {rejectValue: string}>(
+    'image_menu_add_toolkit',
+    async(payload, reject) => {
+        try{
+            const response = await fetch (baseURL + `tables/megaMenu/menuImage/add.php`, {
+                method: 'POST', 
+                credentials: 'include',
+                body:payload
+            })
+            
+            if (!response.ok){
+               if(response.status === 422){
+                    reject.dispatch(onWarningImage({
+                        title: 'title is requierd!',
+                        list: 'list is requierd!',
+                        image: 'image is requierd!',
+                        body: 'caption is requierd! '
+                        
+                    }))
+                }
+                else if (response.status === 405){
+                    reject.dispatch(onCallBackImage())
+                }
+
+                else if (response.status === 404){
+                      reject.dispatch(onWarningImage({
+                        title: '',
+                        list: '',
+                        image: 'not upload image ?? repeat again !!',
+                        body: ''
+                        
+                    }))
+                }
+                
+                else {
+                    throw new Error ('warning ');
+                }
+            }
+            const data = await response.json()
+            return data
+        }
+        catch(err: any){
+            return (`warning: ${err.message}`)
+        }
+    }
 )
