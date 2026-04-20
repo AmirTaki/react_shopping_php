@@ -16,6 +16,7 @@
         
         3- tables
             1. users -> curd
+            
             2. mgeaMenus 
                 a. menus -> curd
                 b. menuList -> curd
