@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewProductHeadresThunk, createProductHeadersThunk } from "./actionsMenuSeries";
+import { viewProductHeadresThunk, createProductHeadersThunk, deleteItemsProductHeadersThunk } from "./actionsMenuSeries";
 
 export type TProductMenuHeader =  Array<{id: number, series: string,  list: string, title: string,  status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TProductMenusHeaderObject = {id: number, series: string,  list: string, title: string,  status: number, created_at: string, updated_at: string }
@@ -94,6 +94,20 @@ const sereisSlice =  createSlice({
             state.callback =  false;
             state.addItems = action.payload === true ? true : false;
 
+        })
+        
+        // delete item series menu headers
+        builder.addCase(deleteItemsProductHeadersThunk.pending, (state) => {
+            state.loading = true
+        })
+        builder.addCase(deleteItemsProductHeadersThunk.rejected, (state, action) => {
+            state.loading = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(deleteItemsProductHeadersThunk.fulfilled, (state, action) => {
+            state.loading = false
+            state.warningMessage = ''
+            state.products = action.payload
         })
     }
 })
