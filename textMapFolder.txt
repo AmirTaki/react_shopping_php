@@ -1,0 +1,46 @@
+// back end 
+
+
+// front end 
+    component -> 
+                1- Auth 
+                    a. login
+                        a. redux
+                        b. index
+
+                    b. register 
+                        a. redux
+                        b. index
+
+                    c. validation
+                        a. images
+                        b. redux
+                        c. stlyles
+                        d. validation file
+                
+                2- DarkMode
+                    a.redux 
+                    b.index
+                    c.styles
+
+                3- Home
+                    a. Footer
+    
+                    b. Header
+                        1- menus
+                            a. menus.tsx
+                            b. panel Admin
+                            c. redux
+                            
+                            1. menuList
+                                a. list.tsx
+                                b. panel Admin
+                                c. redux 
+
+                                1. menuCategory
+                                    a. category.tsx
+                                    b. panel Admin
+                                    c. redux
+
+                    c. Session
+                    d. index
