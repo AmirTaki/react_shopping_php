@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { AppDispatch, RooState } from "../../../../../../store";
 import { useEffect } from "react";
-import { viewListHeadersThunk } from "../redux/actionsMenuList";
+import { deleteItemListHeadersThunk, viewListHeadersThunk } from "../redux/actionsMenuList";
 
 
 const MenuListHeadersPA = () => {
@@ -67,7 +67,7 @@ const MenuListHeadersPA = () => {
                                         
                                         <div 
                                             onClick={() => {
-                                            //    window.confirm('Do you want it to be deleted ? ')  && dispatch(deleteImageAdvertSessionThunk({id: item.id}))                                            
+                                               window.confirm('Do you want it to be deleted ? ')  && dispatch(deleteItemListHeadersThunk({id: item.id}))                                            
                                             }}
                                             className="text-rose-500 cursor-pointer duration-200 hover:text-red-700! py-1"
                                         >
