@@ -40,13 +40,12 @@ const MenusSideBar = ({menu, counterMenu} : {menu: TMenusHeaderObject, counterMe
             <div 
                 style={{'--dynamic-height' : `${findHightDynamic(counterMenu)}px`} as React.CSSProperties} 
 
-                className={`${response ? `group-hover/menu:h-[var(--dynamic-height)]  overflow-hidden h-0 flex flex-col duration-300`: `bg-gray-900 flex flex-col hidden w-full h-130 left-0 absolute top-14 group-hover/menu:flex`}`}
+                className={`${response ? `group-hover/menu:h-[var(--dynamic-height)]  overflow-hidden h-0 flex flex-col duration-300`: `bg-gray-900  flex-col px-[10%] w-full h-130 left-0 fixed top-14 group-hover/menu:flex hidden`}`}
             >
                 {Array.isArray(Lists) && Lists.map((item, index) => {
                     if(item.title == menu.title && item.status == 10)
                     return(
                         <ListSideBar key = {index} item = {item}/>
-                  
                     )
                 })}
             </div> 
