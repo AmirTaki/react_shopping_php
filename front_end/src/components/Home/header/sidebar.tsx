@@ -5,6 +5,8 @@ import { closeWidthDelay } from "./redux/headerSlice";
 import "./styles/styles.css"
 import { useEffect } from "react";
 import { viewMenusHeaders } from "./menus/redux/actionsMenus";
+import MenusSideBar from "./menus/menus";
+import "./styles/styles.css"
 
 const Sidebar = () => {
     const dispatch =  useDispatch<AppDispatch>()
@@ -18,25 +20,27 @@ const Sidebar = () => {
             style={{animation: `${sidebar ? "openSidebar 1.5s linear forwards" : "closeSidebar 1.5s linear forwards"}`}}
             className={`${response ? 
                 // mobile
-                `bg-gray-500
+               ` dark:bg-[#242424]! bg-white z-50
                 ${sidebar === null ? "hidden!" : ''}
                 w-full min-h-screen fixed top-0 left-0
                     ` :
                     // desktop
                     `bg-amber-800 flex `
                 }
-        `}>
-            <RxCross2 
-                className={`${response ? 'flex' : 'hidden'}`}
-                onClick={() => {dispatch(closeWidthDelay())}}
-            />
+            
+            `}
+        >
+            <div className={`${response ? `flex w-full h-14 justify-end items-center px-4 border-b-1 border-[silver] navbarWhite` : `hidden`}`}>
+                <RxCross2  className="cursor-pointer hover:text-red-500 duration-200 hover:scale-150"
+                    onClick={() => {dispatch(closeWidthDelay())}}
+                />
+            </div>
 
-            <div className={`${response ? `` : `flex gap-3`}`}>
+            <div className={`${response ? ` flex flex-col` : `flex gap-3`}`}>
                 {Array.isArray(Menus) && Menus.map((item) => {
                     if(item.status == 10){
                         return(
-                            <div>{item.title}</div>
-                            // <ListSidebar  item = {item}/>
+                            <MenusSideBar  item = {item}/>
                         )
                     }
                 })}
