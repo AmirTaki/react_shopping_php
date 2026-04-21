@@ -25,7 +25,7 @@ const Sidebar = () => {
                 w-full min-h-screen fixed top-0 left-0
                     ` :
                     // desktop
-                    `bg-amber-800 flex `
+                    ` flex h-full items-center `
                 }
             
             `}

@@ -5,27 +5,24 @@ import type { TMenusHeaderObject} from "./redux/menusSlice"
 import { useEffect, useRef } from "react"
 import { viewListHeadersThunk } from "./menuList/redux/actionsMenuList"
 import { FaChevronDown } from "react-icons/fa";
+import ListSideBar from "./menuList/list"
 
 const MenusSideBar = ({menu, counterMenu} : {menu: TMenusHeaderObject, counterMenu: number}) => {
     const dispatch = useDispatch<AppDispatch>()
     const {response} = useSelector((state: RooState) => state.response) // respone ? mobile : desktop
     const {Lists} = useSelector((state: RooState) => state.lists) 
+    
     useEffect(() => {dispatch(viewListHeadersThunk())}, [])
 
     const menusRef =  useRef <Array<HTMLElement | null>>([])
-    const listsRef =  useRef <Array<HTMLElement> | null>([])
 
-    const findHightDynamic = (h: number) => {
-  
+    const findHightDynamic = (h: number) => {  
         if(menusRef){  
             const menuElement = menusRef.current
             const specificMenu = menuElement && menuElement[h] as HTMLElement
             if(specificMenu ) {
                 const listElement =  specificMenu.querySelectorAll('.listElement')
                 return listElement.length * 30
-
-                // const listElement = listsRef.current
-                // return listElement?.length * 20
             }
         }   
     }
@@ -34,7 +31,7 @@ const MenusSideBar = ({menu, counterMenu} : {menu: TMenusHeaderObject, counterMe
         <div className="group/menu"
             ref = {(x:  HTMLDivElement | null) => {menusRef.current[counterMenu] = x }}
         >
-            <div className={`${response ? `flex justify-between items-center  h-11 px-5` : ``}`}>
+            <div className={`${response ? `flex justify-between items-center  h-11 px-5` : ` h-14 flex items-center px-3 group-hover/menu:border-b border-[1px_solid_silver] duration-200`}`}>
                 <div className="">{menu.title}</div>
                 <div className={`${response ? `group-hover/menu:rotate-180 duration-200 text-[silver]` : `hidden`}`}><FaChevronDown /></div>
             </div>
@@ -48,11 +45,8 @@ const MenusSideBar = ({menu, counterMenu} : {menu: TMenusHeaderObject, counterMe
                 {Array.isArray(Lists) && Lists.map((item, index) => {
                     if(item.title == menu.title && item.status == 10)
                     return(
-                        <div
-                            key = {index}
-                            // ref = {(x) => {listsRef.current[index] = x }}
-                            className="listElement bg-amber-300 h-10  "
-                        >{item.list}</div>
+                        <ListSideBar key = {index} item = {item}/>
+                  
                     )
                 })}
             </div> 
