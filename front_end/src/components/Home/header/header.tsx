@@ -1,6 +1,6 @@
 import { Link,  } from "react-router-dom"
 import DarkMode from "../../DarkMode"
-import { hideScrollTop, onSearchHandler, onSidebarHandler } from "./redux/headerSlice"
+import {hideScrollTop, onSearchHandler, onSidebarHandler } from "./redux/headerSlice"
 import { IoLogoBuffer } from "react-icons/io";
 import { FaUserAlt } from "react-icons/fa";
 import { RiAdminFill } from "react-icons/ri";
@@ -12,7 +12,7 @@ import {type AppDispatch, type RooState } from "../../../store"
 import "./styles/styles.css"
 import { useEffect } from "react"
 import Search from "./search"
-import MenusSideBar from "./menus/menus";
+import Sidebar from "./sidebar";
 
 
 const Header = () => {
@@ -67,8 +67,6 @@ const Header = () => {
                         onClick={() => {dispatch(onSidebarHandler({sidebar: true}))}}
                     />
 
-                 
-                                          
                     {/* regiseter */}
                     <Link to = "/validation/register">
                         <FaUserAlt 
@@ -90,14 +88,11 @@ const Header = () => {
                             `}
                         />
                     </Link>
-
-
                 </div>
 
                 {/*  menus item & megamenu & sidebar -> menus, list, category, series, image */}
-                <MenusSideBar />
-
-
+                <Sidebar />
+               
                 {/* user admin serach */}
                 <div className="flex items-center gap-5">
             

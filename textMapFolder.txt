@@ -50,6 +50,12 @@
                     a. Footer
     
                     b. Header
+                        a. header.tsx
+                        b. sidebar.tsx
+                        c. styles
+                        d. redux
+                        e. search  
+
                         1- menus
                             a. menus.tsx
                             b. panel Admin
