@@ -37,10 +37,10 @@ const Sidebar = () => {
             </div>
 
             <div className={`${response ? ` flex flex-col` : `flex gap-3`}`}>
-                {Array.isArray(Menus) && Menus.map((item) => {
+                {Array.isArray(Menus) && Menus.map((item, index) => {
                     if(item.status == 10){
                         return(
-                            <MenusSideBar  item = {item}/>
+                            <MenusSideBar key = {index} menu = {item} counterMenu = {index}/>
                         )
                     }
                 })}
