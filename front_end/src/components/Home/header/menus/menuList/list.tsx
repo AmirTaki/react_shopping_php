@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux"
 import type { TListMenusHeaderObject } from "./redux/sliceMenuList"
 import type { RooState, AppDispatch } from "../../../../../store"
+import { FaChevronRight } from "react-icons/fa6";
 
 const ListSideBar = ({item, }: {item: TListMenusHeaderObject }) => {
     const {response} = useSelector((state: RooState) => state.response) // respone ? mobile : desktop
@@ -8,10 +9,15 @@ const ListSideBar = ({item, }: {item: TListMenusHeaderObject }) => {
     return(
        
 
-            <div className={`${response ? ` listElement bg-amber-300 h-10` : `w-[30%] bg-[blue]   `}`}>
-                <div className=" bg-amber-300">
-                    {item.list}
-                    {/* icon */}
+            <div className={`${response ? ` listElement group/list ` : `w-[30%] bg-[blue]   `}`}>
+                <div className={`${response ? `h-10 text-sm! mx-10 cursor-pointer  flex items-center justify-between  dark:group-hover/list:text-teal-400 group-hover/list:text-rose-400 ` : ``}`}>
+                    <div className={`${response ? `` : ``}`}>
+                        {item.list}
+                    </div> 
+                    <div className={`${response ? ``: `hidden`}`}> 
+                        <FaChevronRight  />
+                    </div>
+                   
                 </div>
 
                 {/* side to side */}

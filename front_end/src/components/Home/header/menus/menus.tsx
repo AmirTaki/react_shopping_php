@@ -11,7 +11,8 @@ const MenusSideBar = ({menu, counterMenu} : {menu: TMenusHeaderObject, counterMe
     const dispatch = useDispatch<AppDispatch>()
     const {response} = useSelector((state: RooState) => state.response) // respone ? mobile : desktop
     const {Lists} = useSelector((state: RooState) => state.lists) 
-    
+    const {dark} =  useSelector((state: RooState) => state.darkMode)
+
     useEffect(() => {dispatch(viewListHeadersThunk())}, [])
 
     const menusRef =  useRef <Array<HTMLElement | null>>([])
@@ -22,7 +23,7 @@ const MenusSideBar = ({menu, counterMenu} : {menu: TMenusHeaderObject, counterMe
             const specificMenu = menuElement && menuElement[h] as HTMLElement
             if(specificMenu ) {
                 const listElement =  specificMenu.querySelectorAll('.listElement')
-                return listElement.length * 30
+                return listElement.length * 40
             }
         }   
     }
@@ -40,7 +41,7 @@ const MenusSideBar = ({menu, counterMenu} : {menu: TMenusHeaderObject, counterMe
             <div 
                 style={{'--dynamic-height' : `${findHightDynamic(counterMenu)}px`} as React.CSSProperties} 
 
-                className={`${response ? `group-hover/menu:h-[var(--dynamic-height)]  overflow-hidden h-0 flex flex-col duration-300`: `bg-gray-900  flex-col px-[10%] w-full h-130 left-0 fixed top-14 group-hover/menu:flex hidden`}`}
+                className={`${response ? `  ${dark ? "navbarDark" : "bg-gray-200!"} group-hover/menu:h-[var(--dynamic-height)]  overflow-hidden h-0 flex   flex-col duration-500 navbarWhite bg-gray-500`: `bg-gray-900  flex-col px-[10%] w-full h-130 left-0 fixed top-14 group-hover/menu:flex hidden`}`}
             >
                 {Array.isArray(Lists) && Lists.map((item, index) => {
                     if(item.title == menu.title && item.status == 10)

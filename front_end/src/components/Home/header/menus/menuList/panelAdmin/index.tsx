@@ -37,10 +37,7 @@ const MenuListHeadersPA = () => {
                             return(
                                 <tr key = {ind} className=" " >
                                     
-                                    <th className="">{ind + 1}</th>
-                                    
-                                    <th></th>
-                                                            
+                                    <th className="">{ind + 1}</th>                                        
                                     <th>{item.list}</th>
                                     <th>{item.title}</th>
 

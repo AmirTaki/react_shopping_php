@@ -30,13 +30,13 @@ const Sidebar = () => {
             
             `}
         >
-            <div className={`${response ? `flex w-full h-14 justify-end items-center px-4 border-b-1 border-[silver] navbarWhite` : `hidden`}`}>
+            <div className={`${response ? `flex w-full h-14 justify-end items-center px-4 border-b-[.5px] border-[silver] navbarWhite` : `hidden`}`}>
                 <RxCross2  className="cursor-pointer hover:text-red-500 duration-200 hover:scale-150"
                     onClick={() => {dispatch(closeWidthDelay())}}
                 />
             </div>
 
-            <div className={`${response ? ` flex flex-col` : `flex gap-3`}`}>
+            <div className={`${response ? ` flex flex-col my-4 ` : `flex gap-3`}`}>
                 {Array.isArray(Menus) && Menus.map((item, index) => {
                     if(item.status == 10){
                         return(
