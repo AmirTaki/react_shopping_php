@@ -46,7 +46,7 @@ const Header = () => {
         <div className={` 
             ${dark ? "navbarDark" : "navbarWhite"} 
             ${scrollHide ?   'translate-y-0' : 'translate-y-[-100%]'}    
-            dark:text-white text-black fixed w-full duration-1000  z-100!  `}
+            dark:text-white text-black  fixed w-full duration-1000    `}
         >
             {/* component navbar */}
             <div 

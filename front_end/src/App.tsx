@@ -43,6 +43,7 @@ function App() {
       className="bg-white! text-black! dark:bg-[#242424]! dark:text-[rgba(255,255,255,0.87)]!  ">
       {/* routhing */}
       <Routh />
+
     </div>
   )
 }
