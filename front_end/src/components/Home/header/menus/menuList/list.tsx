@@ -6,9 +6,9 @@ import { useReducer } from "react";
 import { reducerSideToSide, SideState } from "./sideToSide/reducer/reducer";
 import "../../styles/styles.css"
 import SidetoSide from "./sideToSide";
+import type { TMenusHeaderObject } from "../redux/menusSlice";
 
-
-const ListSidebar = ({list, index}: {list: TListMenusHeaderObject, index: number }) => {
+const ListSidebar = ({list, index, menu}: {list: TListMenusHeaderObject, index: number, menu: TMenusHeaderObject }) => {
     const {response} = useSelector((state: RooState) => state.response) // response ?  mobile : desktop
     
     const dispatch = useDispatch<AppDispatch>()
@@ -17,7 +17,7 @@ const ListSidebar = ({list, index}: {list: TListMenusHeaderObject, index: number
     return(
         <div 
             key = {list.id} 
-            className = {`${response ? `listElement group/list ` : ``}`}
+            className = {`${response ? `listElement   ` : ``} group/list`}
         >
 
                 <div 
@@ -37,7 +37,7 @@ const ListSidebar = ({list, index}: {list: TListMenusHeaderObject, index: number
 
                 </div>
                 {/* side to side */}
-                <SidetoSide list = {list} sideToSide = {sideToSide} dispatchSideToSide = {dispatchSideToSide}  index = {index} />
+                <SidetoSide list = {list} sideToSide = {sideToSide} dispatchSideToSide = {dispatchSideToSide}  index = {index} menu = {menu} />
             
 
         
