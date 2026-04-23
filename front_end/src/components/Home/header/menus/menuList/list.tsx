@@ -1,30 +1,23 @@
-import { FaChevronLeft } from "react-icons/fa6";
 import { FaChevronRight } from "react-icons/fa6";
 import type { TListMenusHeaderObject } from "./redux/sliceMenuList";
 import { useDispatch, useSelector } from "react-redux";
 import { type AppDispatch, type RooState } from "../../../../../store";
 import { useReducer } from "react";
-import { reducerSideToSide, SideState } from "./redux/reducer";
+import { reducerSideToSide, SideState } from "./sideToSide/reducer/reducer";
 import "../../styles/styles.css"
-import { closeWidthDelay } from "../../redux/headerSlice";
+import SidetoSide from "./sideToSide";
 
-const ListSidebar = ({item, index}: {item: TListMenusHeaderObject, index: number }) => {
+
+const ListSidebar = ({list, index}: {list: TListMenusHeaderObject, index: number }) => {
     const {response} = useSelector((state: RooState) => state.response) // response ?  mobile : desktop
+    
     const dispatch = useDispatch<AppDispatch>()
-
     const [sideToSide, dispatchSideToSide] =  useReducer(reducerSideToSide, SideState)   // usereducer for side to side
     
-    const closeSide = () => {
-        dispatchSideToSide({type: 'close', payload: {id: index}})
-        setTimeout(() => {
-            dispatchSideToSide({type: 'nullHasInteracted'})
-        }, 500)
-    }
-
-
+   
     return(
         <div 
-            key = {item.id} 
+            key = {list.id} 
             className = {`${response ? `listElement group/list ` : ``}`}
         >
             <div 
@@ -38,44 +31,15 @@ const ListSidebar = ({item, index}: {item: TListMenusHeaderObject, index: number
                     ``
                 }`}
             >
-                <div className="">{item.list}</div>
+                <div className="">{list.list}</div>
                 <div className={`${response ? `` : `hidden`}`}><FaChevronRight /></div>
 
             </div>
 
         
             {/* side to side */}
-            <div 
-                className={`${response ? 
-                    `fixed w-full min-h-screen bg-green-700 top-0
-                        ${sideToSide.hasInteracted === null && 'hidden!'}
-                        ${ (sideToSide.SideToSide as any)[index] ? `openSideToSide` : `closeSideToSide`}
-                    ` 
-                    : 
-                    'hidden'}
-                `}
-            >   
-                {/* left button */}
-                <div className=""
-                    onClick={() => {
-                        if(window.innerWidth < 750){closeSide()}
-                    }}
-                >
-                    <FaChevronLeft /> {item.list}
-                </div>
-
-                {/* circle  */}
-                <div className=""
-                    onClick={() => {
-                        if(window.innerWidth < 750){
-                            closeSide();
-                            dispatch(closeWidthDelay())
-                        }
-                    }}
-                >
-                    ❌
-                </div>
-            </div>
+            <SidetoSide list = {list} sideToSide = {sideToSide} dispatchSideToSide = {dispatchSideToSide}  index = {index} />
+        
         </div>
     )
 }

@@ -4,7 +4,7 @@ interface ISideToSide {
     [key: string]: boolean
 }
 
-interface ISideState {
+export interface ISideState {
     SideToSide: ISideToSide
     hasInteracted: null | boolean   
 }
@@ -13,7 +13,7 @@ export const SideState:ISideState = {
     SideToSide: {},
     hasInteracted: null
 }
-type TAction = 
+export type TActionSideToSide = 
     {type: 'open', payload: {id: number}}  |
     {type: 'close', payload: {id: number}} |
     {type: 'closeAll'} |
@@ -22,7 +22,7 @@ type TAction =
 
 
 
-export const reducerSideToSide = (state: ISideState, action: TAction): ISideState => {
+export const reducerSideToSide = (state: ISideState, action: TActionSideToSide): ISideState => {
     switch(action.type){
         case "open":
             return {...state, 

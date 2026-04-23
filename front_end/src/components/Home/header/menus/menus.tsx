@@ -49,7 +49,7 @@ const MenusSidebar = ({menu, index }: {menu: TMenusHeaderObject, index: number} 
                 {Array.isArray(Lists) && Lists.map((item, index) => {
                     if(item.title == menu.title && item.status == 10){
                         return(
-                            <ListSidebar key = {item.id} item = {item} index = {index}/>
+                            <ListSidebar key = {item.id} list = {item} index = {index}/>
                        
                         )
                     }
