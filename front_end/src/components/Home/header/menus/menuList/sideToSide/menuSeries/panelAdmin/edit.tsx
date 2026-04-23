@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
-import type { AppDispatch, RooState } from "../../../../../../../store";
+import type { AppDispatch, RooState } from "../../../../../../../../store";
 import { onAddItemsSeries, onListSeries, onLoadingSeries, onSeriesMenus, onTitleSeries } from "../redux/sliceMenuSeries";
-import { foundItemsListHeadersThunk, viewListHeadersThunk } from "../../redux/actionsMenuList";
-import { viewMenusHeaders } from "../../../redux/actionsMenus";
+import { foundItemsListHeadersThunk, viewListHeadersThunk } from "../../../redux/actionsMenuList";
+import { viewMenusHeaders } from "../../../../redux/actionsMenus";
 import { readingItemProdcutHeadersThunk, editItemsProdcutHeadersThunk } from "../redux/actionsMenuSeries";
 
 const EditProductHeadersPA = () => {

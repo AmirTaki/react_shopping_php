@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { useEffect } from "react"
-import type { RooState, AppDispatch } from "../../../../../../../store"
+import type { RooState, AppDispatch } from "../../../../../../../../store"
 import { onAddItemsSeries, onListSeries, onLoadingSeries, onSeriesMenus, onTitleSeries } from "../redux/sliceMenuSeries"
-import { viewMenusHeaders } from "../../../redux/actionsMenus"
-import { foundItemsListHeadersThunk, viewListHeadersThunk } from "../../redux/actionsMenuList"
+import { viewMenusHeaders } from "../../../../redux/actionsMenus"
+import { foundItemsListHeadersThunk, viewListHeadersThunk } from "../../../redux/actionsMenuList"
 import { createProductHeadersThunk } from "../redux/actionsMenuSeries"
 
 const CreateMegaMenuProductPA = () => {

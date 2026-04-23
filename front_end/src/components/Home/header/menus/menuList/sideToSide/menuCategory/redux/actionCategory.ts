@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { onCallBackSeries, onWarningSeries, type TProductMenuHeader, type TProductMenusHeaderObject } from "./sliceMenuSeries";
-import { baseURL } from "../../../../../../../baseURL";
+import { onCallBackCategory, onWarningCategory, type TCategoryMenuHeader, type TCategoryMenusHeaderObject } from "./sliceCategory";
+import { baseURL } from "../../../../../../../../baseURL";
 
-export const viewProductHeadresThunk = createAsyncThunk<TProductMenuHeader, void, {rejectValue: string}>(
-    'product_(sereis)_headers_toolkit',
+export const viewCategoryHeadresThunk = createAsyncThunk<TCategoryMenuHeader, void, {rejectValue: string}>(
+    'category_headers_toolkit_thunk',
         async(_, {rejectWithValue}) => {
             try{
-                const response = await fetch (baseURL + `tables/megaMenu/menuProduct/product.php`, {
+                const response = await fetch (baseURL + `tables/megaMenu/menuCategory/category.php`, {
                     method: 'GET', 
                     headers: {
                         'Content-Type': 'application/json'
@@ -24,34 +24,34 @@ export const viewProductHeadresThunk = createAsyncThunk<TProductMenuHeader, void
         }
 )
 
-export const createProductHeadersThunk = createAsyncThunk<TProductMenuHeader, {title: string, list: string, series: string, }, {rejectValue: string}>(
-    'add_product_headers_toolkit',
+export const createCategoryHeadersThunk = createAsyncThunk<TCategoryMenuHeader, {title: string, list: string, category: string, sign: string}, {rejectValue: string}>(
+    'add_list_headers_toolkit',
     async(payload, rejectValue) => {
         try{
-            const response = await fetch (baseURL + `tables/megaMenu/menuProduct/add.php`, {
+            const response = await fetch (baseURL + `tables/megaMenu/menuCategory/add.php`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body : JSON.stringify({title: payload.title, list: payload.list, series: payload.series})
+                body : JSON.stringify({title: payload.title, list: payload.list, category: payload.category, sign: payload.sign})
             })
             if(!response.ok){
                 if(response.status === 422){
-                    rejectValue.dispatch(onWarningSeries({
+                    rejectValue.dispatch(onWarningCategory({
                         title: 'title is requierd!',
                         list: 'list is requierd!',
-                        series: 'series is requierd!'
+                        category: 'category is requierd!'
                     }))
                 }
                 else if (response.status === 405){
-                    rejectValue.dispatch(onCallBackSeries())
+                    rejectValue.dispatch(onCallBackCategory())
                 }
 
                 else if (response.status === 415){
-                    rejectValue.dispatch(onWarningSeries({
+                    rejectValue.dispatch(onWarningCategory({
                         title: '',
-                        series: 'name series repeat ??? change name series !!!',
+                        category: 'name category repeat ??? change name category !!!',
                         list: ''
                     }))
                 }
@@ -71,12 +71,11 @@ export const createProductHeadersThunk = createAsyncThunk<TProductMenuHeader, {t
     }
 )
 
-
-export const deleteItemsProductHeadersThunk = createAsyncThunk<TProductMenuHeader, {id: number}, {rejectValue: string}>(
-    'delete_item_product_toolkit', 
+export const deleteItemsCategoryHeadersThunk = createAsyncThunk<TCategoryMenuHeader, {id: number}, {rejectValue: string}>(
+    'delete_item_category_toolkit', 
     async(payload, {rejectWithValue}) => {
         try{
-            const response = await fetch (baseURL + `tables/megaMenu/menuProduct/delete.php/${payload.id}/delete`, {
+            const response = await fetch (baseURL + `tables/megaMenu/menuCategory/delete.php/${payload.id}/delete`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -95,11 +94,11 @@ export const deleteItemsProductHeadersThunk = createAsyncThunk<TProductMenuHeade
 )
 
 
-export const changeStatusItemProductThunk = createAsyncThunk<TProductMenuHeader, {id: number},{rejectValue: string}>(
-    'change_status_item_product_toolkit',
+export const changeStatusItemCategoryThunk = createAsyncThunk<TCategoryMenuHeader, {id: number},{rejectValue: string}>(
+    'change_status_item_category_toolkit',
     async(payload, {rejectWithValue}) => {
         try{
-            const response = await fetch (baseURL + `tables/megaMenu/menuProduct/status.php/${payload.id}/changeStatus`, {
+            const response = await fetch (baseURL + `tables/megaMenu/menuCategory/status.php/${payload.id}/changeStatus`, {
                 method: 'GET', 
                 credentials: 'include',
                 headers: {
@@ -119,12 +118,11 @@ export const changeStatusItemProductThunk = createAsyncThunk<TProductMenuHeader,
     }
 )
 
-
-export const readingItemProdcutHeadersThunk = createAsyncThunk<TProductMenusHeaderObject, {id: number},{rejectValue: string}> (
-    'reading_item_product_toolkit',
+export const readingItemCategoryHeadersThunk = createAsyncThunk<TCategoryMenusHeaderObject, {id: number},{rejectValue: string}> (
+    'reading_item_menuList_toolkit',
     async(payload, {rejectWithValue}) => {
         try{
-            const response = await fetch (baseURL + `tables/megaMenu/menuProduct/product.php/${payload.id}`, {
+            const response = await fetch (baseURL + `tables/megaMenu/menuCategory/category.php/${payload.id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -145,33 +143,34 @@ export const readingItemProdcutHeadersThunk = createAsyncThunk<TProductMenusHead
     }
 )
 
-export const editItemsProdcutHeadersThunk = createAsyncThunk<TProductMenuHeader, {id: number, title: string, list: string, series: string, }, {rejectValue: string}>(
-    'updatae_items_product_toolkit',
+
+export const editItemsCategoryHeadersThunk = createAsyncThunk<TCategoryMenuHeader, {id: number, title: string, list: string, category: string, sign: string}, {rejectValue: string}>(
+    'updatae_items_menuList_toolkit',
     async(payload, rejected) => {
         try{
-            const response = await fetch (baseURL + `tables/megaMenu/menuProduct/edit.php/${payload.id}`, {
+            const response = await fetch (baseURL + `tables/megaMenu/menuCategory/edit.php/${payload.id}`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({title: payload.title, list: payload.list,series: payload.series, id: payload.id })
+                body: JSON.stringify({title: payload.title, list: payload.list,category: payload.category, sign: payload.sign, id: payload.id })
             })
             if(!response.ok){
                 if(response.status === 400){
-                    rejected.dispatch((onWarningSeries({
+                    rejected.dispatch((onWarningCategory({
                         title: 'title is requierd!',
                         list: 'list is requierd!',
-                        series: 'series is requierd!'
+                        category: 'category is requierd!'
                     })))
                 }
                 else if (response.status === 405){
-                    rejected.dispatch(onCallBackSeries())
+                    rejected.dispatch(onCallBackCategory())
                 }
 
                 else if (response.status === 415){
-                    rejected.dispatch((onWarningSeries({
+                    rejected.dispatch((onWarningCategory({
                         title: '',
-                        series: 'name series repeat ??? change name series !!!',
+                        category: 'name category repeat ??? change name category !!!',
                         list: ''
                     })))                
                 }

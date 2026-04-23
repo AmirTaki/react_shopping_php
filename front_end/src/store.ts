@@ -9,9 +9,9 @@ import menusSlice from "./components/Home/header/menus/redux/menusSlice";
 import headerSlice from "./components/Home/header/redux/headerSlice";
 import responseSlice from "./components/Response/redux/responseSlice";
 import listMenusSlice from "./components/Home/header/menus/menuList/redux/sliceMenuList";
-import categorySlice from "./components/Home/header/menus/menuList/menuCategory/redux/sliceCategory";
-import sereisSlice from "./components/Home/header/menus/menuList/menuSeries/redux/sliceMenuSeries";
-import imageMenuSlice from "./components/Home/header/menus/menuList/menuImage/redux/sliceImageMenus";
+import categorySlice from "./components/Home/header/menus/menuList/sideToSide/menuCategory/redux/sliceCategory";
+import sereisSlice from "./components/Home/header/menus/menuList/sideToSide/menuSeries/redux/sliceMenuSeries";
+import imageMenuSlice from "./components/Home/header/menus/menuList/sideToSide/menuImage/redux/sliceImageMenus";
 
 const reducers = combineReducers({
 

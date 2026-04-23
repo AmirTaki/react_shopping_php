@@ -66,20 +66,24 @@
                                 b. panel Admin
                                 c. redux 
 
-                                1. menuCategory
-                                    a. category.tsx
-                                    b. panel Admin
-                                    c. redux
-                                
-                                2. menuSeries (product)
-                                    a. series.tsx
-                                    b. panel Admin
-                                    c. redux
+                                1. sideToSide
+                                    a. reducer -> reducer & actions
+                                    b. index.tsx
 
-                                3. menuImage
-                                    a. image.tsx
-                                    b. panel Admin
-                                    c. redux
+                                    1. menuCategory
+                                        a. category.tsx
+                                        b. panel Admin
+                                        c. redux
+                                    
+                                    2. menuSeries (product)
+                                        a. series.tsx
+                                        b. panel Admin
+                                        c. redux
+
+                                    3. menuImage
+                                        a. image.tsx
+                                        b. panel Admin
+                                        c. redux
                         
                     c. Session
                     d. index

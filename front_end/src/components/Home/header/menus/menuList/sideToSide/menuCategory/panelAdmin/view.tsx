@@ -1,18 +1,17 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import type { AppDispatch, RooState } from "../../../../../../../store";
 import { useDispatch, useSelector } from "react-redux";
-import { onChangeSliderPanelAdmin } from "../../../../../../PanelAdmin/structcher/redux/panelAdminSlice";
+import { onChangeSliderPanelAdmin } from "../../../../../../../PanelAdmin/structcher/redux/panelAdminSlice";
+import type { AppDispatch, RooState } from "../../../../../../../../store";
 
-
-const ViewImageMegaMenuPA = () => {
+const ViewMenuCategoryPA = () => {
     const dispatch = useDispatch<AppDispatch>()
     const {user} =  useSelector((state: RooState) => state.panelAdmin)
     const navigate = useNavigate()
 
 
     useEffect(() => {
-        dispatch(onChangeSliderPanelAdmin({id: 6}))
+        dispatch(onChangeSliderPanelAdmin({id: 4}))
     }, [])
 
     useEffect(() => {
@@ -29,9 +28,9 @@ const ViewImageMegaMenuPA = () => {
     }, [user])
     return(
         <div className={`flex justify-center items-center flex-col gap-10 ${user?.level !== "A" && user?.level !== 'B' ? "opacity-10": ""}`}>
-            <h1 className="text-2xl hover:tracking-[.3rem] duration-300">Image Menu Tables</h1> 
+            <h1 className="text-2xl hover:tracking-[.3rem] duration-300">Mega Menu Category Tables</h1> 
             <Outlet />
         </div>
     )
 }
-export default ViewImageMegaMenuPA;
+export default ViewMenuCategoryPA;

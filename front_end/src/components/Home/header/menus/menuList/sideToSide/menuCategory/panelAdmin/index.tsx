@@ -1,16 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import type { AppDispatch, RooState } from "../../../../../../../store";
+import type { AppDispatch, RooState } from "../../../../../../../../store";
 import { useEffect } from "react";
-import { changeStatusImageMenuThunk, deleteImageMenuHeadersThunk, viewImageMenuHeadresThunk } from "../redux/actionsImageMenu";
-import { imgURL } from "../../../../../../../baseURL";
+import { deleteItemsCategoryHeadersThunk, viewCategoryHeadresThunk, changeStatusItemCategoryThunk  } from "../redux/actionCategory";
 
-const MenuImageHeadersPA = () => {
-    const {images, loading} = useSelector((state: RooState) => state.imagesMenus)
-   
+const MenuCategoryHeadresPA = () => {
+    const {categories, loading} = useSelector((state: RooState) => state.categoreis)
     const dispatch = useDispatch<AppDispatch>()
+    
     useEffect(() => {
-        dispatch(viewImageMenuHeadresThunk())
+        dispatch(viewCategoryHeadresThunk())
     }, [loading]) 
 
     return(
@@ -20,7 +19,7 @@ const MenuImageHeadersPA = () => {
                 className="text-center text-4xl my-3 cursor-pointer hover:text-sky-500 duration-200 hover:tracking-[.3rem]"
                 to = "create" 
             >
-                create image item
+                create category item
             </Link>
             
             <div className="w-[90%] mx-auto flex flex-col my-3 overflow-x-auto " >
@@ -29,37 +28,37 @@ const MenuImageHeadersPA = () => {
                     <thead >
                         <tr >
                             <th>#</th>
-                            <th>Image</th>
+                            <th>Category</th>
                             <th>List</th>
                             <th>Title</th>
-                            <th>Caption</th>
+                            <th>Sign</th>
                             <th>status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody >
-                        {Array.isArray(images) && images.map((item, ind) => {
+                        {Array.isArray(categories) && categories.map((item, ind) => { 
                             return(
                                 <tr key = {ind} className=" " >
                                     
                                     <th className="">{ind + 1}</th>
                                     
-                                    <th className=" ">
-                                        <img src = {imgURL + item.image} className="mx-auto h-[100px] " alt="" />
-                                    </th>
+                                    <th>{item.category}</th>
                                                             
                                     <th>{item.list}</th>
+                                    
                                     <th>{item.title}</th>
-                                    <th>{item.body}</th>
+
+                                    <th>{item.sign}</th>
 
                                     <th className = {`${item.status == 10 ? "text-green-400" : 'text-rose-400'  } `}>
                                         {item.status == 10 ? 'enable' : 'disable'}
                                     </th>
-
+                    
                                     <th>
                                         <div 
                                             onClick={() => {
-                                                dispatch(changeStatusImageMenuThunk({id: item.id}) );
+                                                dispatch(changeStatusItemCategoryThunk({id: item.id}) );
                                             }}
                                             className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 py-1 "
                                         >
@@ -74,7 +73,7 @@ const MenuImageHeadersPA = () => {
                                         
                                         <div 
                                             onClick={() => {
-                                               window.confirm('Do you want it to be deleted ? ')  && dispatch(deleteImageMenuHeadersThunk({id: item.id}))                                            
+                                               window.confirm('Do you want it to be deleted ? ')  && dispatch(deleteItemsCategoryHeadersThunk({id: item.id}))                                            
                                             }}
                                             className="text-rose-500 cursor-pointer duration-200 hover:text-red-700! py-1"
                                         >
@@ -92,4 +91,4 @@ const MenuImageHeadersPA = () => {
         </div>
     )
 }
-export default MenuImageHeadersPA
+export default MenuCategoryHeadresPA

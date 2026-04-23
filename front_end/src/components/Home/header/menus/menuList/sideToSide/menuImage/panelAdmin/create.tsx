@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom"
-import type { AppDispatch, RooState } from "../../../../../../../store";
+import type { AppDispatch, RooState } from "../../../../../../../../store";
 import { useEffect, useState } from "react";
 import { onAddItemsImage, onBodyImage, onListImage, onLoadingImage, onSetURLImage, onTitleImage } from "../redux/sliceImageMenus";
-import { viewMenusHeaders } from "../../../redux/actionsMenus";
-import { foundItemsListHeadersThunk, viewListHeadersThunk } from "../../redux/actionsMenuList";
+import { viewMenusHeaders } from "../../../../redux/actionsMenus";
+import { foundItemsListHeadersThunk, viewListHeadersThunk } from "../../../redux/actionsMenuList";
 import { createImageMenuHeadersThunk } from "../redux/actionsImageMenu";
 
 

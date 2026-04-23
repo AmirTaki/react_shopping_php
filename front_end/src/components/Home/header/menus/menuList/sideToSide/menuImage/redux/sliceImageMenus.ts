@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {editImageMenuHeadersThunk, readingItemImageMenuThunk, changeStatusImageMenuThunk, deleteImageMenuHeadersThunk, viewImageMenuHeadresThunk, createImageMenuHeadersThunk } from "./actionsImageMenu";
-import { imgURL } from "../../../../../../../baseURL";
+import { imgURL } from "../../../../../../../../baseURL";
 
 export type TImageMenuHeader =  Array<{id: number, image: string,  list: string, title: string, body: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TImageMenuHeaderObject = {id: number, image: string,  list: string, title: string, body: string, status: number, created_at: string, updated_at: string }

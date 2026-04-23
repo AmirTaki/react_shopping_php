@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import type { AppDispatch, RooState } from "../../../../../../../store";
+import type { AppDispatch, RooState } from "../../../../../../../../store";
 import { useEffect } from "react";
 import { changeStatusItemProductThunk, deleteItemsProductHeadersThunk, viewProductHeadresThunk } from "../redux/actionsMenuSeries";
 
