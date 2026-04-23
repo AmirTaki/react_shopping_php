@@ -53,7 +53,7 @@ const SidetoSide = ({list, sideToSide, dispatchSideToSide, index, menu}: SideToS
                     ${ (sideToSide.SideToSide as any)[index] ? `openSideToSide` : `closeSideToSide`}
                 ` 
                 : 
-                'fixed left-[30%]  w-[60%]   top-14  flex  h-110  overflow-hidden '}
+                'fixed left-[25.7%]  w-[70%]   top-14  flex  h-110  overflow-hidden  hidden  group-hover/list:flex'}
             `}
         >   
             {/* header side to side  ${dark ? "navbarDark" : "navbarWhite"}*/}
@@ -92,8 +92,9 @@ const SidetoSide = ({list, sideToSide, dispatchSideToSide, index, menu}: SideToS
             <div className={`${response ? `flex flex-wrap flex-col h-screen` : `w-full group-hover/list:flex hidden `}`}>
               
                 {/* category */}
-                <div className={`${response ? `w-[50%]  h-[50%]  ` : `w-[33.3%] py-3 bg-[blue]`}`}>
-                    <div className="text-center">category</div>
+                <div className={`${response ? `w-[50%]  h-[50%]  ` : `w-[33.3%] py-3 dark:bg-[#242424] bg-white border-r `}`}>
+                    <div className=" bg-[silver] text-gray-950 h-10 flex justify-center items-center">category</div>
+                    
                     {Array.isArray(categories) && categories.map((item) => {
                         if(item.list === list.list && item.status == 10 && item.title == menu.title){
                             return(
@@ -105,7 +106,7 @@ const SidetoSide = ({list, sideToSide, dispatchSideToSide, index, menu}: SideToS
                 </div>
 
                 {/* series product */}
-                <div className={`${response ? `w-[50%]  h-[50%] border-t ` : `w-[33.3%] bg-[red] `}`}>
+                <div className={`${response ? `w-[50%]  h-[50%] border-t ` : `w-[33.3%] dark:bg-[#242424] bg-white   `}`}>
                     <div className="text-center">series</div>
                     {Array.isArray(products) && products.map((item) => {
                         if(item.list === list.list && item.status == 10 && item.title == menu.title){
@@ -119,7 +120,7 @@ const SidetoSide = ({list, sideToSide, dispatchSideToSide, index, menu}: SideToS
 
 
                 {/* image */}
-                <div className={`${response ? `w-[50%]  h-full border-l ` : `w-[33.3%]  bg-green-400 `}`}>image
+                <div className={`${response ? `w-[50%]  h-full border-l ` : `w-[33.3%]  dark:bg-[#242424] bg-white  `}`}>image
                     {Array.isArray(images) && images.map((item) => {
                         if(item.list === list.list && item.status == 10 && item.title == menu.title){
                             return(
