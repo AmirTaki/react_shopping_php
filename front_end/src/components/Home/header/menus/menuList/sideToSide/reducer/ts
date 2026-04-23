@@ -1,0 +1,44 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+// تعریف نوع‌ها
+interface ISideToSide {
+  [key: string]: boolean;
+}
+
+interface ISideState {
+  SideToSide: ISideToSide;
+  hasInteracted: null | boolean;
+}
+
+const initialState: ISideState = {
+  SideToSide: {},
+  hasInteracted: null,
+};
+
+// ایجاد Slice
+const sideSlice = createSlice({
+  name: 'sideState',
+  initialState,
+  reducers: {
+    open: (state, action: PayloadAction<{ id: number }>) => {
+      state.hasInteracted = true;
+      state.SideToSide[action.payload.id] = true;
+    },
+    close: (state, action: PayloadAction<{ id: number }>) => {
+      state.hasInteracted = false;
+      state.SideToSide[action.payload.id] = false;
+    },
+    closeAll: (state) => {
+      Object.keys(state.SideToSide).forEach((key) => {
+        state.SideToSide[key] = false;
+      });
+    },
+    nullHasInteracted: (state) => {
+      state.hasInteracted = null;
+    },
+  },
+});
+
+// اکسپورت کردن اکشن‌ها و ریدوسر
+export const { open, close, closeAll, nullHasInteracted } = sideSlice.actions;
+export default sideSlice.reducer;

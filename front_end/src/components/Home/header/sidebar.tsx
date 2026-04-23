@@ -15,8 +15,6 @@ const Sidebar = () => {
     const {Menus} = useSelector((state: RooState) => state.menus)
 
   
-    
-
     useEffect(() => {
         dispatch(viewMenusHeaders())
     }, [])
@@ -30,7 +28,7 @@ const Sidebar = () => {
                     ${sidebar === null ?  `hidden!` : ''}
                     fixed w-full min-h-screen dark:bg-[#242424]! bg-white top-0 left-0 z-10` 
                     : 
-                    ``}
+                    ` `}
                 `}
             >
                 {/* cross sidesar */}
@@ -44,7 +42,7 @@ const Sidebar = () => {
                 </div>
 
                 {/* menu */}
-                <div className={`${response ? `flex flex-col min-h-screen mt-5` : ``}`}>
+                <div className={`${response ? `flex flex-col min-h-screen mt-5` : `flex gap-5`}`}>
                     {Array.isArray(Menus) && Menus.map((menu, index) => {
                         if(menu.status == 10){
                             return (

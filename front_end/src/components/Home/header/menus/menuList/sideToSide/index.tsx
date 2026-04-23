@@ -4,6 +4,7 @@ import { closeWidthDelay } from "../../../redux/headerSlice";
 import { FaChevronLeft } from "react-icons/fa6";
 import type { TListMenusHeaderObject } from "../redux/sliceMenuList";
 import type { ISideState, TActionSideToSide } from "../sideToSide/reducer/reducer";
+import "../../../styles/styles.css"
 
 interface SideToSideComponent {
     list: TListMenusHeaderObject, 
@@ -32,22 +33,25 @@ const SidetoSide = ({list, sideToSide, dispatchSideToSide, index}: SideToSideCom
                     ${ (sideToSide.SideToSide as any)[index] ? `openSideToSide` : `closeSideToSide`}
                 ` 
                 : 
-                'hidden'}
+                'fixed bg-[blue] left-[32%]  w-[63%]  top-14  flex  h-110  '}
             `}
         >   
             {/* left button */}
             <div className=""
-                onClick={() => {
-                    if(window.innerWidth < 750){closeSide()}
+                onClick={(e) => {       
+                    e.stopPropagation();
+                    if(window.innerWidth <= 750){closeSide()}
                 }}
             >
-                <FaChevronLeft /> {list.list}
+                <FaChevronLeft  className="hidden"/>
+                 {list.list}
             </div>
 
             {/* circle  */}
             <div className=""
-                onClick={() => {
-                    if(window.innerWidth < 750){
+                onClick={(e) => {
+                    e.stopPropagation();
+                    if(window.innerWidth <= 750){
                         closeSide();
                         dispatch(closeWidthDelay())
                     }

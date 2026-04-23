@@ -31,9 +31,9 @@ const MenusSidebar = ({menu, index }: {menu: TMenusHeaderObject, index: number} 
     return(
         <div
             ref = {(x: HTMLDivElement | null) => {menusRef.current[index] = x}} 
-            className={`${response ? ` group/menu overflow-hidden` : ``}`}
+            className={`${response ? `  overflow-hidden` : ``} group/menu `}
         >
-            <div className={`${response ? `h-10 flex items-center justify-between px-5 ` : ``}`}>
+            <div className={`${response ? `h-10 flex items-center justify-between px-5 ` : `h-14 flex justify-center items-center px-2 cursor-pointer  group-hover/menu:border-b-1 duration-200 `}`}>
                 <div className=""> {menu.title}</div>
                 <div className={`${response ? `text-[silver] group-hover/menu:rotate-180 duration-300` : `hidden`}`}> <FaChevronDown/></div>
             </div>
@@ -43,17 +43,19 @@ const MenusSidebar = ({menu, index }: {menu: TMenusHeaderObject, index: number} 
                 style={{'--dynamic-height' : `${findHightDynamic(index)}px`} as React.CSSProperties} 
                 className={`${response ? `h-0 group-hover/menu:h-[var(--dynamic-height)] duration-400   ${dark ? 'bg-[rgba(224,227,222,0.11)]' : 'bg-[rgba(222,222,222,.6)]'}`
                     : 
-                    ``}
+                    `fixed bg-amber-800 w-full h-110 left-0 top-14 group-hover/menu:flex hidden   px-[5%]`}
                 `}
-            >
-                {Array.isArray(Lists) && Lists.map((item, index) => {
-                    if(item.title == menu.title && item.status == 10){
-                        return(
-                            <ListSidebar key = {item.id} list = {item} index = {index}/>
-                       
-                        )
-                    }
-                })}
+            >   
+                <div className={`${response ? `` : `flex flex-col h-full w-[30%] border-r bg-amber-600`}`}>
+                    {Array.isArray(Lists) && Lists.map((item, index) => {
+                        if(item.title == menu.title && item.status == 10){
+                            return(
+                                <ListSidebar key = {item.id} list = {item} index = {index}/>
+                        
+                            )
+                        }
+                    })}
+                </div>
             </div>
         </div>
     )
