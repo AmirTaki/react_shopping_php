@@ -28,7 +28,7 @@ const ListSidebar = ({list, index, menu}: {list: TListMenusHeaderObject, index: 
                 }}
                 className={`${response ? `flex  h-10 text-[15px]  items-center justify-between px-10  my-1 cursor-pointer dark:group-hover/list:text-rose-400 group-hover/list:text-sky-400 duration-300` 
                     :
-                    ` h-8 flex items-center px-2 group-hover/list:text-sky-500  `
+                    ` h-10 flex items-center px-2 group-hover/list:text-sky-500  `
                 }`}
             >
                 <div className="">{list.list}</div>

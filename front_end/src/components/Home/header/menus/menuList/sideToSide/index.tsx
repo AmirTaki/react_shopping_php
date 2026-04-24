@@ -10,8 +10,10 @@ import { useEffect } from "react";
 import { viewCategoryHeadresThunk } from "./menuCategory/redux/actionCategory";
 import type { TMenusHeaderObject } from "../../redux/menusSlice";
 import { viewProductHeadresThunk } from "./menuSeries/redux/actionsMenuSeries";
-import { imgURL } from "../../../../../../baseURL";
 import { viewImageMenuHeadresThunk } from "./menuImage/redux/actionsImageMenu";
+import CategoryMenus from "./menuCategory/category";
+import SeriesMenus from "./menuSeries/series";
+import ImagesMenus from "./menuImage/image";
 
 interface SideToSideComponent {
     list: TListMenusHeaderObject, 
@@ -92,13 +94,13 @@ const SidetoSide = ({list, sideToSide, dispatchSideToSide, index, menu}: SideToS
             <div className={`${response ? `flex flex-wrap flex-col h-screen` : `w-full group-hover/list:flex hidden `}`}>
               
                 {/* category */}
-                <div className={`${response ? `w-[50%]  h-[50%]  ` : `w-[33.3%] py-3 dark:bg-[#242424] bg-white border-r `}`}>
+                <div className={`${response ? `w-[50%]  h-[50%]  ` : `w-[33.3%] py-3 dark:bg-[#242424] bg-white  border-r flex flex-col `}`}>
                     <div className=" bg-[silver] text-gray-950 h-10 flex justify-center items-center">category</div>
                     
                     {Array.isArray(categories) && categories.map((item) => {
                         if(item.list === list.list && item.status == 10 && item.title == menu.title){
                             return(
-                                <div key = {item.id} className="" >{item.category}</div>
+                                <CategoryMenus key = {item.id} item = {item} />
                             )
                         }
                     }) }
@@ -106,12 +108,13 @@ const SidetoSide = ({list, sideToSide, dispatchSideToSide, index, menu}: SideToS
                 </div>
 
                 {/* series product */}
-                <div className={`${response ? `w-[50%]  h-[50%] border-t ` : `w-[33.3%] dark:bg-[#242424] bg-white   `}`}>
-                    <div className="text-center">series</div>
+                <div className={`${response ? `w-[50%]  h-[50%] border-t ` : `w-[33.3%] py-3 dark:bg-[#242424] bg-white border-r flex flex-col `}`}>
+                    <div className=" bg-[silver] text-gray-950 h-10 flex justify-center items-center">series</div>
+
                     {Array.isArray(products) && products.map((item) => {
                         if(item.list === list.list && item.status == 10 && item.title == menu.title){
                             return(
-                                <div key = {item.id} className="" >{item.series}</div>
+                                <SeriesMenus key = {item.id} item = {item} />
                             )
                         }
                     }) }
@@ -120,13 +123,11 @@ const SidetoSide = ({list, sideToSide, dispatchSideToSide, index, menu}: SideToS
 
 
                 {/* image */}
-                <div className={`${response ? `w-[50%]  h-full border-l ` : `w-[33.3%]  dark:bg-[#242424] bg-white  `}`}>image
+                <div className={`${response ? `w-[50%]  h-full border-l ` : `w-[33.3%]  dark:bg-[#242424] bg-white  `}`}>
                     {Array.isArray(images) && images.map((item) => {
                         if(item.list === list.list && item.status == 10 && item.title == menu.title){
                             return(
-                                <div key = {item.id} className="" >
-                                    <img src={imgURL + item.image} alt="" />
-                                </div>
+                                <ImagesMenus key = {item.id} item = {item} />
                             )
                         }
                     }) }
