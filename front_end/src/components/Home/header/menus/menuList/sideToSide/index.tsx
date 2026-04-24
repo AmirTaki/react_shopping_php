@@ -55,7 +55,7 @@ const SidetoSide = ({list, sideToSide, dispatchSideToSide, index, menu}: SideToS
                     ${ (sideToSide.SideToSide as any)[index] ? `openSideToSide` : `closeSideToSide`}
                 ` 
                 : 
-                'fixed left-[25.7%]  w-[70%]   top-14  flex  h-110  overflow-hidden  hidden  group-hover/list:flex'}
+                'fixed left-[25.7%]  w-[70%]   top-14  flex  h-110  overflow-hidden  hidden  group-hover/list:flex SideToMegaMenu'}
             `}
         >   
             {/* header side to side  ${dark ? "navbarDark" : "navbarWhite"}*/}
@@ -91,10 +91,10 @@ const SidetoSide = ({list, sideToSide, dispatchSideToSide, index, menu}: SideToS
 
 
             {/* contianer  side to side */}
-            <div className={`${response ? `flex flex-wrap flex-col h-screen` : `w-full group-hover/list:flex hidden `}`}>
+            <div className={`${response ? `flex flex-wrap flex-col h-screen` : `w-full group-hover/list:flex hidden sideToSideContainer`}`}>
               
                 {/* category */}
-                <div className={`${response ? `w-[50%]  h-[50%]  ` : `w-[33.3%] py-3 dark:bg-[#242424] bg-white  border-r flex flex-col `}`}>
+                <div className={`${response ? `w-[50%]  h-[50%]  ` : `w-[33.3%] py-3 dark:bg-[#242424] bg-white  border-r flex flex-col category`}`}>
                     <div className=" bg-[silver] text-gray-950 h-10 flex justify-center items-center">category</div>
                     
                     {Array.isArray(categories) && categories.map((item) => {

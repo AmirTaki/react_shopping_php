@@ -2,7 +2,7 @@ import { FaChevronRight } from "react-icons/fa6";
 import type { TListMenusHeaderObject } from "./redux/sliceMenuList";
 import { useDispatch, useSelector } from "react-redux";
 import { type AppDispatch, type RooState } from "../../../../../store";
-import {useReducer } from "react";
+import {useReducer, useRef } from "react";
 import { reducerSideToSide, SideState } from "./sideToSide/reducer/reducer";
 import "../../styles/styles.css"
 import SidetoSide from "./sideToSide";
@@ -10,14 +10,17 @@ import type { TMenusHeaderObject } from "../redux/menusSlice";
 
 const ListSidebar = ({list, index, menu}: {list: TListMenusHeaderObject, index: number, menu: TMenusHeaderObject }) => {
     const {response} = useSelector((state: RooState) => state.response) // response ?  mobile : desktop
-    
+    const {dark} = useSelector((state: RooState) => state.darkMode)
+
     const dispatch = useDispatch<AppDispatch>()
     const [sideToSide, dispatchSideToSide] =  useReducer(reducerSideToSide, SideState)   // usereducer for side to side
+    const ListsRef =  useRef<Array<HTMLElement | null>>([])    
     
     return(
         <div 
+            ref = {(x)  => {ListsRef.current[index] = x}}
             key = {list.id} 
-            className = {`${response ? `listElement   ` : ``} group/list`}
+            className = {`${response ? `listElement   ` : ``} group/list listMouseEnter`}
         >
             <div 
                 onClick={(e) => {
@@ -28,7 +31,7 @@ const ListSidebar = ({list, index, menu}: {list: TListMenusHeaderObject, index: 
                 }}
                 className={`${response ? `flex  h-10 text-[15px]  items-center justify-between px-10  my-1 cursor-pointer dark:group-hover/list:text-rose-400 group-hover/list:text-sky-400 duration-300` 
                     :
-                    ` h-10 flex items-center px-2 group-hover/list:text-sky-500  `
+                    ` h-10 flex items-center px-2    group-hover/list:text-sky-400 dark:group-hover/list:text-rose-400 dark:group-hover/list:bg-[silver] group-hover/list:bg-teal-50 ListItems   `
                 }`}
             >
                 <div className="">{list.list}</div>
