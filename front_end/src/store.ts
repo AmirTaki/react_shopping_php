@@ -12,6 +12,7 @@ import listMenusSlice from "./components/Home/header/menus/menuList/redux/sliceM
 import categorySlice from "./components/Home/header/menus/menuList/sideToSide/menuCategory/redux/sliceCategory";
 import sereisSlice from "./components/Home/header/menus/menuList/sideToSide/menuSeries/redux/sliceMenuSeries";
 import imageMenuSlice from "./components/Home/header/menus/menuList/sideToSide/menuImage/redux/sliceImageMenus";
+import SwiperSlicer from "./components/Home/session/backGroundSlider/redux/swiperSlice";
 
 const reducers = combineReducers({
 
@@ -52,6 +53,9 @@ const reducers = combineReducers({
     // images 
     imagesMenus: imageMenuSlice.reducer,     // images menus header in panel Admin
 
+    // ---------------------------- session -----------------------------------------
+    // backgroud slider
+    SwiperSlide: SwiperSlicer.reducer,          // background slider -> swiper slicer 
 
 
 

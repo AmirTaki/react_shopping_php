@@ -69,14 +69,14 @@ const MenusSidebar = ({menu, index }: {menu: TMenusHeaderObject, index: number} 
             {/* list */}
             <div 
                 style={{'--dynamic-height' : `${findHightDynamic(index)}px`} as React.CSSProperties} 
-                className={`${response ? `h-0 group-hover/menu:h-[var(--dynamic-height)] duration-400   `
+                className={`${response ? `h-0 group-hover/menu:h-[var(--dynamic-height)] duration-400  ${dark ? 'bg-[rgba(224,227,222,0.11)]' : 'bg-[rgba(222,222,222,.6)]'} `
                     : 
-                    `fixed w-full h-110 left-0 top-14 group-hover/menu:flex  hidden  px-[5%]`}
+                    `fixed w-full h-110 left-0 top-14 group-hover/menu:flex  hidden  px-[5%]   ${dark ?  "bg-[#474747] " : "bg-[#efefef]"} `}
                     
-                    ${dark ? 'bg-[rgba(224,227,222,0.11)]' : 'bg-[rgba(222,222,222,.6)]'}
+                    
                 `}
             >   
-                <div className={`${response ? `` : `flex flex-col h-full w-[23%]  border-r py-4  dark:bg-[#242424] bg-white   `}`}>
+                <div className={`${response ? `` : `flex flex-col h-full w-[23%]  border-r py-4   `}`}>
                     {Array.isArray(Lists) && Lists.map((item, index) => {
                         if(item.title == menu.title && item.status == 10){
                             return(
