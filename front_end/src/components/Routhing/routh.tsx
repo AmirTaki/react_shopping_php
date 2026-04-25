@@ -32,6 +32,7 @@ import CreateMegaMenuImagePA from "../Home/header/menus/menuList/sideToSide/menu
 import EditMegaMenuImagePA from "../Home/header/menus/menuList/sideToSide/menuImage/panelAdmin/edit"
 import ViewImageSliderSessionPA from "../Home/session/backGroundSlider/panelAdmin/view"
 import ImageSliderSessionPA from "../Home/session/backGroundSlider/panelAdmin"
+import CreateSessionImageSliderPA from "../Home/session/backGroundSlider/panelAdmin/create"
 
 const Routh = () => {
     return (
@@ -110,7 +111,7 @@ const Routh = () => {
                         {/* headers -> image : navbar */}
                         <Route path="sessionImageSlider" element = {<ViewImageSliderSessionPA />}>
                             <Route path = "" element = {<ImageSliderSessionPA />}/>
-                            {/* <Route path = "create" element = {<CreateMegaMenuImagePA />}/> */}
+                            <Route path = "create" element = {<CreateSessionImageSliderPA />}/>
                             {/* <Route path = "edit/:id" element = {<EditMegaMenuImagePA />}/> */}
                         </Route>
 

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewImageSliderSessionThunk } from "./actionsSwiper";
+import { viewImageSliderSessionThunk, createImageSliderSessionThunk } from "./actionsSwiper";
 
 export type TImageSlider = Array<{id: number, image: string, title: string, status: number, created_at: string, updated_at: string}> | boolean | string
 export type TImageSliderObject = {id: number, image: string, title: string, status: number, created_at: string, updated_at: string}
@@ -22,10 +22,8 @@ interface ISwiperToolkit {
 
     // create & edit
     urlImage: string   // save image url
-    image: string,
-    imageWarning: string,
-    title: string, 
-    titleWarning: string,
+    image: {name: string, warning: string},
+    title: {name: string, warning: string},
     callback: boolean, 
     addItems: boolean,
 
@@ -53,10 +51,9 @@ const initialState: ISwiperToolkit =  {
 
     // create & edit
     urlImage: '', // save image url
-    image: '',
-    imageWarning: '',
-    title: '', 
-    titleWarning: '',
+    image: {name: '', warning: ''},
+    title: {name: '', warning: ''},
+
     callback: false, 
     addItems: false,
 
@@ -146,9 +143,30 @@ const SwiperSlicer = createSlice({
                 state.activeIndicator = (state.slide - 2) % state.sliders.length
                 if(state.activeIndicator < 0) state.activeIndicator += state.sliders.length
             }
-        }
+        },
 
         // panel admin
+        onTitleSwiper: (state, action) => {
+            state.title = {name: action.payload.title, warning : ''}
+        },
+        onSetURLSwiper: (state, action) => {
+            state.urlImage = action.payload.result
+        },
+        onLoadingSwiper: (state) => {
+            state.urlImage = ''
+            state.image = {name: '', warning: ''},
+            state.title = {name: '', warning: ''}
+        },
+        onWarningSwiper: (state, action) => {
+            state.image = {name: state.image.name,  warning: action.payload.image}
+            state.title ={ name: state.title.name,  warning: action.payload.title}
+        },
+        onCallBackSwiper: (state) => {
+            state.callback = true
+        },
+        onSetItemsSwiper: (state) => {
+            state.addItems = false
+        }
 
     },
     extraReducers: (builder) => {
@@ -163,8 +181,27 @@ const SwiperSlicer = createSlice({
             state.warningMessage = ''
             state.sliders = action.payload
         })
+        
+        // create item image slider
+        builder.addCase(createImageSliderSessionThunk.pending, (state) => {
+            state.callback = false
+            state.addItems =false
+            state.warningMessage = ''
+        })
+        builder.addCase(createImageSliderSessionThunk.rejected, (state, action) => {
+            state.callback = false
+            state.addItems = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(createImageSliderSessionThunk.fulfilled, (state, action) => {
+            state.addItems = action.payload === true ? true : false
+            state.callback = false
+        })
     }
 })
 
 export default SwiperSlicer
-export const {clickRight, clickLeft, endTransition, handlerWidthContainer, handlerExtractSliders, HandlerMouseDown, HanlderMouseMove, HandlerMouseUp, HandlerActiveButton, HandlerButton} = SwiperSlicer.actions;
+export const {clickRight, clickLeft, endTransition, handlerWidthContainer, handlerExtractSliders, HandlerMouseDown, HanlderMouseMove, HandlerMouseUp, HandlerActiveButton, HandlerButton,
+
+    onTitleSwiper,onCallBackSwiper,     onLoadingSwiper, onSetItemsSwiper, onSetURLSwiper, onWarningSwiper
+} = SwiperSlicer.actions;
