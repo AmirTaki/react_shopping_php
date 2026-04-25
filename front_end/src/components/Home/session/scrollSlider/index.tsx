@@ -85,7 +85,7 @@ const PayloarSlider = () => {
                         <div 
                             key = {index}
                             className="w-[300px] mx-[10px] h-[90%] text-4xl flex justify-center items-center rounded-2xl overflow-hidden"
-                            style={{border: `1px solid blue`}}
+                            style={{border: `1px solid white`}}
                         >
                             <img src={imgURL + item.image }  className="w-full h-full" draggable = {false} alt="" />
                         </div>

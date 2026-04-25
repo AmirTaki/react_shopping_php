@@ -11,6 +11,13 @@ interface IPayloarSlider {
     // create & edit
     urlImage: string , // save image url
 
+    image: {url: string, warning: string},
+    body: {caption: string, warning: string},
+    title: {name: string, warning: string},
+    price: {money: number, warning: string},
+    callback: boolean, 
+    addItems: boolean,
+
     // delete & status 
     loading: boolean
 }
@@ -20,6 +27,12 @@ const initialState: IPayloarSlider = {
 
     // create & edit
     urlImage: '' , // save image url
+    image: {url: '', warning: ''},
+    body: {caption: '', warning: ''},
+    title: {name: '', warning: ''},
+    price: {money: 0, warning: ''},   
+    callback: false, 
+    addItems: false ,
 
     // delete & status 
     loading: false
@@ -28,7 +41,40 @@ const initialState: IPayloarSlider = {
 const scrollSliderSlice = createSlice({
     name: 'scroll_slider_swiper_toolkit',
     initialState: initialState,
-    reducers: {},
+    reducers: {
+
+        onSetURLPayloar: (state, action) => {
+            state.urlImage = action.payload.result
+        },
+        onTitlePayloar: (state, action) => {
+            state.title = {name: action.payload.title, warning: ''}
+        },
+        onBodyPayloar: (state, action) => {
+            state.body = {caption: action.payload.body, warning: ''}
+        },
+        onPricePayloar: (state, action) => {
+            state.price = {money: action.payload.price < 0 ? 0 : action.payload.price, warning: ''}
+        }, 
+        onWarningPayloar: (state, action) => {
+            state.image = {url: state.image.url, warning: action.payload.image},
+            state.body ={caption: state.body.caption, warning: action.payload.body},
+            state.title = {name: state.title.name, warning: action.payload.title},
+            state.price = {money: 0, warning: action.payload.price}
+        },
+        onCallBackPayloar: (state) => {
+            state.callback = true
+        },
+        onLoadingPayloar: (state) => {
+            state.urlImage = ''
+            state.image = {url: '', warning: ''},
+            state.body ={caption: '', warning: ''},
+            state.title = {name: '', warning: ''},
+            state.price = {money: 0, warning: ''}
+        },
+        onSetItemsPayloar: (state) => {
+            state.addItems = false
+        }
+    },
     extraReducers: (builder) => {
         // view item scroll slider
         builder.addCase(viewScrollSliderSessionThunk.pending, (state) => {
@@ -44,4 +90,4 @@ const scrollSliderSlice = createSlice({
 })
 
 export default scrollSliderSlice
-export const {} = scrollSliderSlice.actions
+export const { onBodyPayloar, onCallBackPayloar, onLoadingPayloar, onPricePayloar, onSetItemsPayloar, onSetURLPayloar, onTitlePayloar, onWarningPayloar} = scrollSliderSlice.actions
