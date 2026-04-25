@@ -1,8 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { viewImageSliderSessionThunk } from "./actionsSwiper";
+
+export type TImageSlider = Array<{id: number, image: string, title: string, status: number, created_at: string, updated_at: string}> | boolean | string
+export type TImageSliderObject = {id: number, image: string, title: string, status: number, created_at: string, updated_at: string}
 
 interface ISwiperToolkit {
-    sliders : Array<string>,
-    extractSliders: Array<string>,
+    // swiper
+    sliders : TImageSlider,
+    extractSliders: TImageSlider,
     slide: number,
     isTransition: boolean,
     widthContainer: number,
@@ -11,12 +16,29 @@ interface ISwiperToolkit {
     currentX: number,
     dragOffset: number,
     activeIndicator: number
+
+    // panel Admin 
+    warningMessage: string,
+
+    // create & edit
+    urlImage: string   // save image url
+    image: string,
+    imageWarning: string,
+    title: string, 
+    titleWarning: string,
+    callback: boolean, 
+    addItems: boolean,
+
+    // status & delete
+    loading: boolean
+
 }
 
 
 const initialState: ISwiperToolkit =  {
-    sliders : ['blue', 'red', 'yellow', 'pink', 'brown', 'green', 'gray', 'orange', 'silver','blue', 'red', 'yellow', 'pink', 'brown', 'green', 'gray', 'orange', 'silver',],
-    extractSliders: [''],
+    // swiper
+    sliders : [],
+    extractSliders: [],
     slide: 2,
     isTransition: false, 
     widthContainer: 0,
@@ -24,13 +46,29 @@ const initialState: ISwiperToolkit =  {
     startX: 0,
     currentX: 0,
     dragOffset: 0,
-    activeIndicator: 0
+    activeIndicator: 0,
+
+    // panelAdmin: 
+    warningMessage : '',
+
+    // create & edit
+    urlImage: '', // save image url
+    image: '',
+    imageWarning: '',
+    title: '', 
+    titleWarning: '',
+    callback: false, 
+    addItems: false,
+
+    // status & delete
+    loading: false
 }
 
 const SwiperSlicer = createSlice({
     name: 'swiper_toolkit',
     initialState: initialState,
     reducers: {
+        // swiper 
         clickRight: (state, action) => {
             state.slide += action.payload.number
             state.isTransition = true
@@ -43,12 +81,13 @@ const SwiperSlicer = createSlice({
 
         endTransition: (state) => {
             state.isTransition = false
-            
-            if(state.slide > state.extractSliders.length - 2){
-                state.slide = state.slide - state.sliders.length
-            }
-            else if (state.slide < 2){
-                state.slide = state.slide + state.sliders.length
+            if (Array.isArray(state.sliders) && Array.isArray(state.extractSliders)){
+                if(state.slide > state.extractSliders.length - 2){
+                    state.slide = state.slide - state.sliders.length
+                }
+                else if (state.slide < 2){
+                    state.slide = state.slide + state.sliders.length
+                }
             }
            
         },
@@ -58,7 +97,9 @@ const SwiperSlicer = createSlice({
         },
 
         handlerExtractSliders : (state) => {
+            if (Array.isArray(state.sliders))
             state.extractSliders = [...state.sliders.slice(-2), ...state.sliders, ...state.sliders.slice(0, 2)]
+            
         },
 
         HandlerMouseDown: (state, action) => {
@@ -101,9 +142,27 @@ const SwiperSlicer = createSlice({
         },
 
         HandlerActiveButton: (state, ) => {
-            state.activeIndicator = (state.slide - 2) % state.sliders.length
-            if(state.activeIndicator < 0) state.activeIndicator += state.sliders.length
+            if( Array.isArray(state.sliders)){
+                state.activeIndicator = (state.slide - 2) % state.sliders.length
+                if(state.activeIndicator < 0) state.activeIndicator += state.sliders.length
+            }
         }
+
+        // panel admin
+
+    },
+    extraReducers: (builder) => {
+        // view items image sliders
+        builder.addCase(viewImageSliderSessionThunk.pending, (state)=> {
+            state.warningMessage = ''
+        })
+        builder.addCase(viewImageSliderSessionThunk.rejected, (state, action)=> {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(viewImageSliderSessionThunk.fulfilled, (state, action)=> {
+            state.warningMessage = ''
+            state.sliders = action.payload
+        })
     }
 })
 

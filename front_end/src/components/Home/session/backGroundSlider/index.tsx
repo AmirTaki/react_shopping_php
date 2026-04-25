@@ -4,6 +4,8 @@ import type { AppDispatch, RooState } from "../../../../store";
 import { handlerExtractSliders, handlerWidthContainer, HandlerActiveButton, HandlerMouseUp, HanlderMouseMove, HandlerMouseDown,HandlerButton, clickLeft, clickRight, endTransition } from "./redux/swiperSlice";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
+import { viewImageSliderSessionThunk } from "./redux/actionsSwiper";
+import { imgURL } from "../../../../baseURL";
 
 const SwiperSlide = ()  => {
     const dispatch =  useDispatch<AppDispatch>();
@@ -12,7 +14,13 @@ const SwiperSlide = ()  => {
     
     // navbar => change Menu item
     useEffect(() => { 
-        dispatch(handlerExtractSliders())
+        dispatch(viewImageSliderSessionThunk());
+
+        const timer =  setInterval(() => {
+            dispatch(handlerExtractSliders());
+            dispatch(HandlerActiveButton())
+        }, 100);
+        return () => clearInterval(timer)
 
     }, [])
 
@@ -75,18 +83,18 @@ const SwiperSlide = ()  => {
                         onTransitionEnd={() => {dispatch(endTransition())}}
                         // onTransitionStart={}
                     >
-                        {extractSliders?.map((_, ind) => {
+                        {Array.isArray(extractSliders) && extractSliders?.map((item, ind) => {
                             const isActive =  ind === slide
                             return (
                                 <div 
                                     key = {ind}
-                                    style={{ border: `1px solid ${_}` }}
-                                    draggable = {false}
-                                    className={`w-[97%] mx-[1.5%] h-full flex justify-center items-center text-5xl duration-700  rounded-4xl
+                                    // style={{ border: `1px solid blue` }}
+                         
+                                    className={`w-[100%]  h-full flex justify-center items-center text-5xl duration-700  rounded-4xl
                                         ${isActive ? 'scale-100 opacity-100': "scale-75 opacity-50"}    
                                     `}
                                 >
-                                    {ind + 1}
+                                    <img draggable = {false} src={imgURL + item.image} className="w-full h-full" alt="" />
                                 </div>
                             )
                         })}
@@ -110,7 +118,7 @@ const SwiperSlide = ()  => {
 
                 {/* button */}
                 <div className="absolute flex gap-2 bottom-6">
-                    {sliders.map((_, index) => {
+                    {Array.isArray(sliders) && sliders.map((_, index) => {
                         return(
                             <div
                                 key={index} 
@@ -121,7 +129,7 @@ const SwiperSlide = ()  => {
                                 }
                                 style={{
                                     border: `1px solid ${_}`,
-                                    backgroundColor: activeIndicator === index ? _ : ''
+                                    backgroundColor: activeIndicator === index ? 'red' : 'white'
                                 }}
                             ></div>
                         )
