@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { onCallBackSwiper, onWarningSwiper, type TImageSlider } from "./swiperSlice";
+import { onCallBackSwiper, onWarningSwiper, type TImageSlider, type TImageSliderObject } from "./swiperSlice";
 import { baseURL } from "../../../../../baseURL";
 
 export const viewImageSliderSessionThunk = createAsyncThunk<TImageSlider, void, {rejectValue: string}>(
@@ -87,8 +87,6 @@ export const deleteImageSliderSessionThunk = createAsyncThunk<TImageSlider, {id:
     }
 )
 
-
-
 export const changeStatusImageSliderSessionThunk = createAsyncThunk<TImageSlider, {id: number},{rejectValue: string}>(
     'status_item_imageSliderSession_toolkit',
     async(payload, {rejectWithValue}) => {
@@ -109,6 +107,71 @@ export const changeStatusImageSliderSessionThunk = createAsyncThunk<TImageSlider
         }
         catch(error: any){
             return rejectWithValue (`warning: ${error.message}`)
+        }
+    }
+)
+
+export const readingItemImageSliderSessionThunk = createAsyncThunk<TImageSliderObject, {id: number},{rejectValue: string}> (
+    'reading_item_ImageSlider_Session_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/backGroundSlider/slider.php/${payload.id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                } ,
+                // credentials: 'include',
+            })
+            if(!response.ok){
+                throw new Error('message');
+            }
+
+            const data =  await response.json()
+            return data
+   
+        }
+        catch(err: any){
+            return rejectWithValue (`warning: ${err.message}`)
+        }
+    }
+)
+
+
+export const editItemImageSliderSessionThunk = createAsyncThunk<TImageSlider,  {formData: FormData, id: number}, {rejectValue: string}>(
+    'edit_item_imageSlider_session_toolkit',
+    async(payload, reject) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/backGroundSlider/edit.php/${payload.id}`, {
+                method: 'POST', 
+                credentials: 'include',
+                body: payload.formData
+            })
+            
+            if (!response.ok){
+               if(response.status === 422){
+                    reject.dispatch(onWarningSwiper({
+                        title: 'title is requierd!',      
+                    }))
+                }
+                else if (response.status === 405){
+                    reject.dispatch(onCallBackSwiper())
+                }
+
+                else if (response.status === 404){
+                      reject.dispatch(onWarningSwiper({
+                        image: 'not upload image ?? repeat again !!',                        
+                    }))
+                }
+                
+                else {
+                    throw new Error ('warning ');
+                }
+            }
+            const data = await response.json()
+            return data
+        }
+        catch(err: any){
+            return (`warning: ${err.message}`)
         }
     }
 )

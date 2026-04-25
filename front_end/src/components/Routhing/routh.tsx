@@ -33,6 +33,7 @@ import EditMegaMenuImagePA from "../Home/header/menus/menuList/sideToSide/menuIm
 import ViewImageSliderSessionPA from "../Home/session/backGroundSlider/panelAdmin/view"
 import ImageSliderSessionPA from "../Home/session/backGroundSlider/panelAdmin"
 import CreateSessionImageSliderPA from "../Home/session/backGroundSlider/panelAdmin/create"
+import EditSessionImageSliderPA from "../Home/session/backGroundSlider/panelAdmin/edt"
 
 const Routh = () => {
     return (
@@ -112,7 +113,7 @@ const Routh = () => {
                         <Route path="sessionImageSlider" element = {<ViewImageSliderSessionPA />}>
                             <Route path = "" element = {<ImageSliderSessionPA />}/>
                             <Route path = "create" element = {<CreateSessionImageSliderPA />}/>
-                            {/* <Route path = "edit/:id" element = {<EditMegaMenuImagePA />}/> */}
+                            <Route path = "edit/:id" element = {<EditSessionImageSliderPA />}/>
                         </Route>
 
                     </Route>

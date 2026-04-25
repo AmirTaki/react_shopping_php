@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewImageSliderSessionThunk, createImageSliderSessionThunk, deleteImageSliderSessionThunk, changeStatusImageSliderSessionThunk } from "./actionsSwiper";
+import { viewImageSliderSessionThunk, createImageSliderSessionThunk, deleteImageSliderSessionThunk, changeStatusImageSliderSessionThunk, readingItemImageSliderSessionThunk, editItemImageSliderSessionThunk } from "./actionsSwiper";
+import { imgURL } from "../../../../../baseURL";
 
 export type TImageSlider = Array<{id: number, image: string, title: string, status: number, created_at: string, updated_at: string}> | boolean | string
 export type TImageSliderObject = {id: number, image: string, title: string, status: number, created_at: string, updated_at: string}
@@ -224,11 +225,40 @@ const SwiperSlicer = createSlice({
             state.warningMessage = ''
         }) 
 
+         // reading item image slider
+        builder.addCase(readingItemImageSliderSessionThunk.pending, (state)=> {
+            state.urlImage = ''
+        })        
+        builder.addCase(readingItemImageSliderSessionThunk.rejected, (state, action)=> {
+            state.warningMessage = action.payload as string
+        })        
+        builder.addCase(readingItemImageSliderSessionThunk.fulfilled, (state, actoin)=> {
+            state.warningMessage = ''
+            const answer = actoin.payload as TImageSliderObject
+            state.image = {name: imgURL + answer.image , warning: ''}
+            state.title = {name: answer.title, warning: ''}
+        })        
+
+        // edit item image slider
+        builder.addCase(editItemImageSliderSessionThunk.pending, (state) => {
+            state.callback = false
+            state.warningMessage = ''
+        })
+        builder.addCase(editItemImageSliderSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.callback = false
+        })
+        builder.addCase(editItemImageSliderSessionThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            state.addItems = action.payload === true ? true : false
+            state.callback = false
+        })
+
     }
 })
 
 export default SwiperSlicer
-export const {clickRight, clickLeft, endTransition, handlerWidthContainer, handlerExtractSliders, HandlerMouseDown, HanlderMouseMove, HandlerMouseUp, HandlerActiveButton, HandlerButton,
-
-    onTitleSwiper,onCallBackSwiper,     onLoadingSwiper, onSetItemsSwiper, onSetURLSwiper, onWarningSwiper
+export const {
+    clickRight, clickLeft, endTransition, handlerWidthContainer, handlerExtractSliders, HandlerMouseDown, HanlderMouseMove, HandlerMouseUp, HandlerActiveButton, HandlerButton,
+    onTitleSwiper,onCallBackSwiper,  onLoadingSwiper, onSetItemsSwiper, onSetURLSwiper, onWarningSwiper
 } = SwiperSlicer.actions;
