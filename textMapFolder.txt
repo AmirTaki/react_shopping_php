@@ -92,6 +92,11 @@
                             a. PanelAdmin
                             b. redux
                             c. index.tsx
+
+                        2. scrollSlider
+                            a. PanelAdmin
+                            b. redux
+                            c. index.tsx
                     
                     d. index
 

@@ -34,6 +34,7 @@ import ViewImageSliderSessionPA from "../Home/session/backGroundSlider/panelAdmi
 import ImageSliderSessionPA from "../Home/session/backGroundSlider/panelAdmin"
 import CreateSessionImageSliderPA from "../Home/session/backGroundSlider/panelAdmin/create"
 import EditSessionImageSliderPA from "../Home/session/backGroundSlider/panelAdmin/edt"
+import ViewScrollSliderSessionPA from "../Home/session/scrollSlider/panelAdmin/view"
 
 const Routh = () => {
     return (
@@ -109,11 +110,18 @@ const Routh = () => {
                             <Route path = "edit/:id" element = {<EditMegaMenuImagePA />}/>
                         </Route>
                         
-                        {/* headers -> image : navbar */}
+                        {/* session -> backgroundSlider (swiper slider) */}
                         <Route path="sessionImageSlider" element = {<ViewImageSliderSessionPA />}>
                             <Route path = "" element = {<ImageSliderSessionPA />}/>
                             <Route path = "create" element = {<CreateSessionImageSliderPA />}/>
                             <Route path = "edit/:id" element = {<EditSessionImageSliderPA />}/>
+                        </Route>
+                     
+                        {/* session -> scrollSlider (payloar slider) */}
+                        <Route path="sessionScrollSlider" element = {<ViewScrollSliderSessionPA />}>
+                            {/* <Route path = "" element = {<ImageSliderSessionPA />}/> */}
+                            {/* <Route path = "create" element = {<CreateSessionImageSliderPA />}/> */}
+                            {/* <Route path = "edit/:id" element = {<EditSessionImageSliderPA />}/> */}
                         </Route>
 
                     </Route>
