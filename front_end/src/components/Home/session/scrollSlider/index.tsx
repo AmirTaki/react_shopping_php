@@ -2,15 +2,42 @@ import { useEffect, useReducer, useRef,  } from "react"
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import RedcuerPayloar, { initialPayloar } from "./redux/reducerPlayoar";
+import { baseURL, imgURL } from "../../../../baseURL";
 
 const PayloarSlider = () => {
   
-    // source code
-    const containerRef = useRef<HTMLDivElement>(null)
+    const [state, dispatchReducer] =   useReducer (RedcuerPayloar, initialPayloar)
 
-    const [state, dispatchReducer] =  useReducer (RedcuerPayloar, initialPayloar)
+    const getRequestApi = async () => {
+        try{
+            const response = await fetch (baseURL + "tables/session/scrollSlider/slider.php", {
+                method: 'GET', 
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            const data = await response.json();
+            dispatchReducer({type: 'RequestAPI', payload: {boxes: data}})
+        }
+        catch(err){
+            console.error('message: ', err)
+        }
+    }
 
     useEffect(() => {
+        getRequestApi()
+        const timer =  setInterval(() => {
+            dispatchReducer({type: 'sizeHandler'})
+        }, 40)
+        return () => clearInterval(timer)
+    }, [])
+
+
+    // source code
+    const containerRef = useRef<HTMLDivElement>(null)
+    
+    useEffect(() => {
+
         const resize = () => {
             if(containerRef.current){
                 dispatchReducer({type : 'widthContainer', payload: {offset: containerRef.current.offsetWidth} })
@@ -20,10 +47,10 @@ const PayloarSlider = () => {
         resize()
         window.addEventListener('resize', resize)
         return () => window.removeEventListener('resize' ,resize)
+        
     }, [])
-
-
-
+    
+    
     useEffect(() => {
         const handlerScroll = () => {
             if(containerRef.current){
@@ -38,7 +65,7 @@ const PayloarSlider = () => {
 
 
     return(
-        <div className="text-rose-400 w-[95%] mx-auto h-[500px] border-0 flex justify-center items-center relative ">
+        <div className="text-rose-400 w-[95%] mx-auto h-[560px] border-0 flex justify-center items-center relative ">
             {/* container */}
             <div 
                 ref = {containerRef}
@@ -53,13 +80,15 @@ const PayloarSlider = () => {
                 onTouchEnd={() => {dispatchReducer({type: 'mouseUp', payload: {container: containerRef.current}})}}
             >
                 {/* item */}
-                {state.items.map((item, index) => {
+                {Array.isArray(state.items) && state.items.map((item, index) => {
                     return(
                         <div 
                             key = {index}
-                            className="w-[300px] mx-[10px] h-[70%] text-4xl flex justify-center items-center rounded-2xl"
-                            style={{border: `1px solid ${item}`}}
-                        >{index}</div>
+                            className="w-[300px] mx-[10px] h-[90%] text-4xl flex justify-center items-center rounded-2xl overflow-hidden"
+                            style={{border: `1px solid blue`}}
+                        >
+                            <img src={imgURL + item.image }  className="w-full h-full" draggable = {false} alt="" />
+                        </div>
                     )
                 })}
             </div>
