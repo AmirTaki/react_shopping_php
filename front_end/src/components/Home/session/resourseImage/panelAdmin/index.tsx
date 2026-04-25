@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { imgURL } from "../../../../../baseURL";
 import type { RooState, AppDispatch } from "../../../../../store";
-import { viewResourceImageSessionThunk } from "../redux/actionsResourse";
-// import { changeStatusResourceImageSessionThunk, deleteResourceImageSessionThunk, viewResourceImageSessionThunk } from "./actionsResourceImage";
+import { viewResourceImageSessionThunk, changeStatusResourceImageSessionThunk,deleteResourceImageSessionThunk } from "../redux/actionsResourse";
 
 const ResourceImageSessionPA = ()  => {
     const dispatch =  useDispatch<AppDispatch>()
@@ -59,7 +58,7 @@ const ResourceImageSessionPA = ()  => {
                                     <th>
                                         <div 
                                             onClick={() => {
-                                                // dispatch(changeStatusResourceImageSessionThunk({id: item.id}) );
+                                                dispatch(changeStatusResourceImageSessionThunk({id: item.id}) );
                                             }}
                                             className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 py-1 "
                                         >
@@ -74,7 +73,7 @@ const ResourceImageSessionPA = ()  => {
                                         
                                         <div 
                                             onClick={() => {
-                                                // dispatch(deleteResourceImageSessionThunk({id: item.id}))
+                                                  window.confirm('Do you want it to be deleted ? ')  &&  dispatch(deleteResourceImageSessionThunk({id: item.id}))
                                             }}
                                             className="text-rose-500 cursor-pointer duration-200 hover:text-red-700! py-1"
                                         >

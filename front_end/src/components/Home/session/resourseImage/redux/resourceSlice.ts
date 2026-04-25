@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewResourceImageSessionThunk, readingAllResourceImageSessionThnk, createResourceImageSessionThunk } from "./actionsResourse";
+import { viewResourceImageSessionThunk, readingAllResourceImageSessionThnk, createResourceImageSessionThunk, deleteResourceImageSessionThunk, changeStatusResourceImageSessionThunk } from "./actionsResourse";
 
 export type TResouceImage = Array<{id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}> | string | boolean
 export type TResouceImageObject = {id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}
@@ -258,6 +258,36 @@ const resourceImageSlice = createSlice({
             state.addItems = action.payload === true ? true : false
             state.callback = false
             state.warningMessage = ''
+        })
+
+              // delete item reosurce image
+        builder.addCase(deleteResourceImageSessionThunk.pending, (state) => {
+            state.loading = true
+            state.warningMessage = ''
+        })
+        builder.addCase(deleteResourceImageSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload  as string
+            state.loading = false
+        })
+        builder.addCase(deleteResourceImageSessionThunk.fulfilled, (state, action) => {
+            state.loading = false
+            state.warningMessage = ''
+            state.items = action.payload
+        })
+
+        // change status item resource image 
+        builder.addCase(changeStatusResourceImageSessionThunk.pending, (state) => {
+            state.loading = true
+            state.warningMessage = ''
+        })
+        builder.addCase(changeStatusResourceImageSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload  as string
+            state.loading = false
+        })
+        builder.addCase(changeStatusResourceImageSessionThunk.fulfilled, (state, action) => {
+            state.loading = false
+            state.warningMessage = ''
+            state.items = action.payload
         })
 
         // reading all itemss resource image
