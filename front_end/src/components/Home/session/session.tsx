@@ -1,4 +1,5 @@
 import SwiperSlide from "./backGroundSlider"
+import ResourceImage from "./resourseImage"
 import PayloarSlider from "./scrollSlider"
 
 const Session = () => {
@@ -8,6 +9,8 @@ const Session = () => {
             <SwiperSlide />
             {/* scroll slider -> payloar slider */}
             <PayloarSlider />
+            {/* resource image -> payloar swiper  */}
+            <ResourceImage />
              
         </div>
     )

@@ -14,6 +14,7 @@ import sereisSlice from "./components/Home/header/menus/menuList/sideToSide/menu
 import imageMenuSlice from "./components/Home/header/menus/menuList/sideToSide/menuImage/redux/sliceImageMenus";
 import SwiperSlicer from "./components/Home/session/backGroundSlider/redux/swiperSlice";
 import scrollSliderSlice from "./components/Home/session/scrollSlider/redux/actionsScrollSlider";
+import resourceImageSlice from "./components/Home/session/resourseImage/redux/resourceSlice";
 
 const reducers = combineReducers({
 
@@ -58,7 +59,9 @@ const reducers = combineReducers({
     // backgroud slider
     SwiperSlide: SwiperSlicer.reducer,          // background slider -> swiper slicer 
     // scroll slider
-    scrollPayloar:    scrollSliderSlice.reducer,     // scroll slider => payloar  slider           
+    scrollPayloar:    scrollSliderSlice.reducer,     // scroll slider => payloar  slider   
+    // resource image -> 
+    resourceImage:  resourceImageSlice.reducer,                     // resource image -> payloar swiper          
 
 
 
