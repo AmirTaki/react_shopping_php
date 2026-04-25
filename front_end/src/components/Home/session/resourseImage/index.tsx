@@ -7,12 +7,18 @@ import { rightClick, endTranistion, leftClick, handlerWidthContainer,  payloarDo
 
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
+import { imgURL } from "../../../../baseURL";
+import { viewResourceImageSessionThunk } from "./redux/actionsResourse";
 
 const ResourceImage = () => {
     const disptach =  useDispatch<AppDispatch>()    
     const {items, translateX, isTransition, isDrag, dragOffset, sizeContainer, widthContainer, sizeThumble, isScroll, dragScroll, widthScroll, translateThumble} =  useSelector((state: RooState) => state.resourceImage)
     const containerRef = useRef<HTMLDivElement>(null)
     const scrollRef = useRef<HTMLDivElement>(null)
+   
+    useEffect(() => {
+        disptach(viewResourceImageSessionThunk())
+    }, [])
 
     const getTranslateX = () => {
         const base = translateX 
@@ -21,9 +27,11 @@ const ResourceImage = () => {
             return drag
         }
         if(isScroll){
-            const scrollDrag = dragScroll * (((items.length * 350) + (items.length * 20)) / widthContainer)
-            const drag = base + scrollDrag > sizeContainer ? sizeContainer  : base + scrollDrag
-            return drag
+            if(Array.isArray(items)){
+                const scrollDrag = dragScroll * (((items.length * 350) + (items.length * 20)) / widthContainer)
+                const drag = base + scrollDrag > sizeContainer ? sizeContainer  : base + scrollDrag
+                return drag
+            }
         } 
         return base
     }
@@ -48,26 +56,31 @@ const ResourceImage = () => {
         }
     }
 
-    useEffect(() => {
-        const handlerResize = () => {
-            
-            if(containerRef.current){
-                disptach(handlerWidthContainer({offset: containerRef.current.offsetWidth}));
-            }
-            
-            if(scrollRef.current){
-                disptach(handlerContainerScroll({offset: scrollRef.current.offsetWidth}))
-            }  
-           
-            disptach(handlerSizeContainer())
-            disptach(sizeThumbe())
-           
+    const handlerResize = () => {
+        if(containerRef.current){
+            disptach(handlerWidthContainer({offset: containerRef.current.offsetWidth}));
         }
+        
+        if(scrollRef.current){
+            disptach(handlerContainerScroll({offset: scrollRef.current.offsetWidth}))
+        }  
+       
+        disptach(handlerSizeContainer())
+        disptach(sizeThumbe())
+    }
+
+    useEffect(() => {
         handlerResize()
         window.addEventListener('resize', handlerResize);
         return () => window.removeEventListener('resize', handlerResize) 
     }, [])
 
+    useEffect(() => {
+        const timer =  setInterval(() => {
+            handlerResize()
+        }, 50)
+        return () => clearInterval(timer)
+    }, [])
 
     useEffect(() => {
         disptach(rightClick({distance: 0}))
@@ -75,8 +88,8 @@ const ResourceImage = () => {
 
 
     return( 
-        <div className="text-sky-400">
-                <div className={`w-[95%] mx-auto h-80 flex justify-center items-center  relative ${isScroll && 'active:cursor-pointer'}`}
+        <div className="text-sky-400 my-6">
+                <div className={`w-[95%] mx-auto h-80  flex justify-center items-center  relative ${isScroll && 'active:cursor-pointer'}`}
                 
                     onMouseMove={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {disptach(scrollMove({client: e.clientX}))}}
                     onTouchMove={(e: React.TouchEvent<HTMLDivElement>) => {disptach(scrollMove({client: e.touches[0].clientX}))}}
@@ -88,7 +101,7 @@ const ResourceImage = () => {
                     {/* container */}
                     <div  
                         ref = {containerRef}
-                        style={{width: (items.length * 350 ) + (items.length * 20)}}
+                        style={{width:  Array.isArray(items) ? (items.length * 350 ) + (items.length * 20) : 10 }}
                         className=" h-[300px] flex flex-col flex-wrap justify-center items-center overflow-hidden select-none cursor-grab active:cursor-grabbing "
                         onMouseDown={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {disptach(payloarDown({client: e.clientX}))}}
                         onMouseMove={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {disptach(payloarMove({client: e.clientX}))}}
@@ -100,21 +113,23 @@ const ResourceImage = () => {
                         onTouchEnd={() => {disptach(payloarUp())}}
                     >
                         {/* item */}
-                        {items.map((item, index) => {
-                            return (
-                                <div 
-                                    key = {index}
-                                    className="w-[350px] h-[200px] mx-[10px] shrink-0 flex justify-center items-center text-4xl "
-                                    style={{
-                                        border: `1px solid ${item}`,
-                                        transform: `translateX(-${getTranslateX()}px)`,
-                                        transition: isTransition ? 'transform 500ms cubic-bezier(0.25, 1, 0.5, 1)' : 'none'
-                                    }}  
-                                    onTransitionEnd={() => {disptach(endTranistion())}}
-                                >
-                                    {index}
-                                </div>
-                            )
+                        {Array.isArray(items) && items.map((item, index) => {
+                            if(item.status == 10){
+                                return (
+                                    <div 
+                                        key = {index}
+                                        className="w-[350px] h-[200px] mx-[10px] shrink-0 flex justify-center items-center text-4xl "
+                                        style={{
+                                            border: `1px solid ${item}`,
+                                            transform: `translateX(-${getTranslateX()}px)`,
+                                            transition: isTransition ? 'transform 500ms cubic-bezier(0.25, 1, 0.5, 1)' : 'none'
+                                        }}  
+                                        onTransitionEnd={() => {disptach(endTranistion())}}
+                                    >
+                                        <img src={imgURL + item.image} draggable = {false} alt="" />
+                                    </div>
+                                )
+                            }
                         })}
                     </div>
 
@@ -132,7 +147,7 @@ const ResourceImage = () => {
                         <FaAngleDoubleLeft />
                     </button>
               
-                    <div className="w-[98%]  mx-auto  absolute -bottom-2 h-24 bg-transparent flex items-center hidden ">
+                    <div className="w-[98%]  mx-auto  absolute -bottom-20 h-24 bg-transparent flex items-center hidden ">
                         <div 
                             onClick={(e) => {clickScroll(e.clientX)}}
                             ref = {scrollRef}
