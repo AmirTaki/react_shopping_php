@@ -36,6 +36,7 @@ import CreateSessionImageSliderPA from "../Home/session/backGroundSlider/panelAd
 import EditSessionImageSliderPA from "../Home/session/backGroundSlider/panelAdmin/edt"
 import ViewScrollSliderSessionPA from "../Home/session/scrollSlider/panelAdmin/view"
 import ScrollSliderSessionPA from "../Home/session/scrollSlider/panelAdmin"
+import CreateSessionScrollSliderPA from "../Home/session/scrollSlider/panelAdmin/create"
 
 const Routh = () => {
     return (
@@ -121,7 +122,7 @@ const Routh = () => {
                         {/* session -> scrollSlider (payloar slider) */}
                         <Route path="sessionScrollSlider" element = {<ViewScrollSliderSessionPA />}>
                             <Route path = "" element = {<ScrollSliderSessionPA />}/>
-                            {/* <Route path = "create" element = {<CreateSessionImageSliderPA />}/> */}
+                            <Route path = "create" element = {<CreateSessionScrollSliderPA />}/>
                             {/* <Route path = "edit/:id" element = {<EditSessionImageSliderPA />}/> */}
                         </Route>
 

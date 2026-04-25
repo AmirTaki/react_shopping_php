@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewScrollSliderSessionThunk } from "./scrollSliderSlice";
+import { viewScrollSliderSessionThunk, createScrollSliderSessionThunk } from "./scrollSliderSlice";
 
 export type TScrollSlider = Array<{id: number, image: string, title: string, body: string, price: number,  status: number, created_at: string, updated_at: string}> | string | boolean
 export type TScrollSliderObject = {id: number, image: string, title: string, body: string, price: number,  status: number, created_at: string, updated_at: string}
@@ -85,6 +85,23 @@ const scrollSliderSlice = createSlice({
         })
         builder.addCase(viewScrollSliderSessionThunk.fulfilled, (state, action) => {
             state.boxses = action.payload
+        })
+        
+        // create item scroll slider
+        builder.addCase(createScrollSliderSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.callback = false
+            state.addItems = false
+        })
+        builder.addCase(createScrollSliderSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.callback = false
+            state.addItems = false
+        })
+        builder.addCase(createScrollSliderSessionThunk.fulfilled, (state, action) => {
+            state.callback = false
+            state.warningMessage = ''
+            state.addItems = action.payload === true ? true : false
         })
     }
 })

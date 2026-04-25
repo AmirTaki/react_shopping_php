@@ -2,18 +2,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { RooState, AppDispatch } from "../../../../../store";
-// import { onSetURL, onTitleChange, onBodyChange, onPriceChange, onLoading, onSetItems } from "../../../../redux/scrollImage/scrollImage";
-// import { createScrollSliderSessionThunk } from "./actionsScrollSlider";
+import { onBodyPayloar, onLoadingPayloar, onPricePayloar, onSetItemsPayloar, onSetURLPayloar, onTitlePayloar } from "../redux/actionsScrollSlider";
+import { createScrollSliderSessionThunk } from "../redux/scrollSliderSlice";
 
 const CreateSessionScrollSliderPA = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const {boxses, loading} = useSelector((state: RooState) => state.scrollPayloar)
+    const {boxses, loading, callback, addItems, image, title, body, price, urlImage} = useSelector((state: RooState) => state.scrollPayloar)
     const [file, setFile] = useState<File | null>()
     const navigate = useNavigate()
 
 
     useEffect(() => {
-        dispatch(onLoading()) 
+        dispatch(onLoadingPayloar()) 
     }, [])
     
     useEffect(() => {  callback && navigate('/LogOut') }, [callback])
@@ -21,7 +21,7 @@ const CreateSessionScrollSliderPA = () => {
     useEffect(() => {
         if(addItems){
             navigate('/panelAdmin/sessionScrollSlider')
-            dispatch(onSetItems())
+            dispatch(onSetItemsPayloar())
         }
     }, [addItems])
 
@@ -31,7 +31,7 @@ const CreateSessionScrollSliderPA = () => {
         if(file){
             const reader = new FileReader();
             reader.onload = () => {
-                dispatch(onSetURL({result: reader.result}))
+                dispatch(onSetURLPayloar({result: reader.result}))
             }
             reader.readAsDataURL(file);
         }
@@ -69,7 +69,7 @@ const CreateSessionScrollSliderPA = () => {
                 </div>
                 <div className="text-gray-500 py-5">message:
                     <span className="text-red-600 px-2">
-                        {imageWarning}
+                        {image.warning}
                     </span>
                 </div>
                 
@@ -79,14 +79,14 @@ const CreateSessionScrollSliderPA = () => {
                 <div className="flex gap-5 items-center justify-center">
                     <label htmlFor="title" className="text-blue-500">title</label>
                     <input 
-                        value = {title}
+                        value = {title.name}
                         type="text" id = "title" className="border-2 w-full rounded-md h-10 p-2"
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {dispatch(onTitleChange({title: e.target.value}))}}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {dispatch(onTitlePayloar({title: e.target.value}))}}
                     ></input>
                 </div>
                 <div className="text-gray-500 py-5">message:
                     <span className="text-red-600 px-2">
-                        {titleWarning}
+                        {title.warning}
                     </span>
                 </div>
 
@@ -98,14 +98,14 @@ const CreateSessionScrollSliderPA = () => {
                 
                     <textarea
                         id = 'body'
-                        value = {body}
+                        value = {body.caption}
                         className="border-2 w-full rounded-md h-23  p-1"
-                        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {dispatch(onBodyChange({body: e.target.value}))}}
+                        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {dispatch(onBodyPayloar({body: e.target.value}))}}
                     ></textarea>
                 </div>
                 <div className="text-gray-500 py-5">message:
                     <span className="text-red-600 px-2">
-                        {bodyWarning}
+                        {body.warning}
                     </span>
                 </div>
 
@@ -115,14 +115,14 @@ const CreateSessionScrollSliderPA = () => {
                 <div className="flex gap-5 items-center justify-center">
                     <label htmlFor="price" className="text-blue-500">price</label>
                     <input 
-                        value = {price}
+                        value = {price.money}
                         type="number" id = "price" className="border-2 w-full rounded-md h-10 p-2"
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {dispatch(onPriceChange({price: e.target.value}))}}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {dispatch(onPricePayloar({price: e.target.value}))}}
                     ></input>
                 </div>
                 <div className="text-gray-500 py-5">message:
                     <span className="text-red-600 px-2">
-                        {priceWarning}
+                        {price.warning}
                     </span>
                 </div>      
 
@@ -134,9 +134,9 @@ const CreateSessionScrollSliderPA = () => {
 
                             const formData = new FormData();
                             file &&  formData.append('image', file)
-                            formData.append('title', title)
-                            formData.append('body', body)
-                            formData.append('price', String(price))
+                            formData.append('title', title.name)
+                            formData.append('body', body.caption)
+                            formData.append('price', String(price.money))
             
                             dispatch(createScrollSliderSessionThunk(formData));
                         }}                        
