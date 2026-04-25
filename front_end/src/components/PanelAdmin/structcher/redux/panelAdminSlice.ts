@@ -34,7 +34,8 @@ const initialState: IPanelAdminNavar = {
         {id: 6, name: 'megaMenu Image', link : `megaMenuImage`},
         {id: 7, name: 'session image slider', link: 'sessionImageSlider'},  
         {id: 8, name: 'session scroll slider', link: 'sessionScrollSlider'},
-    
+        {id: 9, name: 'session resource image', link: 'sessionResourceImage'},
+
     ],
     openSlide: false,
     numberSide: 0,

@@ -76,7 +76,7 @@ const ResourceImage = () => {
 
     return( 
         <div className="text-sky-400">
-                <div className={`w-[95%] mx-auto h-100 flex justify-center items-center  relative ${isScroll && 'active:cursor-pointer'}`}
+                <div className={`w-[95%] mx-auto h-80 flex justify-center items-center  relative ${isScroll && 'active:cursor-pointer'}`}
                 
                     onMouseMove={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {disptach(scrollMove({client: e.clientX}))}}
                     onTouchMove={(e: React.TouchEvent<HTMLDivElement>) => {disptach(scrollMove({client: e.touches[0].clientX}))}}

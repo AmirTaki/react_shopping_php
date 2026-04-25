@@ -38,6 +38,8 @@ import ViewScrollSliderSessionPA from "../Home/session/scrollSlider/panelAdmin/v
 import ScrollSliderSessionPA from "../Home/session/scrollSlider/panelAdmin"
 import CreateSessionScrollSliderPA from "../Home/session/scrollSlider/panelAdmin/create"
 import EditSessionScrollSliderPA from "../Home/session/scrollSlider/panelAdmin/edit"
+import ViewResourceImageSessionPA from "../Home/session/resourseImage/panelAdmin/view"
+import ResourceImageSessionPA from "../Home/session/resourseImage/panelAdmin"
 
 const Routh = () => {
     return (
@@ -125,6 +127,13 @@ const Routh = () => {
                             <Route path = "" element = {<ScrollSliderSessionPA />}/>
                             <Route path = "create" element = {<CreateSessionScrollSliderPA />}/>
                             <Route path = "edit/:id" element = {<EditSessionScrollSliderPA />}/>
+                        </Route>
+
+                        {/* session -> resource image (payloar swiper) */}
+                        <Route path="sessionResourceImage" element = {<ViewResourceImageSessionPA />}>
+                            <Route path = "" element = {<ResourceImageSessionPA />}/>
+                            {/* <Route path = "create" element = {<CreateSessionScrollSliderPA />}/> */}
+                            {/* <Route path = "edit/:id" element = {<EditSessionScrollSliderPA />}/> */}
                         </Route>
 
                     </Route>

@@ -1,7 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { viewResourceImageSessionThunk } from "./actionsResourse";
+
+export type TResouceImage = Array<{id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}> | string | boolean
+export type TResouceImageObject = {id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}
 
 interface IPayloar {
-    items: Array<string>,
+    items: TResouceImage,
     translateX: number,
     isTransition: boolean,
     widthContainer: number,
@@ -17,9 +21,25 @@ interface IPayloar {
     currentScroll: number,
     dragScroll: number,
     translateThumble: number
+
+    // panel admin
+    warningMessage: string,
+
+    // create & edit
+    urlImage: string , // save url image & view for user
+
+    image: {url: string, warning: string},
+    title: {name: string, warning: string},
+    body: {caption: string, warning: string},
+
+    addItems: boolean, 
+    callback: boolean,
+
+    // stauts & delete
+    loading: boolean
 }
 const initialState: IPayloar = {
-    items: ['silver','blue', 'pink', 'green', 'red', 'white', 'yellow', 'pink', 'gray', 'orange', 'silver','blue', 'pink', 'green', 'red', 'white', 'yellow', 'pink', 'gray', 'orange',],
+    items: [],
    
     // scroll slide
     translateX: 0,
@@ -39,8 +59,23 @@ const initialState: IPayloar = {
     currentScroll: 0,
     dragScroll: 0,
 
-    translateThumble: 0
+    translateThumble: 0,
 
+    // panel admin
+    warningMessage: '',
+
+    // create & edit
+    urlImage: '' , // save url image & view for user
+   
+    image: {url: '', warning: ''},
+    title: {name: '', warning: ''},
+    body: {caption: '', warning: ''},
+     
+    addItems: false, 
+    callback: false,
+
+    // stauts & delete
+    loading: false
 }
 
 const resourceImageSlice = createSlice({
@@ -48,8 +83,10 @@ const resourceImageSlice = createSlice({
     initialState: initialState,
     reducers: {
         handlerSizeContainer: (state) => {
-            const sizeRef = (state.items.length * 350) + (state.items.length * 20)
-            state.sizeContainer = sizeRef - state.widthContainer
+            if(Array.isArray(state.items)){
+                const sizeRef = (state.items.length * 350) + (state.items.length * 20)
+                state.sizeContainer = sizeRef - state.widthContainer
+            }
         },
         rightClick: (state, action) => {           
             const newTranslate = state.translateX + action.payload.distance >= state.sizeContainer ? state.sizeContainer - state.translateX : action.payload.distance
@@ -107,8 +144,10 @@ const resourceImageSlice = createSlice({
             state.widthScroll = action.payload.offset
         },
         sizeThumbe: (state,) => {
-            const size = (state.items.length * 350) + (state.items.length * 20) 
-            state.sizeThumble =  state.widthScroll / ( size / state.widthContainer )
+            if(Array.isArray(state.items)){
+                const size = (state.items.length * 350) + (state.items.length * 20) 
+                state.sizeThumble =  state.widthScroll / ( size / state.widthContainer )
+            }
 
         },
         scrollStart: (state, action) => {
@@ -127,26 +166,30 @@ const resourceImageSlice = createSlice({
 
             state.isScroll = false;
 
-            if(state.currentScroll > state.startScroll){
+            if(Array.isArray(state.items)){
 
-                const translate = state.dragScroll * (((state.items.length * 350) + (state.items.length * 20)) / state.widthContainer)
-
-                const newTranslate = state.translateX + translate >= state.sizeContainer ? state.sizeContainer - state.translateX : translate
-            
-                state.isTransition = true
-                state.translateX += newTranslate
-            }
-            else if (state.currentScroll < state.startScroll){
-                const translate = - state.dragScroll * (((state.items.length * 350) + (state.items.length * 20)) / state.widthContainer)
+                if(state.currentScroll > state.startScroll){
+    
+                    const translate = state.dragScroll * (((state.items.length * 350) + (state.items.length * 20)) / state.widthContainer)
+    
+                    const newTranslate = state.translateX + translate >= state.sizeContainer ? state.sizeContainer - state.translateX : translate
                 
-                const newTranslate = state.translateX - translate <= 0 ? state.translateX : translate
-           
-                state.isTransition = true,
-                state.translateX -= newTranslate
+                    state.isTransition = true
+                    state.translateX += newTranslate
+                }
+                else if (state.currentScroll < state.startScroll){
+                    const translate = - state.dragScroll * (((state.items.length * 350) + (state.items.length * 20)) / state.widthContainer)
+                    
+                    const newTranslate = state.translateX - translate <= 0 ? state.translateX : translate
+            
+                    state.isTransition = true,
+                    state.translateX -= newTranslate
+                }
+                else {
+                    state.isTransition = true
+                }
             }
-            else {
-                state.isTransition = true
-            }
+
             state.dragScroll = 0
         },
         handlerTranslateThumble: (state, action) => {
@@ -154,8 +197,51 @@ const resourceImageSlice = createSlice({
         },
 
         // panel admin
+        onLoadingResource: (state) => {
+            state.urlImage = ''
+            state.body = {caption: '', warning: ''},
+            state.title = {name: '', warning: ''},
+            state.image = {url: '', warning: ''}
+        },
+        onSetURLResource:  (state, action) => {
+            state.urlImage = action.payload.result
+        },
+        onTitleResource: (state, action) => {
+            state.title = {name: action.payload.title, warning: ''}
+        },
+        onBodyResource: (state, action) => {
+            state.body = {caption: action.payload.body, warning: ''}
+        },
+        onImageResource: (state, action) => {
+            state.image = {url: action.payload.image, warning: ''}
+        },
+        onWarningResource: (state, action) => {
+            state.title = {name: state.title.name, warning: action.payload.title}
+            state.body = {caption: state.body.caption, warning: action.payload.body}
+            state.image = {url: state.image.url, warning: action.payload.image}
+        },
+        onCallBackResource: (state) => {
+            state.callback = true
+        },
+        onSetItemsResource: (state) => {
+            state.addItems = false
+        }
         
 
+    },
+    extraReducers: (builder) => {
+        
+        // veiw items resource image
+        builder.addCase(viewResourceImageSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(viewResourceImageSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(viewResourceImageSessionThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            state.items = action.payload
+        })
     }
 })
 
