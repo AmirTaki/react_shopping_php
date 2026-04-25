@@ -64,3 +64,51 @@ export const createImageSliderSessionThunk = createAsyncThunk<TImageSlider, Form
         }
     }
 )
+
+export const deleteImageSliderSessionThunk = createAsyncThunk<TImageSlider, {id: number}, {rejectValue: string}>(
+    'delete_item_imageSlider_session_toolkit', 
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/backGroundSlider/delete.php/${payload.id}/delete`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }  ,
+            })
+            if(!response.ok){
+                throw new Error('message warning')
+            }
+            const data = await response.json();
+            return Array.isArray(data) ? data : []
+        }   
+        catch(error: any){
+            return rejectWithValue (`warning: ${error.message}`)
+        }
+    }
+)
+
+
+
+export const changeStatusImageSliderSessionThunk = createAsyncThunk<TImageSlider, {id: number},{rejectValue: string}>(
+    'status_item_imageSliderSession_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/backGroundSlider/status.php/${payload.id}/changeStatus`, {
+                method: 'GET', 
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },  
+
+            })
+            if(!response.ok){
+                throw new Error('warning: ');
+            }
+            const data = await response.json()
+            return Array.isArray(data) ? data : []
+        }
+        catch(error: any){
+            return rejectWithValue (`warning: ${error.message}`)
+        }
+    }
+)

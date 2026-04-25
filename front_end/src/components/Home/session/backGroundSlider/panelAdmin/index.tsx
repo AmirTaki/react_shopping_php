@@ -3,11 +3,7 @@ import { Link } from "react-router-dom"
 import { useEffect } from "react"
 import type { RooState, AppDispatch } from "../../../../../store"
 import { imgURL } from "../../../../../baseURL"
-import { viewImageSliderSessionThunk } from "../redux/actionsSwiper"
-
-// import { changeStatusImageSliderSessionThunk, deleteImageSliderSessionThunk, viewImageSliderSessionThunk } from "./actionsImageSlider"
-
-
+import { viewImageSliderSessionThunk, changeStatusImageSliderSessionThunk, deleteImageSliderSessionThunk } from "../redux/actionsSwiper"
 
 const ImageSliderSessionPA = () => {
     const {sliders, loading} = useSelector((state: RooState) => state.SwiperSlide);
@@ -60,7 +56,7 @@ const ImageSliderSessionPA = () => {
                                         
                                         <div 
                                             onClick={() => {
-                                                // dispatch(changeStatusImageSliderSessionThunk({id: item.id}) );
+                                                dispatch(changeStatusImageSliderSessionThunk({id: item.id}) );
                                             }}
                                             className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 py-1 "
                                         >
@@ -75,7 +71,7 @@ const ImageSliderSessionPA = () => {
                                         
                                         <div 
                                             onClick={() => {
-                                                // dispatch(deleteImageSliderSessionThunk({id: item.id}))
+                                               window.confirm('Do you want it to be deleted ? ')  &&   dispatch(deleteImageSliderSessionThunk({id: item.id}))
                                             }}
                                             className="text-rose-500 cursor-pointer duration-200 hover:text-red-700! py-1"
                                         >

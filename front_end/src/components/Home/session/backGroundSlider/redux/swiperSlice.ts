@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewImageSliderSessionThunk, createImageSliderSessionThunk } from "./actionsSwiper";
+import { viewImageSliderSessionThunk, createImageSliderSessionThunk, deleteImageSliderSessionThunk, changeStatusImageSliderSessionThunk } from "./actionsSwiper";
 
 export type TImageSlider = Array<{id: number, image: string, title: string, status: number, created_at: string, updated_at: string}> | boolean | string
 export type TImageSliderObject = {id: number, image: string, title: string, status: number, created_at: string, updated_at: string}
@@ -197,6 +197,33 @@ const SwiperSlicer = createSlice({
             state.addItems = action.payload === true ? true : false
             state.callback = false
         })
+
+            // delete item image slider
+        builder.addCase(deleteImageSliderSessionThunk.pending, (state) => {
+            state.loading = true;
+        }) 
+        builder.addCase(deleteImageSliderSessionThunk.rejected, (state, action) => {
+            state.loading = false;
+            state.warningMessage = action.payload as string
+        }) 
+        builder.addCase(deleteImageSliderSessionThunk.fulfilled, (state, ) => {
+            state.loading = false;
+            state.warningMessage = ''
+        }) 
+
+        // status item image slider
+        builder.addCase(changeStatusImageSliderSessionThunk.pending, (state) => {
+            state.loading = true;
+        }) 
+        builder.addCase(changeStatusImageSliderSessionThunk.rejected, (state, action) => {
+            state.loading = false;
+            state.warningMessage = action.payload as string
+        }) 
+        builder.addCase(changeStatusImageSliderSessionThunk.fulfilled, (state, ) => {
+            state.loading = false;
+            state.warningMessage = ''
+        }) 
+
     }
 })
 
