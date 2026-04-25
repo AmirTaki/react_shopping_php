@@ -4,7 +4,7 @@ import type { AppDispatch, RooState } from "../../../../store";
 import { handlerExtractSliders, handlerWidthContainer, HandlerActiveButton, HandlerMouseUp, HanlderMouseMove, HandlerMouseDown,HandlerButton, clickLeft, clickRight, endTransition } from "./redux/swiperSlice";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
-import { viewImageSliderSessionThunk } from "./redux/actionsSwiper";
+import { reaidingIndexBackGroundSliderThunk } from "./redux/actionsSwiper";
 import { imgURL } from "../../../../baseURL";
 
 const SwiperSlide = ()  => {
@@ -12,9 +12,10 @@ const SwiperSlide = ()  => {
     const {extractSliders, sliders, slide, isTransition, widthContainer, isDrag, dragOffset, activeIndicator} =  useSelector((state: RooState) => state.SwiperSlide)
     const containerRef =  useRef<HTMLDivElement>(null)
     
+
     // navbar => change Menu item
     useEffect(() => { 
-        dispatch(viewImageSliderSessionThunk());
+        dispatch(reaidingIndexBackGroundSliderThunk());
 
         const timer =  setInterval(() => {
             dispatch(handlerExtractSliders());

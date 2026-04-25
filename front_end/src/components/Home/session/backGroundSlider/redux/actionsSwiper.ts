@@ -17,6 +17,7 @@ export const viewImageSliderSessionThunk = createAsyncThunk<TImageSlider, void, 
                 }
                 const data = await response.json();
                 return Array.isArray(data) ? data : []
+                
             }
             catch(err: any){
                 return rejectWithValue (`warning: ${err.message}`)
@@ -174,4 +175,28 @@ export const editItemImageSliderSessionThunk = createAsyncThunk<TImageSlider,  {
             return (`warning: ${err.message}`)
         }
     }
+)
+
+
+export const reaidingIndexBackGroundSliderThunk = createAsyncThunk<TImageSlider, void, {rejectValue: string}>(
+    'reaiding_Index_Back_Ground_Slider_Thunk_toolkit',
+        async(_, {rejectWithValue}) => {
+            try{
+                const response = await fetch (baseURL + `tables/session/backGroundSlider/reading.php`, {
+                    method: 'GET', 
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                if(!response.ok){
+                    throw new Error('warning: ');
+                }
+                const data = await response.json();
+                return Array.isArray(data) ? data : []
+                
+            }
+            catch(err: any){
+                return rejectWithValue (`warning: ${err.message}`)
+            }
+        }
 )

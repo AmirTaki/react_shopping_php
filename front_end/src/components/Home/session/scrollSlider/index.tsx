@@ -65,11 +65,11 @@ const PayloarSlider = () => {
 
 
     return(
-        <div className="text-rose-400 w-[95%] mx-auto h-[560px] border-0 flex justify-center items-center relative ">
+    <div className="text-rose-400 w-[95%] mx-auto h-[600px] border-0 flex justify-center items-center relative  ">
             {/* container */}
             <div 
                 ref = {containerRef}
-                className="w-full h-[70%] flex flex-col flex-wrap overflow-x-scroll justify-center items-center select-none scrollImage cursor-grab active:cursor-grabbing"
+                className="w-full h-[70%] flex flex-col flex-wrap overflow-x-scroll justify-center items-center select-none scrollImage cursor-grab active:cursor-grabbing pb-7"
                 onMouseDown={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {dispatchReducer({type :'mouseDown', payload : {client: e.clientX, container: containerRef?.current}})}}   
                 onMouseMove={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {dispatchReducer({type: 'mouseMove', payload: {client: e.clientX, container: containerRef?.current}})}}
                 onMouseUp={() => {dispatchReducer({type: 'mouseUp', payload: {container: containerRef.current}})}}

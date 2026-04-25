@@ -7,7 +7,7 @@ import { readingItemScrollSliderSessionThunk, editItemScollSliderSessionThunk } 
 
 const EditSessionScrollSliderPA = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const {boxses, loading, callback, addItems, image, title, body, price, urlImage} = useSelector((state: RooState) => state.scrollPayloar)
+    const {callback, addItems, image, title, body, price, urlImage} = useSelector((state: RooState) => state.scrollPayloar)
     const [file, setFile] = useState<File | null>()
     const navigate = useNavigate()
     const {id} = useParams()

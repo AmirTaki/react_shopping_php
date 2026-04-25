@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewImageSliderSessionThunk, createImageSliderSessionThunk, deleteImageSliderSessionThunk, changeStatusImageSliderSessionThunk, readingItemImageSliderSessionThunk, editItemImageSliderSessionThunk } from "./actionsSwiper";
+import {reaidingIndexBackGroundSliderThunk,  viewImageSliderSessionThunk, createImageSliderSessionThunk, deleteImageSliderSessionThunk, changeStatusImageSliderSessionThunk, readingItemImageSliderSessionThunk, editItemImageSliderSessionThunk } from "./actionsSwiper";
 import { imgURL } from "../../../../../baseURL";
 
 export type TImageSlider = Array<{id: number, image: string, title: string, status: number, created_at: string, updated_at: string}> | boolean | string
@@ -200,7 +200,7 @@ const SwiperSlicer = createSlice({
             state.callback = false
         })
 
-            // delete item image slider
+        // delete item image slider
         builder.addCase(deleteImageSliderSessionThunk.pending, (state) => {
             state.loading = true;
         }) 
@@ -254,6 +254,19 @@ const SwiperSlicer = createSlice({
             state.addItems = action.payload === true ? true : false
             state.callback = false
         })
+
+        // view reading item for index
+        builder.addCase(reaidingIndexBackGroundSliderThunk.pending, (state)=> {
+            state.warningMessage = ''
+        })
+        builder.addCase(reaidingIndexBackGroundSliderThunk.rejected, (state, action)=> {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(reaidingIndexBackGroundSliderThunk.fulfilled, (state, action)=> {
+            state.warningMessage = ''
+            state.sliders = action.payload
+        })
+
 
     }
 })

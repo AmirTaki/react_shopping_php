@@ -18,11 +18,16 @@
             1. users -> curd
             
             2. mgeaMenus 
-                a. menus -> curd
-                b. menuList -> curd
-                c. menuCategory -> curd
-                d. menuProduct -> curd
-                e. menuImage -> curd & uppload
+                1. menus -> curd
+                2. menuList -> curd
+                3. menuCategory -> curd
+                4. menuProduct -> curd
+                5. menuImage -> curd & uppload
+
+            3. session
+                1. backGroundSlider -> curd & reading
+                2. scrollSlider -> curd
+                3.
 
 // front end 
     component -> 
