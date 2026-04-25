@@ -13,6 +13,7 @@ import categorySlice from "./components/Home/header/menus/menuList/sideToSide/me
 import sereisSlice from "./components/Home/header/menus/menuList/sideToSide/menuSeries/redux/sliceMenuSeries";
 import imageMenuSlice from "./components/Home/header/menus/menuList/sideToSide/menuImage/redux/sliceImageMenus";
 import SwiperSlicer from "./components/Home/session/backGroundSlider/redux/swiperSlice";
+import scrollSliderSlice from "./components/Home/session/scrollSlider/redux/actionsScrollSlider";
 
 const reducers = combineReducers({
 
@@ -56,6 +57,8 @@ const reducers = combineReducers({
     // ---------------------------- session -----------------------------------------
     // backgroud slider
     SwiperSlide: SwiperSlicer.reducer,          // background slider -> swiper slicer 
+    // scroll slider
+    scrollPayloar:    scrollSliderSlice.reducer,     // scroll slider => payloar  slider           
 
 
 
