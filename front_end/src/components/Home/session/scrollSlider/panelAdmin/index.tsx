@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { RooState, AppDispatch } from "../../../../../store";
 import { imgURL } from "../../../../../baseURL";
-import { viewScrollSliderSessionThunk } from "../redux/scrollSliderSlice";
-// import { changeStatusScrollSliderSessionThunk, deleteScrollSliderSessionThunk, viewScrollSliderSessionThunk } from "./actionsScrollSlider";
+import { viewScrollSliderSessionThunk, changeStatusScrollSliderSessionThunk, deleteScrollSliderSessionThunk } from "../redux/scrollSliderSlice";
 
 const ScrollSliderSessionPA = ()  => {
 
@@ -63,7 +62,7 @@ const ScrollSliderSessionPA = ()  => {
                                         
                                         <div 
                                             onClick={() => {
-                                                // dispatch(changeStatusScrollSliderSessionThunk({id: item.id}) );
+                                                dispatch(changeStatusScrollSliderSessionThunk({id: item.id}) );
                                             }}
                                             className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 py-1 "
                                         >
@@ -78,7 +77,7 @@ const ScrollSliderSessionPA = ()  => {
                                         
                                         <div 
                                             onClick={() => {
-                                                // dispatch(deleteScrollSliderSessionThunk({id: item.id}))
+                                                window.confirm('Do you want it to be deleted ? ')  && dispatch(deleteScrollSliderSessionThunk({id: item.id}))
                                             }}
                                             className="text-rose-500 cursor-pointer duration-200 hover:text-red-700! py-1"
                                         >

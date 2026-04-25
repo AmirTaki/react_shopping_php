@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewScrollSliderSessionThunk, createScrollSliderSessionThunk } from "./scrollSliderSlice";
+import { viewScrollSliderSessionThunk, createScrollSliderSessionThunk, changeStatusScrollSliderSessionThunk, deleteScrollSliderSessionThunk } from "./scrollSliderSlice";
 
 export type TScrollSlider = Array<{id: number, image: string, title: string, body: string, price: number,  status: number, created_at: string, updated_at: string}> | string | boolean
 export type TScrollSliderObject = {id: number, image: string, title: string, body: string, price: number,  status: number, created_at: string, updated_at: string}
@@ -102,6 +102,35 @@ const scrollSliderSlice = createSlice({
             state.callback = false
             state.warningMessage = ''
             state.addItems = action.payload === true ? true : false
+        })
+
+        
+        // delete item scroll slider
+        builder.addCase(deleteScrollSliderSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.loading = true
+        })
+        builder.addCase(deleteScrollSliderSessionThunk.rejected, (state, action) => {
+            state.loading = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(deleteScrollSliderSessionThunk.fulfilled, (state) => {
+            state.loading = false
+            state.warningMessage = ''
+        })
+        
+        // change status item scroll slider
+        builder.addCase(changeStatusScrollSliderSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.loading = true
+        })
+        builder.addCase(changeStatusScrollSliderSessionThunk.rejected, (state, action) => {
+            state.loading = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(changeStatusScrollSliderSessionThunk.fulfilled, (state) => {
+            state.loading = false
+            state.warningMessage = ''
         })
     }
 })
