@@ -95,8 +95,9 @@ const SwiperSlicer = createSlice({
         },
 
         handlerExtractSliders : (state) => {
-            if (Array.isArray(state.sliders))
-            state.extractSliders = [...state.sliders.slice(-2), ...state.sliders, ...state.sliders.slice(0, 2)]
+            if (Array.isArray(state.sliders)){
+                state.extractSliders = [...state.sliders.slice(-2), ...state.sliders, ...state.sliders.slice(0, 2)]
+            }
             
         },
 

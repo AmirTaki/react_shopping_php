@@ -115,3 +115,73 @@ export const changeStatusScrollSliderSessionThunk = createAsyncThunk<TScrollSlid
         }
     }
 )
+
+
+export const readingItemScrollSliderSessionThunk = createAsyncThunk<TScrollSliderObject, {id: number},{rejectValue: string}> (
+    'reading_item_ImageSlider_Session_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/scrollSlider/slider.php/${payload.id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                } ,
+                // credentials: 'include',
+            })
+            if(!response.ok){
+                throw new Error('message');
+            }
+
+            const data =  await response.json()
+            return data
+   
+        }
+        catch(err: any){
+            return rejectWithValue (`warning: ${err.message}`)
+        }
+    }
+)
+
+
+
+export const editItemScollSliderSessionThunk = createAsyncThunk<TScrollSlider,  {formData: FormData, id: number}, {rejectValue: string}>(
+    'edit_item_scrollSlider_session_toolkit',
+    async(payload, reject) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/scrollSlider/edit.php/${payload.id}`, {
+                method: 'POST', 
+                credentials: 'include',
+                body: payload.formData
+            })
+            
+            if (!response.ok){
+               if(response.status === 422){
+                    reject.dispatch(onWarningPayloar({
+                        title: 'title is requierd!',
+                        image: '',
+                        body: 'body is requierd!',
+                        price: 'price is reqierd!'  
+                    }))
+                }
+                else if (response.status === 405){
+                    reject.dispatch(onCallBackPayloar())
+                }
+
+                else if (response.status === 404){
+                      reject.dispatch(onWarningPayloar({
+                        image: 'not upload image ?? repeat again !!',                        
+                    }))
+                }
+                
+                else {
+                    throw new Error ('warning ');
+                }
+            }
+            const data = await response.json()
+            return data
+        }
+        catch(err: any){
+            return (`warning: ${err.message}`)
+        }
+    }
+)

@@ -84,12 +84,13 @@ const SwiperSlide = ()  => {
                         // onTransitionStart={}
                     >
                         {Array.isArray(extractSliders) && extractSliders?.map((item, ind) => {
-                            const isActive =  ind === slide
+             
+                            const isActive = ind === slide
                             return (
                                 <div 
                                     key = {ind}
                                     // style={{ border: `1px solid blue` }}
-                         
+                            
                                     className={`w-[100%]  h-full flex justify-center items-center text-5xl duration-700  rounded-4xl
                                         ${isActive ? 'scale-100 opacity-100': "scale-75 opacity-50"}    
                                     `}
@@ -97,6 +98,7 @@ const SwiperSlide = ()  => {
                                     <img draggable = {false} src={imgURL + item.image} className="w-full h-full" alt="" />
                                 </div>
                             )
+                    
                         })}
                     </div>
                 </div>
@@ -124,7 +126,7 @@ const SwiperSlide = ()  => {
                                 key={index} 
                                 onClick={() => {dispatch(HandlerButton({index: index + 2}))}}
                                 className={`w-3 h-3 rounded-full hover:cursor-poiner hover:scale-150 duration-200 cursor-pointer
-                                 ${activeIndicator === index ? `scale-200 ` : "scale-100"}`
+                                ${activeIndicator === index ? `scale-200 ` : "scale-100"}`
                                 
                                 }
                                 style={{
@@ -133,6 +135,7 @@ const SwiperSlide = ()  => {
                                 }}
                             ></div>
                         )
+                        
                     })}
                 </div>
             </div>         

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewScrollSliderSessionThunk, createScrollSliderSessionThunk, changeStatusScrollSliderSessionThunk, deleteScrollSliderSessionThunk } from "./scrollSliderSlice";
+import {readingItemScrollSliderSessionThunk, editItemScollSliderSessionThunk, viewScrollSliderSessionThunk, createScrollSliderSessionThunk, changeStatusScrollSliderSessionThunk, deleteScrollSliderSessionThunk } from "./scrollSliderSlice";
+import { imgURL } from "../../../../../baseURL";
 
 export type TScrollSlider = Array<{id: number, image: string, title: string, body: string, price: number,  status: number, created_at: string, updated_at: string}> | string | boolean
 export type TScrollSliderObject = {id: number, image: string, title: string, body: string, price: number,  status: number, created_at: string, updated_at: string}
@@ -130,6 +131,39 @@ const scrollSliderSlice = createSlice({
         })
         builder.addCase(changeStatusScrollSliderSessionThunk.fulfilled, (state) => {
             state.loading = false
+            state.warningMessage = ''
+        })
+
+           // reading item scroll slider
+        builder.addCase(readingItemScrollSliderSessionThunk.pending, (state) => {
+            state.urlImage = ''
+            state.warningMessage = ''
+        })
+        builder.addCase(readingItemScrollSliderSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(readingItemScrollSliderSessionThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            const answer = action.payload  as TScrollSliderObject
+            state.urlImage = imgURL + answer.image
+            state.body = {caption: answer.body, warning: ''}
+            state.title ={name: answer.title, warning: ''}
+            state.price = {money: answer.price, warning: ''}
+
+        })
+
+        // edit item scroll slider
+        builder.addCase(editItemScollSliderSessionThunk.pending, (state) => {
+            state.callback = false
+            state.warningMessage = ''
+        })
+        builder.addCase(editItemScollSliderSessionThunk.rejected, (state, action) => {
+            state.callback = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(editItemScollSliderSessionThunk.fulfilled, (state, action) => {
+            state.addItems = action.payload === true ? true : false
+            state.callback = false
             state.warningMessage = ''
         })
     }

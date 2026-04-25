@@ -81,15 +81,17 @@ const PayloarSlider = () => {
             >
                 {/* item */}
                 {Array.isArray(state.items) && state.items.map((item, index) => {
-                    return(
-                        <div 
-                            key = {index}
-                            className="w-[300px] mx-[10px] h-[90%] text-4xl flex justify-center items-center rounded-2xl overflow-hidden"
-                            style={{border: `1px solid white`}}
-                        >
-                            <img src={imgURL + item.image }  className="w-full h-full" draggable = {false} alt="" />
-                        </div>
-                    )
+                    if(item.status == 10){
+                        return(
+                            <div 
+                                key = {index}
+                                className="w-[300px] mx-[10px] h-[90%] text-4xl flex justify-center items-center rounded-2xl overflow-hidden"
+                                style={{border: `1px solid white`}}
+                            >
+                                <img src={imgURL + item.image }  className="w-full h-full" draggable = {false} alt="" />
+                            </div>
+                        )
+                    }
                 })}
             </div>
 
