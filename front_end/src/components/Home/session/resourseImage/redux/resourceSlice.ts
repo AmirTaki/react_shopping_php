@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewResourceImageSessionThunk, readingAllResourceImageSessionThnk, createResourceImageSessionThunk, deleteResourceImageSessionThunk, changeStatusResourceImageSessionThunk } from "./actionsResourse";
+import { editItemResourceImageSessionThunk, readingItemResourcImageSessionThunk, viewResourceImageSessionThunk, readingAllResourceImageSessionThnk, createResourceImageSessionThunk, deleteResourceImageSessionThunk, changeStatusResourceImageSessionThunk } from "./actionsResourse";
+import { imgURL } from "../../../../../baseURL";
 
 export type TResouceImage = Array<{id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}> | string | boolean
 export type TResouceImageObject = {id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}
@@ -288,6 +289,39 @@ const resourceImageSlice = createSlice({
             state.loading = false
             state.warningMessage = ''
             state.items = action.payload
+        })
+
+        // reading item resourc image
+        builder.addCase(readingItemResourcImageSessionThunk.pending, (state) => {
+            state.urlImage = ''
+            state.warningMessage = ''
+
+        })
+        builder.addCase(readingItemResourcImageSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(readingItemResourcImageSessionThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            const answer = action.payload as TResouceImageObject
+            state.body = {caption: answer.body, warning: ''}
+            state.title = {name: answer.title, warning: ''}
+            state.urlImage = imgURL + answer.image
+        })
+
+        // edit item resource image
+        builder.addCase(editItemResourceImageSessionThunk.pending, (state) => {
+            state.addItems = false
+            state.callback = false
+            state.warningMessage = ''
+        })
+        builder.addCase(editItemResourceImageSessionThunk.rejected, (state, action) => {
+            state.callback = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(editItemResourceImageSessionThunk.fulfilled, (state, action) => {
+            state.addItems = action.payload === true ? true : false
+            state.callback = false
+            state.warningMessage = ''
         })
 
         // reading all itemss resource image
