@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewResourceImageSessionThunk } from "./actionsResourse";
+import { viewResourceImageSessionThunk, readingAllResourceImageSessionThnk, createResourceImageSessionThunk } from "./actionsResourse";
 
 export type TResouceImage = Array<{id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}> | string | boolean
 export type TResouceImageObject = {id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}
@@ -242,8 +242,41 @@ const resourceImageSlice = createSlice({
             state.warningMessage = ''
             state.items = action.payload
         })
+
+        // create item resource image
+        builder.addCase(createResourceImageSessionThunk.pending, (state) => {
+            state.addItems = false
+            state.callback = false
+            state.warningMessage = ''
+        })
+        builder.addCase(createResourceImageSessionThunk.rejected, (state, action) => {
+            state.addItems = false
+            state.callback = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(createResourceImageSessionThunk.fulfilled, (state, action) => {
+            state.addItems = action.payload === true ? true : false
+            state.callback = false
+            state.warningMessage = ''
+        })
+
+        // reading all itemss resource image
+        builder.addCase(readingAllResourceImageSessionThnk.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(readingAllResourceImageSessionThnk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(readingAllResourceImageSessionThnk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            state.items = action.payload
+        })
+
     }
 })
 
 export default resourceImageSlice
-export const {rightClick, endTranistion, leftClick, handlerWidthContainer, payloarDown, payloarMove, payloarUp, handlerSizeContainer, handlerContainerScroll ,sizeThumbe, scrollStart, scrollMove, scrollUp, handlerTranslateThumble, } = resourceImageSlice.actions
+export const {rightClick, endTranistion, leftClick, handlerWidthContainer, payloarDown, payloarMove, payloarUp, handlerSizeContainer, handlerContainerScroll ,sizeThumbe, scrollStart, scrollMove, scrollUp, handlerTranslateThumble, 
+
+    onBodyResource, onCallBackResource, onImageResource, onLoadingResource, onSetItemsResource, onSetURLResource, onTitleResource, onWarningResource
+} = resourceImageSlice.actions

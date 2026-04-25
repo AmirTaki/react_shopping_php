@@ -8,7 +8,7 @@ import { rightClick, endTranistion, leftClick, handlerWidthContainer,  payloarDo
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import { imgURL } from "../../../../baseURL";
-import { viewResourceImageSessionThunk } from "./redux/actionsResourse";
+import { readingAllResourceImageSessionThnk } from "./redux/actionsResourse";
 
 const ResourceImage = () => {
     const disptach =  useDispatch<AppDispatch>()    
@@ -17,7 +17,7 @@ const ResourceImage = () => {
     const scrollRef = useRef<HTMLDivElement>(null)
    
     useEffect(() => {
-        disptach(viewResourceImageSessionThunk())
+        disptach(readingAllResourceImageSessionThnk())
     }, [])
 
     const getTranslateX = () => {
@@ -114,22 +114,20 @@ const ResourceImage = () => {
                     >
                         {/* item */}
                         {Array.isArray(items) && items.map((item, index) => {
-                            if(item.status == 10){
-                                return (
-                                    <div 
-                                        key = {index}
-                                        className="w-[350px] h-[200px] mx-[10px] shrink-0 flex justify-center items-center text-4xl "
-                                        style={{
-                                            border: `1px solid ${item}`,
-                                            transform: `translateX(-${getTranslateX()}px)`,
-                                            transition: isTransition ? 'transform 500ms cubic-bezier(0.25, 1, 0.5, 1)' : 'none'
-                                        }}  
-                                        onTransitionEnd={() => {disptach(endTranistion())}}
-                                    >
-                                        <img src={imgURL + item.image} draggable = {false} alt="" />
-                                    </div>
-                                )
-                            }
+                            return (
+                                <div 
+                                    key = {index}
+                                    className="w-[350px] h-[200px] mx-[10px] shrink-0 flex justify-center items-center text-4xl "
+                                    style={{
+                                        border: `1px solid ${item}`,
+                                        transform: `translateX(-${getTranslateX()}px)`,
+                                        transition: isTransition ? 'transform 500ms cubic-bezier(0.25, 1, 0.5, 1)' : 'none'
+                                    }}  
+                                    onTransitionEnd={() => {disptach(endTranistion())}}
+                                >
+                                    <img src={imgURL + item.image} draggable = {false} alt="" />
+                                </div>
+                            )
                         })}
                     </div>
 
