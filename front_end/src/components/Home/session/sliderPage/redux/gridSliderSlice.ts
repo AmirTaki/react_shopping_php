@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { readingAllItemsSliderPageSessionThunk, viewSliderPageSessionThunk, createSliderPageSessionThunk } from "./actionsGridSlider";
+import {deleteSliderPageSessionThunk, changeStatusSliderPageSessionThunk, readingAllItemsSliderPageSessionThunk, viewSliderPageSessionThunk, createSliderPageSessionThunk } from "./actionsGridSlider";
 
 export type TSliderPage =   Array<{id: number, image: string, body: string, status: number, created_at: string, updated_at: string}> | string | boolean
 export type TSliderPageObject = {id: number, image: string, body: string, status: number, created_at: string, updated_at: string}
@@ -206,6 +206,36 @@ const GridSwiperSlice =  createSlice({
             state.addItems = action.payload === true ? true : false
             state.callback = false
             state.warningMessage = ''
+        })
+
+        // delete item slider page -> grid image
+        builder.addCase(deleteSliderPageSessionThunk.pending, (state) => {
+            state.loading = true
+            state.warningMessage = ''
+        })
+        builder.addCase(deleteSliderPageSessionThunk.rejected, (state, action) => {
+            state.loading = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(deleteSliderPageSessionThunk.fulfilled, (state, action) => {
+            state.loading = false
+            state.warningMessage = ''
+            state.boxes = action.payload
+        })
+
+        // change status slider page -> grid image
+        builder.addCase(changeStatusSliderPageSessionThunk.pending, (state) => {
+            state.loading = true
+            state.warningMessage = ''
+        })
+        builder.addCase(changeStatusSliderPageSessionThunk.rejected, (state, action) => {
+            state.loading = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(changeStatusSliderPageSessionThunk.fulfilled, (state, action) => {
+            state.loading = false
+            state.warningMessage = ''
+            state.boxes = action.payload
         })
         
         // reading all items slider page -> grid image    

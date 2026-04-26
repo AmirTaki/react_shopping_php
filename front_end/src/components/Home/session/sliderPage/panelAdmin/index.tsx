@@ -2,9 +2,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { RooState, AppDispatch } from "../../../../../store";
-// import { changeStatusSliderPageSessionThunk, deleteSliderPageSessionThunk, viewSliderPageSessionThunk } from "./actionsSliderPage";
 import { imgURL } from "../../../../../baseURL";
-import { viewSliderPageSessionThunk } from "../redux/actionsGridSlider";
+import { viewSliderPageSessionThunk, deleteSliderPageSessionThunk, changeStatusSliderPageSessionThunk } from "../redux/actionsGridSlider";
 
 const SliderPageSessionPA = ()  => {
 
@@ -59,7 +58,7 @@ const SliderPageSessionPA = ()  => {
                                         
                                         <div 
                                             onClick={() => {
-                                                // dispatch(changeStatusSliderPageSessionThunk({id: item.id}) );
+                                                dispatch(changeStatusSliderPageSessionThunk({id: item.id}) );
                                             }}
                                             className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 py-1 "
                                         >
@@ -74,7 +73,7 @@ const SliderPageSessionPA = ()  => {
                                         
                                         <div 
                                             onClick={() => {
-                                                // dispatch(deleteSliderPageSessionThunk({id: item.id}))
+                                               window.confirm('Do you want it to be deleted ? ')  && dispatch(deleteSliderPageSessionThunk({id: item.id}))
                                             }}
                                             className="text-rose-500 cursor-pointer duration-200 hover:text-red-700! py-1"
                                         >

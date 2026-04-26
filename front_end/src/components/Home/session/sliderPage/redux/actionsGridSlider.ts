@@ -66,6 +66,53 @@ export const createSliderPageSessionThunk = createAsyncThunk<TSliderPage, FormDa
     }
 )
 
+export const deleteSliderPageSessionThunk = createAsyncThunk<TSliderPage, {id: number}, {rejectValue: string}>(
+    'delete_item_slider_page_grid_session_toolkit', 
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/sliderPage/delete.php/${payload.id}/delete`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }  ,
+            })
+            if(!response.ok){
+                throw new Error('message warning')
+            }
+            const data = await response.json();
+            return Array.isArray(data) ? data : []
+        }   
+        catch(error: any){
+            return rejectWithValue (`warning: ${error.message}`)
+        }
+    }
+)
+
+
+export const changeStatusSliderPageSessionThunk = createAsyncThunk<TSliderPage, {id: number},{rejectValue: string}>(
+    'status_item_slider_page-grid_session_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/sliderPage/status.php/${payload.id}/changeStatus`, {
+                method: 'GET', 
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },  
+
+            })
+            if(!response.ok){
+                throw new Error('warning: ');
+            }
+            const data = await response.json()
+            return Array.isArray(data) ? data : []
+        }
+        catch(error: any){
+            return rejectWithValue (`warning: ${error.message}`)
+        }
+    }
+)
+
 export const readingAllItemsSliderPageSessionThunk = createAsyncThunk<TSliderPage, void, {rejectValue: string}>(
     'reading_all_item_grid_swiper_session_toolkit',
         async(_, {rejectWithValue}) => {
