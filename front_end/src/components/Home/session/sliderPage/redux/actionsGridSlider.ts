@@ -113,6 +113,73 @@ export const changeStatusSliderPageSessionThunk = createAsyncThunk<TSliderPage, 
     }
 )
 
+export const readingItemSliderPageSessionThunk = createAsyncThunk<TSliderPageObject, {id: number},{rejectValue: string}> (
+    'reading_item_slider_page_grid_Session_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/sliderPage/slider.php/${payload.id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                } ,
+                // credentials: 'include',
+            })
+            if(!response.ok){
+                throw new Error('message');
+            }
+
+            const data =  await response.json()
+            return data
+   
+        }
+        catch(err: any){
+            return rejectWithValue (`warning: ${err.message}`)
+        }
+    }
+)
+
+export const editItemSliderPageSessionThunk = createAsyncThunk<TSliderPage,  {formData: FormData, id: number}, {rejectValue: string}>(
+    'edit_item_slider_page_grid_session_toolkit',
+    async(payload, reject) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/sliderPage/edit.php/${payload.id}`, {
+                method: 'POST', 
+                credentials: 'include',
+                body: payload.formData
+            })
+            
+            if (!response.ok){
+               if(response.status === 422){
+                    reject.dispatch(onWarningGrid({
+                        image: '',
+                        body: 'body is requierd!',
+                    }))
+                }
+                else if (response.status === 405){
+                    reject.dispatch(onCallBackGrid())
+                }
+
+                else if (response.status === 404){
+                      reject.dispatch(onWarningGrid({
+                        image: 'not upload image ?? repeat again !!',                        
+                    }))
+                }
+                
+                else {
+                    throw new Error ('warning ');
+                }
+            }
+            const data = await response.json()
+            return data
+        }
+        catch(err: any){
+            return (`warning: ${err.message}`)
+        }
+    }
+)
+
+
+
 export const readingAllItemsSliderPageSessionThunk = createAsyncThunk<TSliderPage, void, {rejectValue: string}>(
     'reading_all_item_grid_swiper_session_toolkit',
         async(_, {rejectWithValue}) => {

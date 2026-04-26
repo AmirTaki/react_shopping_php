@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {deleteSliderPageSessionThunk, changeStatusSliderPageSessionThunk, readingAllItemsSliderPageSessionThunk, viewSliderPageSessionThunk, createSliderPageSessionThunk } from "./actionsGridSlider";
+import {readingItemSliderPageSessionThunk, editItemSliderPageSessionThunk, deleteSliderPageSessionThunk, changeStatusSliderPageSessionThunk, readingAllItemsSliderPageSessionThunk, viewSliderPageSessionThunk, createSliderPageSessionThunk } from "./actionsGridSlider";
+import { imgURL } from "../../../../../baseURL";
 
 export type TSliderPage =   Array<{id: number, image: string, body: string, status: number, created_at: string, updated_at: string}> | string | boolean
 export type TSliderPageObject = {id: number, image: string, body: string, status: number, created_at: string, updated_at: string}
@@ -220,7 +221,7 @@ const GridSwiperSlice =  createSlice({
         builder.addCase(deleteSliderPageSessionThunk.fulfilled, (state, action) => {
             state.loading = false
             state.warningMessage = ''
-            state.boxes = action.payload
+            state.items = action.payload
         })
 
         // change status slider page -> grid image
@@ -235,7 +236,38 @@ const GridSwiperSlice =  createSlice({
         builder.addCase(changeStatusSliderPageSessionThunk.fulfilled, (state, action) => {
             state.loading = false
             state.warningMessage = ''
-            state.boxes = action.payload
+            state.items = action.payload
+        })
+        
+        // reading item slider page -> grid image
+        builder.addCase(readingItemSliderPageSessionThunk.pending, (state, ) => {
+            state.urlImage = ''
+        })
+        builder.addCase(readingItemSliderPageSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(readingItemSliderPageSessionThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            const reading = action.payload as TSliderPageObject
+            state.urlImage = imgURL + reading.image
+            state.body = {caption: reading.body, warning: ''}
+        })
+        
+        // edit  item slider page -> grid image
+        builder.addCase(editItemSliderPageSessionThunk.pending, (state) => {
+            state.addItems = false;
+            state.callback = false
+            state.warningMessage = ''
+        })
+        builder.addCase(editItemSliderPageSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.callback = false
+            state.addItems = false
+        })
+        builder.addCase(editItemSliderPageSessionThunk.fulfilled, (state, action) => {
+            state.addItems = action.payload == true ? true : false
+            state.callback = false;
+            state.warningMessage = ''
         })
         
         // reading all items slider page -> grid image    

@@ -45,6 +45,7 @@ import EditSessionResourceImagePA from "../Home/session/resourseImage/panelAdmin
 import ViewSliderPageSessionPA from "../Home/session/sliderPage/panelAdmin/view"
 import SliderPageSessionPA from "../Home/session/sliderPage/panelAdmin"
 import CreateSessionSliderPagePA from "../Home/session/sliderPage/panelAdmin/create"
+import EditSessionSliderPagePA from "../Home/session/sliderPage/panelAdmin/edit"
 
 const Routh = () => {
     return (
@@ -145,7 +146,7 @@ const Routh = () => {
                         <Route path="sessionSliderPage" element = {<ViewSliderPageSessionPA />}>
                             <Route path = "" element = {<SliderPageSessionPA />}/>
                             <Route path = "create" element = {<CreateSessionSliderPagePA />}/>
-                            {/* <Route path = "edit/:id" element = {<EditSessionResourceImagePA />}/> */}
+                            <Route path = "edit/:id" element = {<EditSessionSliderPagePA />}/>
                         </Route>
 
                     </Route>
