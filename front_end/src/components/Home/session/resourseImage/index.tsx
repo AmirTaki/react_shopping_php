@@ -88,7 +88,7 @@ const ResourceImage = () => {
 
 
     return( 
-        <div className="text-sky-400 my-6">
+        <div className="text-sky-400 my-6  overflow-hidden w-[100%]">
                 <div className={`w-[95%] mx-auto h-80  flex justify-center items-center  relative ${isScroll && 'active:cursor-pointer'}`}
                 
                     onMouseMove={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {disptach(scrollMove({client: e.clientX}))}}

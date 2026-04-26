@@ -99,14 +99,14 @@ const PayloarSlider = () => {
             <button 
 
                 onClick={() => {dispatchReducer({type : "right", payload: {container: containerRef?.current}})}}
-                className={`absolute -right-4  ${state.scroll >= state.sizeItems - (state.widthContainer + 10)  ? 'hidden' : 'flex'}`}
+                className={`absolute right-5  ${state.scroll >= state.sizeItems - (state.widthContainer + 10)  ? 'hidden' : 'flex'}`}
             >
                 <FaAngleDoubleRight />
             </button>
 
             <button 
                 onClick={() => {dispatchReducer({type : "left", payload: {container: containerRef?.current}})}}
-                className={`absolute -left-4   ${state.scroll <= 0 ? 'hidden' : 'flex'}`}
+                className={`absolute left-4   ${state.scroll <= 0 ? 'hidden' : 'flex'}`}
             >
                 <FaAngleDoubleLeft />
             </button>

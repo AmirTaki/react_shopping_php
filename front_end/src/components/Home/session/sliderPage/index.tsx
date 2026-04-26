@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { FaAngleDoubleRight } from "react-icons/fa";
 import type { RooState, AppDispatch } from "../../../../store";
@@ -16,10 +16,11 @@ const GridSwiper = () => {
     const containerRef =  useRef<HTMLDivElement>(null)
 
 
+    
     useEffect(() => {
         dispatch(readingAllItemsSliderPageSessionThunk())
     }, [])
-
+    
     useEffect(() => {
         const timer =   setInterval(() => {
             dispatch(handlerButtons())
@@ -57,75 +58,48 @@ const GridSwiper = () => {
         return base;
     }
 
+    const [counter, setCounter] =  useState<number>(0)
+
+    const handlerScrolTo = (counter: number) => {
+        const maxIndex = Array.isArray(items) ? items.length - 1: -1
+        const newIndex = Math.max(0, Math.min(counter, maxIndex))
+        setCounter(newIndex)
+    }
+    useEffect(() => {
+        if(containerRef.current){
+            containerRef.current.style.scrollBehavior = 'smooth'
+            containerRef.current.scrollLeft = counter * containerRef.current.offsetWidth
+         
+        }
+    }, [counter])
    
     return(
-        <div className="text-sky-400 w-full h-[510px] my-9 flex justify-center items-center relative">
-
-            {/* container */}
-            <div className="w-[95%] h-[95%]  flex flex-col items-center  overflow-hidden relative">
-                {/* container */}
-                <div 
-                    ref = {containerRef}
-                    className="w-full h-full   flex flex-col justify-center items-center flex-wrap cursor-grab active:cursor-grabbing select-none touch-pan-x"
-                    style={{
-                        transform: `translateX(-${getTranslateX()}%)`,
-                        transition: isTransition ? 'transform 500ms cubic-bezier(0.25, 1, 0.5, 1)' : 'none'
-                    }}
-                    onTransitionEnd={() => {dispatch(transitionEnd())}} 
-                    onMouseDown={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {dispatch(gridDown({client: e.clientX}))}}
-                    onMouseMove={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {dispatch(gridMove({client: e.clientX}))}}
-                    onMouseUp={() => {dispatch(gridUp())}}
-                    onMouseLeave={() => {if(isDrag) {dispatch(gridUp())}}}
-
-                    onTouchStart={(e: React.TouchEvent<HTMLDivElement>) => {dispatch(gridDown({client: e.touches[0].clientX}))}}
-                    onTouchMove={(e: React.TouchEvent<HTMLDivElement>) => {dispatch(gridMove({client: e.touches[0].clientX}))}}
-                    onTouchEnd={() => {dispatch(gridUp())}}
-                >
-                    {/* items */}
+        <div className="text-sky-400 w-[98%] h-[300px] mx-auto my-15 relative  flex justify-center items-center ">
+            <div ref = {containerRef} className="w-[95%] h-[95%]  flex flex-col flex-wrap overflow-x-scroll">
+                {/* item */}
                     {Array.isArray(items) && items.map((item, index) => {
-                            return(
-                                <div key = {index} 
-                                    className={`shrink-0 w-[98%] md:w-[48%]! lg:w-[31.3%]! mx-[1%] h-[90%] text-4xl flex justify-center items-center`}
-                                    style={{
-                                        // border: `1px solid blue`,
-                                    }}    
-                                >
-                                    <img src= {imgURL + item.image} className="w-full h-full" alt="" draggable = {false}/>
-                                </div>
-                            )
-                        })}
-                </div>           
+                        return(
+                            <div key = {item.id} 
+                            className="px[1.5%] max-sm:w-[100%] max-lg:w-[50%] lg:w-[33.3%] 
+                                h-[97%]  flex justify-center items-center overflow-hidden 
+                              
+                                " 
+                            >
+                                {/* {item.id} */}
+                                <img src={imgURL + item.image} className="w-[98%] h-full" alt="" draggable = {false}/>
+                            </div>
+                        )
+                    })}
             </div>
+      
 
-            {/* button right */}
-            <button 
-                onClick={() => {dispatch(rightClick({distance: 1 }))}}
-                className={`absolute right-0 top-60 ${slide + 1 >= sizeItmes  ? 'hidden' : 'flex'}`}
-            >
-                <FaAngleDoubleRight />
-            </button>
-
-            {/* button left */}
-            <button 
-                onClick={() => {dispatch(leftClick({distance: 1}))}}
-                className={`absolute left-0 top-60 ${slide <= 0 ? 'hidden': 'flex'}`}
-            >
+            <button className="absolute left-0 top-35" onClick={() => {handlerScrolTo(counter - 1)}}>
                 <FaAngleDoubleLeft />
             </button>
-
-            {/* button */}
-            <div className="flex  absolute bottom-3  gap-3 ">
-                {buttons.map((_, index) => {
-                    return(
-                        
-                        <div 
-                            onClick={() => {dispatch(handlerChangeButton({index: index}))}}
-                            key = {index} 
-                            className= {`w-2 h-2 bg-[silver] rounded-full cursor-pointer duration-300 hover:scale-200 ${index === slide ? 'w-10 bg-sky-400 hover:scale-100!' : ''}`}
-                        ></div>
-                    )
-                })}
-            </div>
+            <button className="absolute right-0 top-35" onClick={() => {handlerScrolTo(counter + 1)}}>
+                <FaAngleDoubleRight />
+            </button>
+        
 
         </div>
     )

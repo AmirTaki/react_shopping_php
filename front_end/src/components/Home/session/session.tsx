@@ -5,7 +5,7 @@ import GridSwiper from "./sliderPage"
 
 const Session = () => {
     return(
-        <div className="pt-14">
+        <div className="pt-14 sizeWidth">
             {/* background slider -> swiper slider */}
             <SwiperSlide />
             

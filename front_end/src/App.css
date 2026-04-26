@@ -1,3 +1,16 @@
+@tailwind utilities;
+
+@layer utilities {
+    @media screen and (min-width: 2080px) {
+        .sizeWidth{
+            width: 50%;
+            display: flex;
+            align-items: center;
+            flex-flow: column;
+            margin: auto;
+        }
+    }
+}
 #root {
   /* max-width: 1280px; */
   /* margin: 0 auto; */
