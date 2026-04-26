@@ -24,3 +24,24 @@ export const viewSliderPageSessionThunk = createAsyncThunk<TSliderPage, void, {r
             }
         }
 )
+export const readingAllItemsSliderPageSessionThunk = createAsyncThunk<TSliderPage, void, {rejectValue: string}>(
+    'reading_all_item_grid_swiper_session_toolkit',
+        async(_, {rejectWithValue}) => {
+            try{
+                const response = await fetch (baseURL + `tables/session/sliderPage/reading.php`, {
+                    method: 'GET', 
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                if(!response.ok){
+                    throw new Error('warning: ');
+                }
+                const data = await response.json();
+                return Array.isArray(data) ? data : []
+            }
+            catch(err: any){
+                return rejectWithValue (`warning: ${err.message}`)
+            }
+        }
+)

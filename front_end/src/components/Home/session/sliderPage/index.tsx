@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { FaAngleDoubleRight } from "react-icons/fa";
 import type { RooState, AppDispatch } from "../../../../store";
 import { FaAngleDoubleLeft } from "react-icons/fa";
-import { transitionEnd, rightClick, leftClick, handlerWidthContainer, gridDown, gridMove, gridUp, handlerButtons, handlerChangeButton } from "./redux/gridSliderSlice"
+import { transitionEnd, rightClick, leftClick, handlerWidthContainer, gridDown, gridMove, gridUp, handlerButtons, handlerChangeButton, handlerItemsAPI, handlerSetSlide } from "./redux/gridSliderSlice"
+import { readingAllItemsSliderPageSessionThunk } from "./redux/actionsGridSlider";
+import {imgURL } from "../../../../baseURL";
 
 const GridSwiper = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -12,6 +14,13 @@ const GridSwiper = () => {
     // grid swiper 
     const {items, slide, isTransition, widthContainer, isDrag, dragOffset, buttons, sizeItmes, } =  useSelector((state: RooState) => state.gridSlider)
     const containerRef =  useRef<HTMLDivElement>(null)
+
+
+    useEffect(() => {
+        dispatch(readingAllItemsSliderPageSessionThunk())
+        dispatch(handlerSetSlide())
+    }, [])
+
 
     useEffect(() => {
         const handlerResize = () => {
@@ -23,6 +32,9 @@ const GridSwiper = () => {
         window.addEventListener('resize', handlerResize);
         return () => window.removeEventListener('resize', handlerResize)
     }, [])
+
+
+
 
     useEffect(() => {
         dispatch(handlerButtons())
@@ -63,15 +75,15 @@ const GridSwiper = () => {
                     onTouchEnd={() => {dispatch(gridUp())}}
                 >
                     {/* items */}
-                    {items.map((item, index) => {
+                    {Array.isArray(items) && items.map((item, index) => {
                             return(
                                 <div key = {index} 
                                     className={`shrink-0 w-[98%] md:w-[48%]! lg:w-[31.3%]! mx-[1%] h-[90%] text-4xl flex justify-center items-center`}
                                     style={{
-                                        border: `1px solid ${item}`,
+                                        border: `1px solid blue`,
                                     }}    
                                 >
-                                    {index}
+                                    <img src= {imgURL + item.image} className="w-full h-full" alt="" draggable = {false}/>
                                 </div>
                             )
                         })}
@@ -95,7 +107,7 @@ const GridSwiper = () => {
             </button>
 
             {/* button */}
-            <div className="flex  absolute bottom-3  gap-3">
+            <div className="flex  absolute bottom-3  gap-3 ">
                 {buttons.map((_, index) => {
                     return(
                         

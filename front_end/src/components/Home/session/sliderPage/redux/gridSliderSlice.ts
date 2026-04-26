@@ -1,13 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewSliderPageSessionThunk } from "./actionsGridSlider";
-
+import { readingAllItemsSliderPageSessionThunk, viewSliderPageSessionThunk } from "./actionsGridSlider";
 
 export type TSliderPage =   Array<{id: number, image: string, body: string, status: number, created_at: string, updated_at: string}> | string | boolean
 export type TSliderPageObject = {id: number, image: string, body: string, status: number, created_at: string, updated_at: string}
 
 
 interface IGridSwiper {
-    items: TSliderPage,
+    items: TSliderPage | Array<string>,
     slide: number,
     isTransition : boolean,
     widthContainer: number,
@@ -29,7 +28,7 @@ interface IGridSwiper {
 }
 
 const initialState: IGridSwiper = {
-    items: [],
+    items: ['black', 'blue', 'brown', 'red', 'white', 'yellow', 'pink', 'silver', 'green', 'orange'],
     slide: 0,
     isTransition: false,
     widthContainer: 0,
@@ -123,13 +122,20 @@ const GridSwiperSlice =  createSlice({
         handlerChangeButton: (state, action) => {
             state.slide = action.payload.index;
             state.isTransition = true
+        },
+        handlerItemsAPI : (state, action) => {
+            state.items = action.payload.data
+        },
+        handlerSetSlide : (state, ) => {
+            state.slide = 0
         }
+
 
         // panel admin
     },
     extraReducers(builder){
-        // view items slider page -> grid image
-        
+
+        // view items slider page -> grid image    
         builder.addCase(viewSliderPageSessionThunk.pending, (state) => {
             state.warningMessage = ''
         })
@@ -141,10 +147,23 @@ const GridSwiperSlice =  createSlice({
         builder.addCase(viewSliderPageSessionThunk.fulfilled, (state, action) => {
             state.warningMessage = ''
             state.items = action.payload 
-            // state.length = Array.isArray(action.payload) ? action.payload.length : 0
+        })
+        
+        // reading all items slider page -> grid image    
+        builder.addCase(readingAllItemsSliderPageSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+        })
+        
+        builder.addCase(readingAllItemsSliderPageSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        
+        builder.addCase(readingAllItemsSliderPageSessionThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            state.items = action.payload 
         })
     }
 })
 
 export default GridSwiperSlice;
-export const {transitionEnd, rightClick, leftClick, handlerWidthContainer,  gridDown, gridMove, gridUp, handlerButtons, handlerChangeButton} = GridSwiperSlice.actions
+export const {handlerSetSlide, handlerItemsAPI,  transitionEnd, rightClick, leftClick, handlerWidthContainer,  gridDown, gridMove, gridUp, handlerButtons, handlerChangeButton} = GridSwiperSlice.actions
