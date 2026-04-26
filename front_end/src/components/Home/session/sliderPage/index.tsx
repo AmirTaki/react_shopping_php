@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { FaAngleDoubleRight } from "react-icons/fa";
 import type { RooState, AppDispatch } from "../../../../store";
 import { FaAngleDoubleLeft } from "react-icons/fa";
-import { transitionEnd, rightClick, leftClick, handlerWidthContainer, gridDown, gridMove, gridUp, handlerButtons, handlerChangeButton, handlerItemsAPI, handlerSetSlide } from "./redux/gridSliderSlice"
+import { transitionEnd, rightClick, leftClick, handlerWidthContainer, gridDown, gridMove, gridUp, handlerButtons, handlerChangeButton, handlerItemsAPI,  } from "./redux/gridSliderSlice"
 import { readingAllItemsSliderPageSessionThunk } from "./redux/actionsGridSlider";
 import {imgURL } from "../../../../baseURL";
 
@@ -18,7 +18,14 @@ const GridSwiper = () => {
 
     useEffect(() => {
         dispatch(readingAllItemsSliderPageSessionThunk())
-        dispatch(handlerSetSlide())
+    }, [])
+
+    useEffect(() => {
+        const timer =   setInterval(() => {
+            dispatch(handlerButtons())
+            dispatch(rightClick({distance: 0}))
+        }, 100)
+        return () => clearInterval(timer)
     }, [])
 
 
@@ -52,7 +59,7 @@ const GridSwiper = () => {
 
    
     return(
-        <div className="text-sky-400 w-full h-[510px]  flex justify-center items-center relative">
+        <div className="text-sky-400 w-full h-[510px] my-9 flex justify-center items-center relative">
 
             {/* container */}
             <div className="w-[95%] h-[95%]  flex flex-col items-center  overflow-hidden relative">
@@ -80,7 +87,7 @@ const GridSwiper = () => {
                                 <div key = {index} 
                                     className={`shrink-0 w-[98%] md:w-[48%]! lg:w-[31.3%]! mx-[1%] h-[90%] text-4xl flex justify-center items-center`}
                                     style={{
-                                        border: `1px solid blue`,
+                                        // border: `1px solid blue`,
                                     }}    
                                 >
                                     <img src= {imgURL + item.image} className="w-full h-full" alt="" draggable = {false}/>

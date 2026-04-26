@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { readingAllItemsSliderPageSessionThunk, viewSliderPageSessionThunk } from "./actionsGridSlider";
+import { readingAllItemsSliderPageSessionThunk, viewSliderPageSessionThunk, createSliderPageSessionThunk } from "./actionsGridSlider";
 
 export type TSliderPage =   Array<{id: number, image: string, body: string, status: number, created_at: string, updated_at: string}> | string | boolean
 export type TSliderPageObject = {id: number, image: string, body: string, status: number, created_at: string, updated_at: string}
@@ -25,6 +25,18 @@ interface IGridSwiper {
 
     // 
     warningMessage: string
+
+    // create & edit
+    urlImage: string , // save url image & view for user
+
+    // image: string,  // save view image for reading item
+    image: {url: string, warning: string}
+    body: {caption: string, warning: string}    
+    addItems: boolean, 
+    callback: boolean,
+
+    // stauts & delete
+    loading: boolean, 
 }
 
 const initialState: IGridSwiper = {
@@ -44,8 +56,21 @@ const initialState: IGridSwiper = {
     slideMD: 0, 
     slideLG: 0,
 
-    // 
-    warningMessage: ''
+    // create &
+    warningMessage: '',
+
+    
+    // create & edit
+    urlImage: '' , // save url image & view for user
+
+    // image: string,  // save view image for reading item
+    image: {url: '', warning: ''},
+    body: {caption: '', warning: ''},    
+    addItems: false, 
+    callback: false,
+
+    // stauts & delete
+    loading: false, 
 }
 
 const GridSwiperSlice =  createSlice({
@@ -126,12 +151,30 @@ const GridSwiperSlice =  createSlice({
         handlerItemsAPI : (state, action) => {
             state.items = action.payload.data
         },
-        handlerSetSlide : (state, ) => {
-            state.slide = 0
-        }
-
 
         // panel admin
+        onLoadingGrid: (state) => {
+            state.urlImage = ''
+            state.body = {caption: '', warning: ''},
+            state.image = {url: '', warning: ''}
+        },
+        onSetItemsGrid: (state) => {
+            state.addItems = false
+        },
+        onSetURLGrid: (state, action) => {
+            state.urlImage = action.payload.result
+        },
+        onBodyGrid: (state, action) => {
+            state.body = {caption: action.payload.body, warning: ''}
+        },
+        onWarningGrid: (state, action) => {
+            state.image = {url: state.image.url, warning: action.payload.image}
+            state.body = {caption: state.body.caption, warning: action.payload.body}
+        },
+        onCallBackGrid: (state,) => {
+            state.callback = true
+        }
+
     },
     extraReducers(builder){
 
@@ -147,6 +190,22 @@ const GridSwiperSlice =  createSlice({
         builder.addCase(viewSliderPageSessionThunk.fulfilled, (state, action) => {
             state.warningMessage = ''
             state.items = action.payload 
+        })
+
+        // create items slider page -> grid image
+        builder.addCase(createSliderPageSessionThunk.pending, (state)=> {
+            state.addItems = false
+            state.callback = false
+            state.warningMessage = ''
+        })
+        builder.addCase(createSliderPageSessionThunk.rejected, (state, action)=> {
+            state.callback = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(createSliderPageSessionThunk.fulfilled, (state, action)=> {
+            state.addItems = action.payload === true ? true : false
+            state.callback = false
+            state.warningMessage = ''
         })
         
         // reading all items slider page -> grid image    
@@ -166,4 +225,6 @@ const GridSwiperSlice =  createSlice({
 })
 
 export default GridSwiperSlice;
-export const {handlerSetSlide, handlerItemsAPI,  transitionEnd, rightClick, leftClick, handlerWidthContainer,  gridDown, gridMove, gridUp, handlerButtons, handlerChangeButton} = GridSwiperSlice.actions
+export const { handlerItemsAPI,  transitionEnd, rightClick, leftClick, handlerWidthContainer,  gridDown, gridMove, gridUp, handlerButtons, handlerChangeButton,
+    onBodyGrid, onCallBackGrid, onLoadingGrid, onSetItemsGrid, onSetURLGrid, onWarningGrid, 
+} = GridSwiperSlice.actions
