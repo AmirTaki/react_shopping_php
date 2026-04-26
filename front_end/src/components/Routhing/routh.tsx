@@ -42,6 +42,8 @@ import ViewResourceImageSessionPA from "../Home/session/resourseImage/panelAdmin
 import ResourceImageSessionPA from "../Home/session/resourseImage/panelAdmin"
 import CreateSessionResourceImagePA from "../Home/session/resourseImage/panelAdmin/create"
 import EditSessionResourceImagePA from "../Home/session/resourseImage/panelAdmin/edit"
+import ViewSliderPageSessionPA from "../Home/session/sliderPage/panelAdmin/view"
+import SliderPageSessionPA from "../Home/session/sliderPage/panelAdmin"
 
 const Routh = () => {
     return (
@@ -136,6 +138,13 @@ const Routh = () => {
                             <Route path = "" element = {<ResourceImageSessionPA />}/>
                             <Route path = "create" element = {<CreateSessionResourceImagePA />}/>
                             <Route path = "edit/:id" element = {<EditSessionResourceImagePA />}/>
+                        </Route>
+
+                        {/* session -> slider page (grid swiper) */}
+                        <Route path="sessionSliderPage" element = {<ViewSliderPageSessionPA />}>
+                            <Route path = "" element = {<SliderPageSessionPA />}/>
+                            {/* <Route path = "create" element = {<CreateSessionResourceImagePA />}/> */}
+                            {/* <Route path = "edit/:id" element = {<EditSessionResourceImagePA />}/> */}
                         </Route>
 
                     </Route>

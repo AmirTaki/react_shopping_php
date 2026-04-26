@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { viewSliderPageSessionThunk } from "./actionsGridSlider";
+
+
+export type TSliderPage =   Array<{id: number, image: string, body: string, status: number, created_at: string, updated_at: string}> | string | boolean
+export type TSliderPageObject = {id: number, image: string, body: string, status: number, created_at: string, updated_at: string}
+
 
 interface IGridSwiper {
-    items: Array<string>,
+    items: TSliderPage,
     slide: number,
     isTransition : boolean,
     widthContainer: number,
@@ -16,10 +22,14 @@ interface IGridSwiper {
     slideSM: number,
     slideMD: number, 
     slideLG: number
+
+
+    // 
+    warningMessage: string
 }
 
 const initialState: IGridSwiper = {
-    items: ['silver','blue', 'pink', 'green', 'red', 'white', 'yellow', 'pink', 'gray', 'orange', 'silver','blue', 'pink', 'green', 'red', 'white', 'yellow', 'pink', 'gray', 'blue', 'green' ],
+    items: [],
     slide: 0,
     isTransition: false,
     widthContainer: 0,
@@ -33,7 +43,10 @@ const initialState: IGridSwiper = {
 
     slideSM: 0,
     slideMD: 0, 
-    slideLG: 0
+    slideLG: 0,
+
+    // 
+    warningMessage: ''
 }
 
 const GridSwiperSlice =  createSlice({
@@ -55,18 +68,20 @@ const GridSwiperSlice =  createSlice({
         },
         handlerWidthContainer: (state, action) => {
             state.widthContainer = action.payload.offset
-            
-            if(window.innerWidth <= 768) {
-                state.sizeItmes =  state.items.length 
-            }
-            else if (window.innerWidth > 768 && window.innerWidth <= 1024){
-                state.sizeItmes =  Math.ceil (state.items.length / 2) 
-            }
-            else if (window.innerWidth > 1024){
-                state.sizeItmes =  Math.ceil(state.items.length / 3) 
-            } 
-            else {
-                state.sizeItmes = 0 
+
+            if(Array.isArray(state.items)){
+                if(window.innerWidth <= 768) {
+                    state.sizeItmes =  state.items.length 
+                }
+                else if (window.innerWidth > 768 && window.innerWidth <= 1024){
+                    state.sizeItmes =  Math.ceil (state.items.length / 2) 
+                }
+                else if (window.innerWidth > 1024){
+                    state.sizeItmes =  Math.ceil(state.items.length / 3) 
+                } 
+                else {
+                    state.sizeItmes = 0 
+                }
             }
         },
         
@@ -109,6 +124,25 @@ const GridSwiperSlice =  createSlice({
             state.slide = action.payload.index;
             state.isTransition = true
         }
+
+        // panel admin
+    },
+    extraReducers(builder){
+        // view items slider page -> grid image
+        
+        builder.addCase(viewSliderPageSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+        })
+        
+        builder.addCase(viewSliderPageSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        
+        builder.addCase(viewSliderPageSessionThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            state.items = action.payload 
+            // state.length = Array.isArray(action.payload) ? action.payload.length : 0
+        })
     }
 })
 
