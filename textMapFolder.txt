@@ -27,7 +27,7 @@
             3. session
                 1. backGroundSlider -> curd & reading
                 2. scrollSlider -> curd
-                3.
+                3. resourceImage -> curd & reading
 
 // front end 
     component -> 
@@ -99,6 +99,11 @@
                             c. index.tsx
 
                         2. scrollSlider
+                            a. PanelAdmin
+                            b. redux
+                            c. index.tsx
+
+                        3. resourceImage
                             a. PanelAdmin
                             b. redux
                             c. index.tsx

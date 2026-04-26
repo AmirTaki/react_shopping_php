@@ -15,6 +15,7 @@ import imageMenuSlice from "./components/Home/header/menus/menuList/sideToSide/m
 import SwiperSlicer from "./components/Home/session/backGroundSlider/redux/swiperSlice";
 import scrollSliderSlice from "./components/Home/session/scrollSlider/redux/actionsScrollSlider";
 import resourceImageSlice from "./components/Home/session/resourseImage/redux/resourceSlice";
+import GridSwiperSlice from "./components/Home/session/sliderPage/redux/gridSliderSlice";
 
 const reducers = combineReducers({
 
@@ -62,7 +63,8 @@ const reducers = combineReducers({
     scrollPayloar:    scrollSliderSlice.reducer,     // scroll slider => payloar  slider   
     // resource image -> 
     resourceImage:  resourceImageSlice.reducer,                     // resource image -> payloar swiper          
-
+    // slider page -> grid Swiper -> grid slider
+    gridSlider: GridSwiperSlice.reducer
 
 
  })
