@@ -28,6 +28,7 @@
                 1. backGroundSlider -> curd & reading
                 2. scrollSlider -> curd
                 3. resourceImage -> curd & reading
+                4. sliderPage -> curd & reading
 
 // front end 
     component -> 
@@ -107,7 +108,14 @@
                             a. PanelAdmin
                             b. redux
                             c. index.tsx
-                    
+
+                        4. sliderPage 
+                            a. panel Admin
+                            b. redux 
+                            c. index.tsx
+
+                        5. 
+                        
                     d. index
 
                 4- PanelAdmin 

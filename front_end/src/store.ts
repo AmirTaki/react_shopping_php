@@ -16,6 +16,7 @@ import SwiperSlicer from "./components/Home/session/backGroundSlider/redux/swipe
 import scrollSliderSlice from "./components/Home/session/scrollSlider/redux/actionsScrollSlider";
 import resourceImageSlice from "./components/Home/session/resourseImage/redux/resourceSlice";
 import GridSwiperSlice from "./components/Home/session/sliderPage/redux/gridSliderSlice";
+import advertSlice from "./components/Home/session/imageAdvert/redux/advertSlice";
 
 const reducers = combineReducers({
 
@@ -64,7 +65,9 @@ const reducers = combineReducers({
     // resource image -> 
     resourceImage:  resourceImageSlice.reducer,                     // resource image -> payloar swiper          
     // slider page -> grid Swiper -> grid slider
-    gridSlider: GridSwiperSlice.reducer
+    gridSlider: GridSwiperSlice.reducer,                    // grid slider -> grid swiper -> image slider 
+    // image advert
+    advert: advertSlice.reducer,            // image advert -> scroll sldider not loop       
 
 
  })

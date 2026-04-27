@@ -1,4 +1,5 @@
 import SwiperSlide from "./backGroundSlider"
+import ImageAdvert from "./imageAdvert"
 import ResourceImage from "./resourseImage"
 import PayloarSlider from "./scrollSlider"
 import GridSwiper from "./sliderPage"
@@ -17,6 +18,9 @@ const Session = () => {
 
             {/* grid image -> slider page )(grid swiper)*/}
             <GridSwiper />
+
+            {/* image advert -> slider scroll */}
+            <ImageAdvert />
         </div>
     )
 }

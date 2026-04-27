@@ -2,8 +2,6 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import {baseURL, imgURL } from "../../../../baseURL";
-import { useDispatch } from "react-redux";
-import type{ AppDispatch } from "../../../../store";
 
 const GridSwiper = () => {
    
@@ -70,7 +68,6 @@ const GridSwiper = () => {
         }
     }, [counter])
    
-
 
     useEffect(() => {
         const handlerResize = () => {       
@@ -177,7 +174,7 @@ const GridSwiper = () => {
             </div>
                 
         </div>
- )
+    )
 }
 
 export default GridSwiper
