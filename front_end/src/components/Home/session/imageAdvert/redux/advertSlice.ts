@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteImageAdvertSessionThunk, changeStatusImageAdvertSessionThunk, createImageAdvertSessionThunk, readingAllItemsImageAdvertSessionThunk, viewImageAdvertSessionThunk } from "./actionAdvert";
+import { editItemImageAdvertSessionThunk, deleteImageAdvertSessionThunk, changeStatusImageAdvertSessionThunk, createImageAdvertSessionThunk, readingAllItemsImageAdvertSessionThunk, viewImageAdvertSessionThunk, readingItemImageAdvertSessionThunk } from "./actionAdvert";
+import { imgURL } from "../../../../../baseURL";
 
 export type TImageAdvert = Array<{id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}> | string | boolean
 export type TImageAdvertObject = {id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}
@@ -118,7 +119,7 @@ const advertSlice = createSlice({
             state.warningMessage = ''
         })
 
-                // delete item image advert : advert image
+        // delete item image advert : advert image
         builder.addCase(deleteImageAdvertSessionThunk.pending, (state, ) => {
             state.loading = true;
             state.warningMessage = ''
@@ -146,6 +147,39 @@ const advertSlice = createSlice({
             state.loading = true
             state.warningMessage = ''
             state.items = action.payload
+        })
+
+        
+        // reading item image advert: advert image
+        builder.addCase(readingItemImageAdvertSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.urlImage =''
+        })
+        builder.addCase(readingItemImageAdvertSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(readingItemImageAdvertSessionThunk.fulfilled, (state, action) => {
+            const advert = action.payload as TImageAdvertObject
+            state.body = {caption: advert.body, warning: ''}
+            state.title = {name: advert.title, warning: ''}
+            state.urlImage = imgURL + advert.image
+            
+        })
+
+        // edit item image advert: advert image
+        builder.addCase(editItemImageAdvertSessionThunk.pending, (state) => {
+            state.callback = false
+            state.warningMessage = ''
+        })
+        builder.addCase(editItemImageAdvertSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.callback = false
+            state.addItems = false
+        })
+        builder.addCase(editItemImageAdvertSessionThunk.fulfilled, (state, action) => {
+            state.addItems = action.payload === true ? true : false
+            state.callback = false
+            state.warningMessage = ''
         })
 
         
