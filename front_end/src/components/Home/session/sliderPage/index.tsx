@@ -1,56 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
 import { FaAngleDoubleRight } from "react-icons/fa";
-import type { RooState, AppDispatch } from "../../../../store";
 import { FaAngleDoubleLeft } from "react-icons/fa";
-import { transitionEnd, rightClick, leftClick, handlerWidthContainer, gridDown, gridMove, gridUp, handlerButtons, handlerChangeButton, handlerItemsAPI,  } from "./redux/gridSliderSlice"
-import { readingAllItemsSliderPageSessionThunk } from "./redux/actionsGridSlider";
 import {baseURL, imgURL } from "../../../../baseURL";
+import { useDispatch } from "react-redux";
+import type{ AppDispatch } from "../../../../store";
 
 const GridSwiper = () => {
-    const dispatch = useDispatch<AppDispatch>()
-
-
-    // grid swiper 
-    // const {items, slide, isTransition, widthContainer, isDrag, dragOffset, buttons, sizeItmes, } =  useSelector((state: RooState) => state.gridSlider)
-
-
-    
- 
-    
-
-
-
-    // useEffect(() => {
-    //     const handlerResize = () => {
-    //         if(containerRef.current){
-    //             dispatch(handlerWidthContainer({offset: containerRef.current.offsetWidth}))
-    //         }  
-    //     }
-    //     handlerResize()
-    //     window.addEventListener('resize', handlerResize);
-    //     return () => window.removeEventListener('resize', handlerResize)
-    // }, [])
-
-
-
-
-    // useEffect(() => {
-    //     dispatch(handlerButtons())
-    //     dispatch(rightClick({distance: 0}))
-    // }, [widthContainer])
-
-    // const getTranslateX = () => {
-    //     const base = slide * 100
-    //     if(isDrag){
-    //         const drag = (dragOffset / widthContainer) * 100
-    //         return base - drag
-    //     }
-    //     return base;
-    // }
-
-    
-    
+   
     const [counter, setCounter] =  useState<number>(0)
     const containerRef =  useRef<HTMLDivElement>(null)
     const widthRef  =  useRef<HTMLDivElement>(null)
@@ -61,9 +17,9 @@ const GridSwiper = () => {
     const currentX = useRef<number>(0)
     const [button, setButtons] = useState<any>([])
     
-    const getRequest =  () => {
+    const getRequest = async () => {
         try{
-            fetch (baseURL + 'tables/session/sliderPage/reading.php', {
+            await fetch (baseURL + 'tables/session/sliderPage/reading.php', {
                 method: 'GET', 
                 headers: {
                     'Content-Type': 'application/json'
@@ -71,7 +27,6 @@ const GridSwiper = () => {
             }).then((res) => {
                 res.json().then((data) => {
                     setItems(data)
-                    // setButtons(Array.from({length: Math.ceil(items.length)}, (_, i) => `item ${i + 1}`))
                 })
             })
 
@@ -87,7 +42,7 @@ const GridSwiper = () => {
             return items.length
         }
         else if(window.innerWidth  > 640  && window.innerWidth  <= 1024 ){
-            setButtons(Array.from({length: Math.ceil(items.length / 3)}, (_, i) => `item ${i + 1}`))
+            setButtons(Array.from({length: Math.ceil(items.length / 2) }, (_, i) => `item ${i + 1}`))
             return items.length / 2
         }
         else {      
@@ -119,7 +74,17 @@ const GridSwiper = () => {
 
     useEffect(() => {
         const handlerResize = () => {       
-            innerWidth
+            handlerScrolTo(0)
+
+            if(window.innerWidth <= 640 ) {
+                setButtons(Array.from({length: Math.ceil(items.length)}, (_, i) => `item ${i + 1}`))
+            }
+            else if(window.innerWidth  > 640  && window.innerWidth  <= 1024 ){
+                setButtons(Array.from({length: Math.ceil(items.length / 2) }, (_, i) => `item ${i + 1}`))
+            }
+            else {      
+                setButtons(Array.from({length: Math.ceil(items.length / 3)}, (_, i) => `item ${i + 1}`))
+            }
         }
         handlerResize()
         window.addEventListener('resize', handlerResize)
@@ -167,7 +132,7 @@ const GridSwiper = () => {
         <div ref = {widthRef} className="text-sky-400 w-[100%] h-[300px] mx-auto my-15 relative  flex justify-center items-center  ">
             <div 
                 ref = {containerRef}
-                className="w-[95%] h-[95%]  flex flex-col flex-wrap overflow-x-hidden select-none touch-pan-x cursor-grab active:cursor-grabbing"
+                className="w-[90%] h-[95%]  flex flex-col flex-wrap overflow-x-hidden select-none touch-pan-x cursor-grab active:cursor-grabbing"
                 onMouseDown={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {handlerDown(e.clientX)}}
                 onMouseMove={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {handlerMove(e.clientX)}}
                 onMouseUp={() => {handlerUp()}}
@@ -203,10 +168,10 @@ const GridSwiper = () => {
                 <FaAngleDoubleRight />
             </button>
         
-            <div className="flex absolute bottom-0 gap-3 hidden">
+            <div className="flex absolute -bottom-7 gap-3 ">
                 {Array.isArray(button) && button.map((_, i) => {
                     return(
-                        <div className = {`w-2 h-2  rounded-full ${i == counter ? `bg-rose-400` : 'bg-sky-400'}`}></div>
+                        <div onClick={() => {handlerScrolTo(i)}} className = {`w-2 h-2  rounded-full ${i == counter ? `bg-rose-400 scale-200 ` : 'bg-sky-400 duration-150 hover:scale-150 cursor-pointer'}`}></div>
                     )
                 })}
             </div>
