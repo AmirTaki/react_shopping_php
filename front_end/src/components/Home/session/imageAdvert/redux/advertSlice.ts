@@ -8,14 +8,42 @@ interface IScrollSlider {
     items: TImageAdvert ,
     counter: number,
 
+    // panel admin
     warningMessage: string
+    
+    // create & edit
+    urlImage: string , // save url image & view for user
+    image: {url: string, warning: string} ,  // save view image for reading item
+    body: {caption: string, warning: string},
+    title: {name: string, warning: string},
+    
+    addItems: boolean, 
+    callback: boolean,
+
+
+    // stauts & delete
+    loading: boolean
 }
 
 const initialState: IScrollSlider = {
     items: [],
     counter: 0,
+    
+    // panel admin
+    warningMessage: '',
 
-    warningMessage: ''
+    // create & edit
+    urlImage: '' , // save url image & view for user
+    image: {url: '', warning: ''} ,  // save view image for reading item
+    body: {caption: '', warning: ''},
+    title: {name: '', warning: ''},
+    
+    addItems: false, 
+    callback: false,
+
+
+    // stauts & delete
+    loading: false
 }
 
 const advertSlice = createSlice({
@@ -32,6 +60,34 @@ const advertSlice = createSlice({
         handlerButtons: (state, action) => {
             state.counter = action.payload.index
         },
+
+        // panel adimin
+        onLoadingAdvert: (state) => {
+            state.image = {url: '', warning: ''},
+            state.body = {caption: '', warning: ''},
+            state.title = {name: '', warning: ''},
+            state.urlImage = ''
+        },
+        onSetItemsAdvert: (state) => {
+            state.addItems = false
+        },
+        onSetURLAdvert: (state, action) => {
+            state.urlImage = action.payload.result
+        },
+        onTitleAdvert: (state, action) => {
+            state.title = {name: action.payload.title, warning: ''}
+        },
+        onBodyAdvert: (state, action) => {
+            state.body = {caption: action.payload.body, warning: ''}
+        },
+        onWarningAdvert: (state, action) => {
+            state.body = {caption: state.body.caption, warning: action.payload.body},
+            state.image = {url: state.image.url, warning: action.payload.image},
+            state.title = {name: state.title.name, warning: action.payload.title}
+        },
+        onCallBackAdvert: (state) => {
+            state.callback = true
+        }
         
     },
     extraReducers: (builder) => {
@@ -63,4 +119,4 @@ const advertSlice = createSlice({
             
 })
 export default advertSlice;
-export const {handlerScrollTo, handlerButtons} = advertSlice.actions
+export const {handlerScrollTo, handlerButtons, onBodyAdvert, onCallBackAdvert, onLoadingAdvert,  onSetItemsAdvert, onSetURLAdvert, onTitleAdvert, onWarningAdvert} = advertSlice.actions

@@ -7,7 +7,7 @@
     $method = $_SERVER['REQUEST_METHOD'];
     switch($method){
         case "GET":
-            $users =  readTable($DBName, "SELECT * FROM imageAdvert ", $single = false, $execute = null);    
+            $users =  readTable($DBName, "SELECT * FROM imageAdvert WHERE status = 10", $single = false, $execute = null);    
             echo json_encode($users);
             break;
         

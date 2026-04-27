@@ -48,6 +48,7 @@ import CreateSessionSliderPagePA from "../Home/session/sliderPage/panelAdmin/cre
 import EditSessionSliderPagePA from "../Home/session/sliderPage/panelAdmin/edit"
 import ViewImageAdvertSessionPA from "../Home/session/imageAdvert/panelAdmin/view"
 import ImageAdvertSessionPA from "../Home/session/imageAdvert/panelAdmin"
+import CreateSessionImageAdvertPA from "../Home/session/imageAdvert/panelAdmin/create"
 
 const Routh = () => {
     return (
@@ -154,7 +155,7 @@ const Routh = () => {
                         {/* session -> image advert  */}
                         <Route path="sessionImageAdvert" element = {<ViewImageAdvertSessionPA />}>
                             <Route path = "" element = {<ImageAdvertSessionPA />}/>
-                            {/* <Route path = "create" element = {<CreateSessionSliderPagePA />}/> */}
+                            <Route path = "create" element = {<CreateSessionImageAdvertPA />}/>
                             {/* <Route path = "edit/:id" element = {<EditSessionSliderPagePA />}/> */}
                         </Route>
 
