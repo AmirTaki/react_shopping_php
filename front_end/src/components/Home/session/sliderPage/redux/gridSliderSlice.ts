@@ -7,7 +7,7 @@ export type TSliderPageObject = {id: number, image: string, body: string, status
 
 
 interface IGridSwiper {
-    items: TSliderPage | Array<string>,
+    items: TSliderPage ,
     slide: number,
     isTransition : boolean,
     widthContainer: number,
@@ -41,7 +41,7 @@ interface IGridSwiper {
 }
 
 const initialState: IGridSwiper = {
-    items: ['black', 'blue', 'brown', 'red', 'white', 'yellow', 'pink', 'silver', 'green', 'orange'],
+    items: [],
     slide: 0,
     isTransition: false,
     widthContainer: 0,
