@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { readingAllItemsImageAdvertSessionThunk, viewImageAdvertSessionThunk } from "./actionAdvert";
+import { createImageAdvertSessionThunk, readingAllItemsImageAdvertSessionThunk, viewImageAdvertSessionThunk } from "./actionAdvert";
 
 export type TImageAdvert = Array<{id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}> | string | boolean
 export type TImageAdvertObject = {id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}
@@ -102,6 +102,22 @@ const advertSlice = createSlice({
             state.items = action.payload
             state.warningMessage = ''
         })
+
+
+        // create item image advert : advert image
+        builder.addCase(createImageAdvertSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.callback = false
+        })
+        builder.addCase(createImageAdvertSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(createImageAdvertSessionThunk.fulfilled, (state, action) => {
+            state.callback = false
+            state.addItems = action.payload === true ? true : false
+            state.warningMessage = ''
+        })
+
         
         //  reading all items image advert: advert image
         builder.addCase(readingAllItemsImageAdvertSessionThunk.pending, (state) =>  {

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import type { AppDispatch, RooState } from "../../../../../store";
 import { useEffect, useState } from "react";
 import { onLoadingAdvert, onSetItemsAdvert, onBodyAdvert, onSetURLAdvert, onTitleAdvert, } from "../redux/advertSlice";
-
+import { createImageAdvertSessionThunk } from "../redux/actionAdvert";
 
 const CreateSessionImageAdvertPA = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -123,7 +123,7 @@ const CreateSessionImageAdvertPA = () => {
                             formData.append('title', title.name)
                             formData.append('body', body.caption)
                             
-                            // dispatch(createImageAdvertSessionThunk(formData));
+                            dispatch(createImageAdvertSessionThunk(formData));
                         }}                        
                         type="submit" value = "Add" 
                         className="border-2 px-4 py-2 rounded-xl cursor-pointer hover:text-green-600 duration-300 hover:border-green-600" 
