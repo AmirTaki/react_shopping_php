@@ -68,6 +68,53 @@ export const createImageAdvertSessionThunk = createAsyncThunk<TImageAdvert, Form
 )
 
 
+export const deleteImageAdvertSessionThunk = createAsyncThunk<TImageAdvert, {id: number}, {rejectValue: string}>(
+    'delete_item_image_advert_session_toolkit', 
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/imageAdvert/delete.php/${payload.id}/delete`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }  ,
+            })
+            if(!response.ok){
+                throw new Error('message warning')
+            }
+            const data = await response.json();
+            return Array.isArray(data) ? data : []
+        }   
+        catch(error: any){
+            return rejectWithValue (`warning: ${error.message}`)
+        }
+    }
+)
+
+export const changeStatusImageAdvertSessionThunk = createAsyncThunk<TImageAdvert, {id: number},{rejectValue: string}>(
+    'status_item_image_advert_session_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/imageAdvert/status.php/${payload.id}/changeStatus`, {
+                method: 'GET', 
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },  
+
+            })
+            if(!response.ok){
+                throw new Error('warning: ');
+            }
+            const data = await response.json()
+            return Array.isArray(data) ? data : []
+        }
+        catch(error: any){
+            return rejectWithValue (`warning: ${error.message}`)
+        }
+    }
+)
+
+
 export const readingAllItemsImageAdvertSessionThunk =  createAsyncThunk<TImageAdvert, void, {rejectValue: string}>(
     'reading_all_items_image_advert_session_toolkit',
     async(_, {rejectWithValue}) => {

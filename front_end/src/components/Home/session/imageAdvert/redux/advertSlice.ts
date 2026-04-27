@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createImageAdvertSessionThunk, readingAllItemsImageAdvertSessionThunk, viewImageAdvertSessionThunk } from "./actionAdvert";
+import { deleteImageAdvertSessionThunk, changeStatusImageAdvertSessionThunk, createImageAdvertSessionThunk, readingAllItemsImageAdvertSessionThunk, viewImageAdvertSessionThunk } from "./actionAdvert";
 
 export type TImageAdvert = Array<{id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}> | string | boolean
 export type TImageAdvertObject = {id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}
@@ -116,6 +116,36 @@ const advertSlice = createSlice({
             state.callback = false
             state.addItems = action.payload === true ? true : false
             state.warningMessage = ''
+        })
+
+                // delete item image advert : advert image
+        builder.addCase(deleteImageAdvertSessionThunk.pending, (state, ) => {
+            state.loading = true;
+            state.warningMessage = ''
+        })
+        builder.addCase(deleteImageAdvertSessionThunk.rejected, (state, action) => {
+            state.loading = false;
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(deleteImageAdvertSessionThunk.fulfilled, (state, action) => {
+            state.loading = true
+            state.warningMessage = ''
+            state.items = action.payload
+        })
+
+        // change status item image advert: advert image
+        builder.addCase(changeStatusImageAdvertSessionThunk.pending, (state, ) => {
+            state.loading = true;
+            state.warningMessage = ''
+        })
+        builder.addCase(changeStatusImageAdvertSessionThunk.rejected, (state, action) => {
+            state.loading = false;
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(changeStatusImageAdvertSessionThunk.fulfilled, (state, action) => {
+            state.loading = true
+            state.warningMessage = ''
+            state.items = action.payload
         })
 
         
