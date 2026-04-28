@@ -57,6 +57,7 @@ import EditCardSliderSessionPA from "../Home/session/cardSlider/panelAdmin/edit"
 import ViewCircleSliderSessionPA from "../Home/session/circleSlider/panelAdmin/view"
 import CircleSliderSessionPA from "../Home/session/circleSlider/panelAdmin"
 import CreateCircleSliderSessionPA from "../Home/session/circleSlider/panelAdmin/create"
+import EditCircleSliderSessionPA from "../Home/session/circleSlider/panelAdmin/edit"
 
 const Routh = () => {
     return (
@@ -178,7 +179,7 @@ const Routh = () => {
                         <Route path="sessionCircleSlider" element = {<ViewCircleSliderSessionPA />}>
                             <Route path = "" element = {<CircleSliderSessionPA />}/>
                             <Route path = "create" element = {<CreateCircleSliderSessionPA />}/>
-                            {/* <Route path = "edit/:id" element = {<EditCardSliderSessionPA />}/> */}
+                            <Route path = "edit/:id" element = {<EditCircleSliderSessionPA />}/>
                         </Route>
 
 

@@ -86,6 +86,9 @@ export const deleteCardSliderSessionThunk = createAsyncThunk<TSwiperCard, {id: n
     }
 )
 
+
+
+
 export const changeStatusCardSliderSessionThunk = createAsyncThunk<TSwiperCard, {id: number},{rejectValue: string}>(
     'change_status_item_card_slider_session_toolkit',
     async(payload, {rejectWithValue}) => {
@@ -109,6 +112,7 @@ export const changeStatusCardSliderSessionThunk = createAsyncThunk<TSwiperCard, 
         }
     }
 )
+
 
 export const readingItemCardSliderSessionThunk = createAsyncThunk<TSwiperCardObject, {id: number},{rejectValue: string}> (
     'reading_item_card_slider_Session_toolkit',

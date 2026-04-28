@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { onCallBackCircle, onWarningCircle, type TCircleSwiper } from "./circleSlice";
+import { onCallBackCircle, onWarningCircle, type TCircleSwiper, type TCircleSwiperObject } from "./circleSlice";
 import { baseURL } from "../../../../../baseURL";
 
 export  const viewCircleSliderSessionThunk =  createAsyncThunk<TCircleSwiper, void, {rejectValue: string}>(
@@ -114,6 +114,28 @@ export const deleteItemsCircleSlidersSessionThunk = createAsyncThunk<TCircleSwip
     }
 )
 
+
+export  const readingItemCircleSliderSessionThunk =  createAsyncThunk<TCircleSwiperObject, {id: number}, {rejectValue: string}>(
+    'reading_item_circle_slidcer_session_toolkit', 
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/circleSlider/slider.php/${payload.id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            if(!response.ok){
+                throw new Error('warning: ');
+            }
+            const data = await response.json()
+            return data
+        }
+        catch(err: any){
+            return rejectWithValue (`warning ${err.message}` )
+        }
+    }
+)
 
 
 

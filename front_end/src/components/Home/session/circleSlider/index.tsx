@@ -16,17 +16,19 @@ const CircleSlider = () => {
     
     const {items, conter, isDrag, dragOffset} = useSelector((state: RooState) => state.circle)
     const rotate = (item: number) => {
-        
-        if(isDrag){
-            return (item * 360 /(items.length)) + dragOffset
+        if(Array.isArray(items)){
+            if(isDrag){
+                return (item * 360 /(items.length)) + dragOffset
+            }
+            return item * 360 /(items.length) 
         }
-        return item * 360 /(items.length) 
         
     }
 
     const translateZ = () => {
-
-        return items.length * 30
+        if(Array.isArray(items)){
+            return items.length * 30
+        }
         
     }
     // circle swiper 
