@@ -21,6 +21,14 @@ interface ISlider {
     // panel admin
     warningMessage: string, 
      
+
+    // create & edit 
+    urlImage: string , // save url image & view for user
+    image: {url: string, warning: string}, // save view image for reading item
+    title: {name: string, warning: string},
+    addItems: boolean,
+    callback: boolean,
+
     // status & delete 
     loading: boolean
 }
@@ -39,6 +47,16 @@ const initialState: ISlider = {
 
     // panel admin
     warningMessage: '', 
+    // create & edit 
+    urlImage: '' , // save url image & view for user
+    
+    image: {url: '', warning: ''}, // save view image for reading item
+    title: {name: '', warning: ''},
+    
+    addItems: false    ,
+    callback: false,
+
+
      
     // status & delete 
     loading: false
@@ -118,8 +136,31 @@ const cardSlice = createSlice({
                 state.activeIndicatore = (state.slide - 2) % state.sliders.length;
                 if(state.activeIndicatore < 0) state.activeIndicatore += state.sliders.length
             }
-        }
+        },
+        
         // panel admin
+        onLoadingCard: (state) => {
+            state.warningMessage = ''
+            state.urlImage = ''
+            state.title = {name: '', warning: ''}
+            state.image = {url: '', warning: ''}
+        },
+        onSetItemsCard: (state) => {
+            state.addItems = false
+        }, 
+        onSetURLCard: (state, action) => {
+            state.urlImage = action.payload.result
+        },
+        onTitleCard: (state, action) => {
+            state.title = {name: action.payload.title, warning: ''}
+        },
+        onWarningCard: (state, action) => {
+            state.image = {url: state.image.url, warning: action.payload.image},
+            state.title = {name: state.title.name, warning: action.payload.title }
+        },
+        onCallBackCard: (state) => {
+            state.callback = true
+        }
     },
     extraReducers: (builder) => {
         // view item card slider
@@ -150,4 +191,6 @@ const cardSlice = createSlice({
 })
 
 export default cardSlice;
-export const {handlerExtractSliders, nextSlide, prevSlide, transitionEnd, handlerWidthContainer, handlerDownSlide, handlerMoveSlide, handlerUpSlide, buttonCircle, handlerActiveButton} = cardSlice.actions
+export const {handlerExtractSliders, nextSlide, prevSlide, transitionEnd, handlerWidthContainer, handlerDownSlide, handlerMoveSlide, handlerUpSlide, buttonCircle, handlerActiveButton,
+    onCallBackCard,   onLoadingCard, onSetItemsCard, onSetURLCard, onTitleCard, onWarningCard, 
+} = cardSlice.actions
