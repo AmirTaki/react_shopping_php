@@ -1,26 +1,33 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { viewCircleSliderSessionThunk } from "./actionsCircle";
+
+export type TCircleSwiper = Array<{id: number, image: string, title: string, status: number, created_at: string, updated_at: string}> | string | boolean
+export type  TCircleSwiperObject = {id: number, image: string, title: string, status: number, created_at: string, updated_at: string}
 
 interface ICircle {
-    items: Array<{id: number, color: string, }>,
+    items: TCircleSwiper,
     conter : number,
     isDrag: boolean,
     startX: number,
     currentX: number, 
-    dragOffset: number
+    dragOffset: number,
+
+    // panel admin
+    warningMessage: string,
+    loading: boolean, 
 }
 
 const initialState: ICircle = {
-    items: [
-        {id: 0, color: 'blue', }, {id: 1, color: 'red',  },{id: 2, color: 'green', }, {id: 3, color: 'yellow', },
-        {id: 4, color: 'silver', }, {id: 5, color: 'brown', },{id: 6, color: 'pink', }, {id: 7, color: 'white',  },
-        {id: 8, color: 'silver', }, {id: 9, color: 'brown', },{id: 10, color: 'pink', }, {id: 11, color: 'white',  },
-        {id: 12, color: 'silver', }, {id: 13, color: 'brown', },{id: 14, color: 'pink', }, {id: 15, color: 'white', }
-    ],
+    items: [],
     conter: 0,
     isDrag: false,
     startX: 0,
     currentX: 0, 
-    dragOffset: 0
+    dragOffset: 0,
+
+    // loading
+    warningMessage: '',
+    loading: false
 }
 
 const circleSlicer  = createSlice({
@@ -59,6 +66,21 @@ const circleSlicer  = createSlice({
                 state.dragOffset = 0
             }
         }
+
+        // panel admin
+    },
+    extraReducers: (builder) => {
+        // view circle sliders 
+        builder.addCase(viewCircleSliderSessionThunk.pending, (state, ) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(viewCircleSliderSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(viewCircleSliderSessionThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            state.items = action.payload
+        })
     }
 })
 

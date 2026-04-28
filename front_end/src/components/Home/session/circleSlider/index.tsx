@@ -7,6 +7,10 @@ import type { RooState, AppDispatch } from "../../../../store";
 
 const CircleSlider = () => {
     const dispatch =  useDispatch<AppDispatch>()
+
+    useEffect(() => {
+        dispatch
+    }, [])
     
     const {items, conter, isDrag, dragOffset} = useSelector((state: RooState) => state.circle)
     const rotate = (item: number) => {
@@ -40,12 +44,12 @@ const CircleSlider = () => {
                     <div 
                         className="w-[150px] h-[200px]  relative transform-3d perspective-[1000px]  select-none"
                     >
-                        {items.map((item) => {
+                        {Array.isArray(items) && items.map((item) => {
                             return(
                                 <div 
                                     key = {item.id} 
                                     style={{
-                                        border: `1px solid ${item.color}`,
+                                        border: `1px solid blue`,
                                         backgroundColor : "#242424",
                                         transform: `rotateY(${rotate(item.id + conter)}deg) translateZ(${translateZ()}px)`
                                     }}

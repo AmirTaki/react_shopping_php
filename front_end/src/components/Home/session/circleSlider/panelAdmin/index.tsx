@@ -3,14 +3,14 @@ import { Link } from "react-router-dom"
 import { useEffect } from "react"
 import { imgURL } from "../../../../../baseURL"
 import type { RooState, AppDispatch } from "../../../../../store"
-import { viewCardSliderSessionThunk, deleteCardSliderSessionThunk, changeStatusCardSliderSessionThunk } from "../redux/actionCard"
+import { viewCircleSliderSessionThunk } from "../redux/actionsCircle"
 
-const CardSliderSessionPA = () => {
-    const {sliders, loading} = useSelector((state: RooState) => state.card )
+const CircleSliderSessionPA = () => {
+    const {items, loading} = useSelector((state: RooState) => state.circle )
     const dispatch = useDispatch<AppDispatch>()
    
     useEffect(() => {
-        dispatch(viewCardSliderSessionThunk())
+        dispatch(viewCircleSliderSessionThunk())
     }, [loading])
 
     return(
@@ -36,7 +36,7 @@ const CardSliderSessionPA = () => {
                     </tr>
                 </thead>
                 <tbody >
-                    {Array.isArray(sliders) && sliders.map((item, ind) => { 
+                    {Array.isArray(items) && items.map((item, ind) => { 
                         return(
                             <tr key = {ind} className=" " >
                                 
@@ -55,7 +55,7 @@ const CardSliderSessionPA = () => {
                                 <th>
                                     <div 
                                         onClick={() => {
-                                            dispatch(changeStatusCardSliderSessionThunk({id: item.id}) );
+                                            // dispatch(changeStatusCardSliderSessionThunk({id: item.id}) );
                                         }}
                                         className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 py-1 "
                                     >
@@ -70,7 +70,7 @@ const CardSliderSessionPA = () => {
                                     
                                     <div 
                                         onClick={() => {
-                                              window.confirm('Do you want it to be deleted ? ')  &&  dispatch(deleteCardSliderSessionThunk({id: item.id}))                                            
+                                            //   window.confirm('Do you want it to be deleted ? ')  &&  dispatch(deleteCardSliderSessionThunk({id: item.id}))                                            
                                         }}
                                         className="text-rose-500 cursor-pointer duration-200 hover:text-red-700! py-1"
                                     >
@@ -88,4 +88,4 @@ const CardSliderSessionPA = () => {
     </div>    
     )
 }
-export default CardSliderSessionPA
+export default CircleSliderSessionPA
