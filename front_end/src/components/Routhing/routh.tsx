@@ -53,6 +53,7 @@ import EditSessionImageAdvertPA from "../Home/session/imageAdvert/panelAdmin/edi
 import ViewCardSliderSessionPA from "../Home/session/cardSlider/panelAdmin/view"
 import CardSliderSessionPA from "../Home/session/cardSlider/panelAdmin"
 import CreateCardSliderSessionPA from "../Home/session/cardSlider/panelAdmin/create"
+import EditCardSliderSessionPA from "../Home/session/cardSlider/panelAdmin/edit"
 
 const Routh = () => {
     return (
@@ -167,7 +168,7 @@ const Routh = () => {
                         <Route path="sessionCardSlider" element = {<ViewCardSliderSessionPA />}>
                             <Route path = "" element = {<CardSliderSessionPA />}/>
                             <Route path = "create" element = {<CreateCardSliderSessionPA />}/>
-                            {/* <Route path = "edit/:id" element = {<EditSessionImageAdvertPA />}/> */}
+                            <Route path = "edit/:id" element = {<EditCardSliderSessionPA />}/>
                         </Route>
 
 

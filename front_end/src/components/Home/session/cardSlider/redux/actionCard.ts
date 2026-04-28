@@ -110,6 +110,70 @@ export const changeStatusCardSliderSessionThunk = createAsyncThunk<TSwiperCard, 
     }
 )
 
+export const readingItemCardSliderSessionThunk = createAsyncThunk<TSwiperCardObject, {id: number},{rejectValue: string}> (
+    'reading_item_card_slider_Session_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/cardSlider/card.php/${payload.id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                } ,
+                // credentials: 'include',
+            })
+            if(!response.ok){
+                throw new Error('message');
+            }
+
+            const data =  await response.json()
+            return data
+   
+        }
+        catch(err: any){
+            return rejectWithValue (`warning: ${err.message}`)
+        }
+    }
+)
+
+
+export const editItemCardSliderSessionThunk = createAsyncThunk<TSwiperCard,  {formData: FormData, id: number}, {rejectValue: string}>(
+    'edit_item_card_slider_session_toolkit',
+    async(payload, reject) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/cardSlider/edit.php/${payload.id}`, {
+                method: 'POST', 
+                credentials: 'include',
+                body: payload.formData
+            })
+            
+            if (!response.ok){
+               if(response.status === 422){
+                    reject.dispatch(onWarningCard({
+                        title: 'title is requierd!',      
+                    }))
+                }
+                else if (response.status === 405){
+                    reject.dispatch(onCallBackCard())
+                }
+
+                else if (response.status === 404){
+                      reject.dispatch(onWarningCard({
+                        image: 'not upload image ?? repeat again !!',                        
+                    }))
+                }
+                
+                else {
+                    throw new Error ('warning ');
+                }
+            }
+            const data = await response.json()
+            return data
+        }
+        catch(err: any){
+            return (`warning: ${err.message}`)
+        }
+    }
+)
 
 export const readingAllItemsCardSliderSessionThunk = createAsyncThunk<TSwiperCard, void, {rejectValue: string}>(
     'reading_all_items_status_card_slider_session_toolkit',

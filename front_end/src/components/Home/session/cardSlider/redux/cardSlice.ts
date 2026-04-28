@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { imgURL } from "../../../../../baseURL";
-import { deleteCardSliderSessionThunk,  changeStatusCardSliderSessionThunk, createCardSliderSessionThunk, readingAllItemsCardSliderSessionThunk, viewCardSliderSessionThunk } from "./actionCard";
+import { readingItemCardSliderSessionThunk, editItemCardSliderSessionThunk, deleteCardSliderSessionThunk,  changeStatusCardSliderSessionThunk, createCardSliderSessionThunk, readingAllItemsCardSliderSessionThunk, viewCardSliderSessionThunk } from "./actionCard";
 
 export type TSwiperCard = Array<{id: number, image: string, title: string, status: number, created_at: string, updated_at: string}> | string | boolean
 export type TSwiperCardObject = {id: number, image: string, title: string, status: number, created_at: string, updated_at: string}
@@ -221,6 +221,37 @@ const cardSlice = createSlice({
             state.loading = false
             state.warningMessage = ''
             state.sliders = action.payload
+        })
+
+        // reading item card slider
+        builder.addCase(readingItemCardSliderSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(readingItemCardSliderSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(readingItemCardSliderSessionThunk.fulfilled, (state, action) => {
+            const object = action.payload as TSwiperCardObject
+            state.title = {name: object.title, warning: ''}
+            state.urlImage = imgURL + object.image
+            state.warningMessage = ''
+        })
+
+        // edit item card slider
+        builder.addCase(editItemCardSliderSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.addItems = false
+            state.callback = false
+        })
+        builder.addCase(editItemCardSliderSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.addItems = false
+            state.callback = false
+        })
+        builder.addCase(editItemCardSliderSessionThunk.fulfilled, (state, action) => {
+            state.addItems = action.payload == true ? true : false
+            state.callback= false
+            state.warningMessage = ''
         })
 
         // reading all items card slider

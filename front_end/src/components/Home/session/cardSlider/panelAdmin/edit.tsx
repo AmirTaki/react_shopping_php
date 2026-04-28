@@ -1,19 +1,22 @@
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import type { RooState, AppDispatch } from "../../../../../store";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import type { RooState, AppDispatch } from "../../../../../store";
 import { onLoadingCard, onSetItemsCard, onSetURLCard, onTitleCard,  } from "../redux/cardSlice";
-import { createCardSliderSessionThunk } from "../redux/actionCard";
+import { editItemCardSliderSessionThunk, readingItemCardSliderSessionThunk } from "../redux/actionCard";
 
-const CreateCardSliderSessionPA = () => {
-    const {urlImage, title, image, callback, addItems} = useSelector((state: RooState) => state.card )
+const EditCardSliderSessionPA = () => {    
+    const {urlImage, title, image, callback, addItems, } = useSelector((state: RooState) => state.card )
     const dispatch = useDispatch<AppDispatch>();
     const [file, setFile] = useState<File | null>()
     const navigate = useNavigate()
-
+    const {id} = useParams();
+    
     useEffect(() => {
         dispatch(onLoadingCard())
+        dispatch(readingItemCardSliderSessionThunk({id: Number(id)}))
     }, [])
+
 
     useEffect(() => {
         callback && navigate('/LogOut')
@@ -25,6 +28,7 @@ const CreateCardSliderSessionPA = () => {
             dispatch(onSetItemsCard())
         }
     }, [addItems])
+    
 
 
     const  handlerImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,22 +42,22 @@ const CreateCardSliderSessionPA = () => {
             reader.readAsDataURL(file);
         }
     }
-    return (
+
+    return(
         <div className={`flex flex-col w-[30%]`}>
             <Link to = "/panelAdmin/sessionCardSlider" 
                 className="text-center text-4xl my-3 cursor-pointer hover:text-sky-500 duration-200 hover:tracking-[.1rem] mb-14"
             >
-                view card
+                view slider
             </Link>
 
+            
             <form  
                 // enctype="multipart/form-data"
             >
                 {/* image view */}
                 <div className="flex gap-5 items-center justify-center m-4">
-                    {urlImage && (
-                        <img src={urlImage} style={{width: 250}}></img>
-                    )}
+                    <img src= {urlImage === "" ? image.url : urlImage} style={{width: 250}}></img>
                 </div>
 
                 {/* image */}
@@ -100,17 +104,17 @@ const CreateCardSliderSessionPA = () => {
                             const formData = new FormData();
                             file &&  formData.append('image', file)
                             formData.append('title', title.name)
-            
-                            dispatch(createCardSliderSessionThunk(formData));
+                            
+                            dispatch(editItemCardSliderSessionThunk({formData: formData, id: Number(id)}));
                         }}                        
-                        type="submit" value = "Add" 
+                        type="submit" value = "Edit" 
                         className="border-2 px-4 py-2 rounded-xl cursor-pointer hover:text-green-600 duration-300 hover:border-green-600" 
                     />
                 </div>
 
             </form>
+
         </div>
     )
 }
-
-export default CreateCardSliderSessionPA;
+export default EditCardSliderSessionPA;
