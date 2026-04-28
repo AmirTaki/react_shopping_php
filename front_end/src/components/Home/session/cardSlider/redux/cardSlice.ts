@@ -1,8 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { imgURL } from "../../../../../baseURL";
+import { viewCardSliderSessionThunk } from "./actionCard";
+
+export type TSwiperCard = Array<{id: number, image: string, title: string, status: number, created_at: string, updated_at: string}> | string | boolean
+export type TSwiperCardObject = {id: number, image: string, title: string, status: number, created_at: string, updated_at: string}
 
 interface ISlider {
-    sliders: Array<string>;
-    extractSliders: Array<string>,
+    sliders: TSwiperCard;
+    extractSliders: TSwiperCard,
     slide: number,
     isTransition: Boolean,
     widthContiner: number,
@@ -11,11 +16,18 @@ interface ISlider {
     currentX: number,
     dragOffset: number,
     activeIndicatore: number
+    
+
+    // panel admin
+    warningMessage: string, 
+     
+    // status & delete 
+    loading: boolean
 }
 
 const initialState: ISlider = {
-    sliders : ['blue', 'red', 'yellow', 'pink', 'brown', 'green', 'gray', 'orange', 'silver','blue', 'red', 'yellow', 'pink', 'brown', 'green', 'gray', 'orange', 'silver',],
-    extractSliders: [''],
+    sliders : [],
+    extractSliders: [],
     slide: 2,
     isTransition: false,
     widthContiner: 0,
@@ -23,7 +35,13 @@ const initialState: ISlider = {
     startX: 0,
     currentX: 0,
     dragOffset: 0,
-    activeIndicatore: 0
+    activeIndicatore: 0,
+
+    // panel admin
+    warningMessage: '', 
+     
+    // status & delete 
+    loading: false
 }
 
 const cardSlice = createSlice({
@@ -31,7 +49,10 @@ const cardSlice = createSlice({
     initialState: initialState, 
     reducers: {
         handlerExtractSliders: (state, ) => {
-            state.extractSliders = [...state.sliders.slice(-2), ...state.sliders, ...state.sliders.slice(0, 2)]
+            if(Array.isArray(state.sliders))
+            {
+                state.extractSliders = [...state.sliders.slice(-2), ...state.sliders, ...state.sliders.slice(0, 2)]
+            }
         },
         nextSlide: (state, action) => {
             state.slide = state.slide += action.payload.index
@@ -43,11 +64,14 @@ const cardSlice = createSlice({
         },
         transitionEnd: (state) => {
             state.isTransition = false;
-            if(state.slide > state.extractSliders.length - 2){
-                state.slide = state.slide - state.sliders.length
-            }
-            else if (state.slide < 2){
-                state.slide = state.slide + state.sliders.length
+            if(Array.isArray(state.sliders) && Array.isArray(state.extractSliders)){
+
+                if(state.slide > state.extractSliders.length - 2){
+                    state.slide = state.slide - state.sliders.length
+                }
+                else if (state.slide < 2){
+                    state.slide = state.slide + state.sliders.length
+                }
             }
         },
         handlerWidthContainer: (state, action) => {
@@ -90,10 +114,25 @@ const cardSlice = createSlice({
             state.isTransition = true
         },
         handlerActiveButton: (state) => {
-            state.activeIndicatore = (state.slide - 2) % state.sliders.length;
-            if(state.activeIndicatore < 0) state.activeIndicatore += state.sliders.length
+            if(Array.isArray(state.sliders)){
+                state.activeIndicatore = (state.slide - 2) % state.sliders.length;
+                if(state.activeIndicatore < 0) state.activeIndicatore += state.sliders.length
+            }
         }
-
+        // panel admin
+    },
+    extraReducers: (builder) => {
+        // view item card slider
+        builder.addCase(viewCardSliderSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(viewCardSliderSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(viewCardSliderSessionThunk.fulfilled, (state, action) => {
+            state.sliders = action.payload
+            state.warningMessage = ''
+        })
 
     }
 })
