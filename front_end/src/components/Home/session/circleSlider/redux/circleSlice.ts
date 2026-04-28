@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewCircleSliderSessionThunk, readingAllItemsCircleSliderSessionThunk } from "./actionsCircle";
+import { changeStatusCircleSlidersSessionThunk, viewCircleSliderSessionThunk, readingAllItemsCircleSliderSessionThunk, createCircleSlidersSessionThunk } from "./actionsCircle";
 
 export type TCircleSwiper = Array<{id: number, image: string, title: string, status: number, created_at: string, updated_at: string}> | string | boolean
 export type  TCircleSwiperObject = {id: number, image: string, title: string, status: number, created_at: string, updated_at: string}
@@ -14,8 +14,18 @@ interface ICircle {
 
     // panel admin
     warningMessage: string,
-    loading: boolean, 
+     
+    // create & edit 
+    urlImage: string , // save url image & view for user
+    image: {url: string, warning: string}, // save view image for reading item
+    title: {name: string, warning: string},
+    addItems: boolean,
+    callback: boolean,
+
+    // status & delete 
+    loading: boolean
 }
+
 
 const initialState: ICircle = {
     items: [],
@@ -25,8 +35,19 @@ const initialState: ICircle = {
     currentX: 0, 
     dragOffset: 0,
 
-    // loading
+    // panel admin
     warningMessage: '',
+
+    // create & edit 
+    urlImage: '' , // save url image & view for user
+    
+    image: {url: '', warning: ''}, // save view image for reading item
+    title: {name: '', warning: ''},
+    
+    addItems: false    ,
+    callback: false,
+
+    // status & delete
     loading: false
 }
 
@@ -65,9 +86,31 @@ const circleSlicer  = createSlice({
 
                 state.dragOffset = 0
             }
-        }
+        },
 
         // panel admin
+        onLoadingCircle: (state) => {
+            state.warningMessage = ''
+            state.urlImage = ''
+            state.image = {url: '', warning: ''}
+            state.title = {name: '', warning: ''}
+        },
+        onSetItemsCircle: (state) => {
+            state.addItems = false
+        },
+        onSetURLCircle: (state, action) => {
+            state.urlImage = action.payload.result
+        },
+        onTitleCircle: (state, action) => {
+            state.title = {name: action.payload.title, warning: ''}
+        },
+        onWarningCircle: (state, action) => {
+            state.image = {url: state.image.url, warning: action.payload.image}
+            state.title = {name: state.title.name , warning: action.payload.title }
+        },
+        onCallBackCircle: (state) => {
+            state.callback = true
+        }
     },
     extraReducers: (builder) => {
         // view circle sliders 
@@ -81,8 +124,40 @@ const circleSlicer  = createSlice({
             state.warningMessage = ''
             state.items = action.payload
         })
-      
-        // reading all items circle sliderc
+
+        // create item circle sliders
+        builder.addCase(createCircleSlidersSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.callback = false
+            state.addItems = false
+        })
+        builder.addCase(createCircleSlidersSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.callback = false
+            state.addItems = false
+        })
+        builder.addCase(createCircleSlidersSessionThunk.fulfilled, (state, action) => {
+            state.callback = false
+            state.addItems = action.payload == true ? true : false
+            state.warningMessage = ''
+        })
+        
+        // change status item circle sliders
+        builder.addCase(changeStatusCircleSlidersSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.loading = true
+        })
+        builder.addCase(changeStatusCircleSlidersSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.loading = false
+        })
+        builder.addCase(changeStatusCircleSlidersSessionThunk.fulfilled, (state, action) => {
+            state.loading = false
+            state.items = action.payload
+            state.warningMessage = ''
+        })
+
+        // reading all items circle sliders
         builder.addCase(readingAllItemsCircleSliderSessionThunk.pending, (state, ) => {
             state.warningMessage = ''
         })
@@ -97,4 +172,6 @@ const circleSlicer  = createSlice({
 })
 
 export default circleSlicer;
-export const {handlerConter, circleDown, circleMove, circleUp} = circleSlicer.actions
+export const {handlerConter, circleDown, circleMove, circleUp,
+    onCallBackCircle, onLoadingCircle, onSetItemsCircle,   onSetURLCircle, onTitleCircle, onWarningCircle
+} = circleSlicer.actions

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { useEffect } from "react"
 import { imgURL } from "../../../../../baseURL"
 import type { RooState, AppDispatch } from "../../../../../store"
-import { viewCircleSliderSessionThunk } from "../redux/actionsCircle"
+import { changeStatusCircleSlidersSessionThunk, viewCircleSliderSessionThunk } from "../redux/actionsCircle"
 
 const CircleSliderSessionPA = () => {
     const {items, loading} = useSelector((state: RooState) => state.circle )
@@ -55,7 +55,7 @@ const CircleSliderSessionPA = () => {
                                 <th>
                                     <div 
                                         onClick={() => {
-                                            // dispatch(changeStatusCardSliderSessionThunk({id: item.id}) );
+                                            dispatch(changeStatusCircleSlidersSessionThunk({id: item.id}) );
                                         }}
                                         className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 py-1 "
                                     >

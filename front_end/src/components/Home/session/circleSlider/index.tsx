@@ -5,6 +5,7 @@ import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import type { RooState, AppDispatch } from "../../../../store";
 import { readingAllItemsCircleSliderSessionThunk } from "./redux/actionsCircle";
+import { imgURL } from "../../../../baseURL";
 
 const CircleSlider = () => {
     const dispatch =  useDispatch<AppDispatch>()
@@ -15,18 +16,18 @@ const CircleSlider = () => {
     
     const {items, conter, isDrag, dragOffset} = useSelector((state: RooState) => state.circle)
     const rotate = (item: number) => {
-        if(Array.isArray(items)){       
-            if(isDrag){
-                return (item * 360 /(items.length)) + dragOffset
-            }
-            return item * 360 /(items.length) 
+        
+        if(isDrag){
+            return (item * 360 /(items.length)) + dragOffset
         }
+        return item * 360 /(items.length) 
+        
     }
 
     const translateZ = () => {
-        if(Array.isArray(items)) {
-            return items.length * 30
-        }
+
+        return items.length * 30
+        
     }
     // circle swiper 
     return(
@@ -49,18 +50,20 @@ const CircleSlider = () => {
                     <div 
                         className="w-[150px] h-[200px]  relative transform-3d perspective-[1000px]  select-none"
                     >
-                        {Array.isArray(items) && items.map((item) => {
+                        {Array.isArray(items) && items.map((item, index) => {
                             return(
                                 <div 
                                     key = {item.id} 
                                     style={{
                                         border: `1px solid blue`,
                                         backgroundColor : "#242424",
-                                        transform: `rotateY(${rotate(item.id + conter)}deg) translateZ(${translateZ()}px)`
+                                        transform: `rotateY(${rotate(index + conter)}deg) translateZ(${translateZ()}px)`
                                     }}
-                                    className="w-full h-full absolute left-0 top-0 transform-3d duration-1000 rounded-2xl flex justify-center items-center"
+                                    className="w-full h-full absolute left-0 top-0 transform-3d duration-1000 rounded-2xl flex justify-center items-center select-none overflow-hidden select-none"
                                 
-                                >{item.id + 1}</div>
+                                >
+                                    <img src={imgURL + item.image} draggable  = {false} alt="" className="w-full h-full" />
+                                </div>
                             )
                         })}
                     </div>
