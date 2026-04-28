@@ -30,7 +30,9 @@
                 3. resourceImage -> curd & reading
                 4. sliderPage -> curd & reading
                 5. imageAdvert -> curd & reading
-                
+                6. cardSlider -> curd & reading
+                7. circleSlider -> curd & reading
+
 // front end 
     component -> 
                 1- Auth 
@@ -116,6 +118,16 @@
                             c. index.tsx
 
                         5. imageAdvert
+                            a. PanelAdmin
+                            b. redux
+                            c. index.tsx
+                        
+                        6. cardSlider
+                            a. PanelAdmin
+                            b. redux
+                            c. index.tsx
+                        
+                        7. circleSlider
                             a. PanelAdmin
                             b. redux
                             c. index.tsx
