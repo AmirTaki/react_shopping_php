@@ -4,24 +4,29 @@ import { handlerConter, circleDown, circleMove, circleUp } from "./redux/circleS
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import type { RooState, AppDispatch } from "../../../../store";
+import { readingAllItemsCircleSliderSessionThunk } from "./redux/actionsCircle";
 
 const CircleSlider = () => {
     const dispatch =  useDispatch<AppDispatch>()
 
     useEffect(() => {
-        dispatch
+        dispatch(readingAllItemsCircleSliderSessionThunk())
     }, [])
     
     const {items, conter, isDrag, dragOffset} = useSelector((state: RooState) => state.circle)
     const rotate = (item: number) => {
-        if(isDrag){
-            return (item * 360 /(items.length)) + dragOffset
+        if(Array.isArray(items)){       
+            if(isDrag){
+                return (item * 360 /(items.length)) + dragOffset
+            }
+            return item * 360 /(items.length) 
         }
-        return item * 360 /(items.length) 
     }
 
     const translateZ = () => {
-        return items.length * 30
+        if(Array.isArray(items)) {
+            return items.length * 30
+        }
     }
     // circle swiper 
     return(

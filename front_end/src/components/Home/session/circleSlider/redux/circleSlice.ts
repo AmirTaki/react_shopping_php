@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewCircleSliderSessionThunk } from "./actionsCircle";
+import { viewCircleSliderSessionThunk, readingAllItemsCircleSliderSessionThunk } from "./actionsCircle";
 
 export type TCircleSwiper = Array<{id: number, image: string, title: string, status: number, created_at: string, updated_at: string}> | string | boolean
 export type  TCircleSwiperObject = {id: number, image: string, title: string, status: number, created_at: string, updated_at: string}
@@ -78,6 +78,18 @@ const circleSlicer  = createSlice({
             state.warningMessage = action.payload as string
         })
         builder.addCase(viewCircleSliderSessionThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            state.items = action.payload
+        })
+      
+        // reading all items circle sliderc
+        builder.addCase(readingAllItemsCircleSliderSessionThunk.pending, (state, ) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(readingAllItemsCircleSliderSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(readingAllItemsCircleSliderSessionThunk.fulfilled, (state, action) => {
             state.warningMessage = ''
             state.items = action.payload
         })
