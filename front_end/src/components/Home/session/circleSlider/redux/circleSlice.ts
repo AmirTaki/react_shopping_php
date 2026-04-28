@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { changeStatusCircleSlidersSessionThunk, viewCircleSliderSessionThunk, readingAllItemsCircleSliderSessionThunk, createCircleSlidersSessionThunk, deleteItemsCircleSlidersSessionThunk, readingItemCircleSliderSessionThunk } from "./actionsCircle";
+import { changeStatusCircleSlidersSessionThunk, viewCircleSliderSessionThunk, readingAllItemsCircleSliderSessionThunk, createCircleSlidersSessionThunk, deleteItemsCircleSlidersSessionThunk, readingItemCircleSliderSessionThunk, editItemCircleSliderSessionThunk } from "./actionsCircle";
 import { imgURL } from "../../../../../baseURL";
 
 export type TCircleSwiper = Array<{id: number, image: string, title: string, status: number, created_at: string, updated_at: string}> | string | boolean
@@ -185,6 +185,21 @@ const circleSlicer  = createSlice({
             const object = action.payload as TCircleSwiperObject
             state.urlImage = imgURL + object.image
             state.title = {name: object.title, warning: ''}
+        })
+
+        // edit item circle sliders
+        builder.addCase(editItemCircleSliderSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.callback = false
+        })
+        builder.addCase(editItemCircleSliderSessionThunk.rejected, (state, action) => {
+            state.warningMessage  = action.payload as string
+            state.callback = false
+        })
+        builder.addCase(editItemCircleSliderSessionThunk.fulfilled, (state, action) => {
+            state.addItems = action.payload == true ? true : false
+            state.callback = false
+            state.warningMessage =  ''
         })
 
         // reading all items circle sliders

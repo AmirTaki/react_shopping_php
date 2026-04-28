@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import type { RooState, AppDispatch } from "../../../../../store";
 import { onLoadingCircle, onSetItemsCircle, onSetURLCircle, onTitleCircle } from "../redux/circleSlice";
-import { readingItemCircleSliderSessionThunk } from "../redux/actionsCircle";
+import { editItemCircleSliderSessionThunk, readingItemCircleSliderSessionThunk } from "../redux/actionsCircle";
 
 const EditCircleSliderSessionPA = () => {    
     const {urlImage, title, image, callback, addItems} = useSelector((state: RooState) => state.circle )
@@ -48,7 +48,7 @@ const EditCircleSliderSessionPA = () => {
             <Link to = "/panelAdmin/sessionCircleSlider" 
                 className="text-center text-4xl my-3 cursor-pointer hover:text-sky-500 duration-200 hover:tracking-[.1rem] mb-14"
             >
-                view slider
+                view circle table
             </Link>
 
             
@@ -105,7 +105,7 @@ const EditCircleSliderSessionPA = () => {
                             file &&  formData.append('image', file)
                             formData.append('title', title.name)
                             
-                            // dispatch(editItemCardSliderSessionThunk({formData: formData, id: Number(id)}));
+                            dispatch(editItemCircleSliderSessionThunk({formData: formData, id: Number(id)}));
                         }}                        
                         type="submit" value = "Edit" 
                         className="border-2 px-4 py-2 rounded-xl cursor-pointer hover:text-green-600 duration-300 hover:border-green-600" 

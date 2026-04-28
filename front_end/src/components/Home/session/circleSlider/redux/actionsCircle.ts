@@ -137,7 +137,45 @@ export  const readingItemCircleSliderSessionThunk =  createAsyncThunk<TCircleSwi
     }
 )
 
+export const editItemCircleSliderSessionThunk = createAsyncThunk<TCircleSwiper, {formData: FormData, id: number} , {rejectValue: string}>(
+    'edit_item_circle_slider_session_tookit',
+    async(payload, reject) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/circleSlider/edit.php/${payload.id}`, {
+                method: 'POST', 
+                credentials: 'include',
+                body: payload.formData
+            })
+            
+            if (!response.ok){
+               if(response.status === 422){
+                    reject.dispatch(onWarningCircle({
+                        title: 'title is requierd!',
+                        image: 'image is requierd!'
+                    }))
+                }
+                else if (response.status === 405){
+                    reject.dispatch(onCallBackCircle())
+                }
 
+                else if (response.status === 404){
+                      reject.dispatch(onWarningCircle({
+                        image: 'not upload image ?? repeat again !!',
+                    }))
+                }
+                
+                else {
+                    throw new Error ('warning ');
+                }
+            }
+            const data = await response.json()
+            return data
+        }
+        catch(err: any){
+            return (`warning: ${err.message}`)
+        }
+    }
+)
 
 
 export  const readingAllItemsCircleSliderSessionThunk =  createAsyncThunk<TCircleSwiper, void, {rejectValue: string}>(
