@@ -91,6 +91,31 @@ export const changeStatusCircleSlidersSessionThunk = createAsyncThunk<TCircleSwi
     }
 )
 
+export const deleteItemsCircleSlidersSessionThunk = createAsyncThunk<TCircleSwiper, {id: number}, {rejectValue: string}>(
+    'delete_item_circle_sliders_session_thunk',
+    async(payload, {rejectWithValue}) =>{
+        try{
+            console.log(payload.id)
+            const response = await fetch (baseURL + `tables/session/circleSlider/delete.php/${payload.id}/delete`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            if(!response.ok){
+                throw new Error('warning: ')
+            }
+            const data = await response.json()
+            return Array.isArray(data) ? data : []
+        }
+        catch(err: any){
+            return  rejectWithValue(`warning: ${err.message}`)
+        }
+    }
+)
+
+
+
 
 
 export  const readingAllItemsCircleSliderSessionThunk =  createAsyncThunk<TCircleSwiper, void, {rejectValue: string}>(
