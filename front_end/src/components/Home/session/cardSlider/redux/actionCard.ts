@@ -64,6 +64,53 @@ export const createCardSliderSessionThunk = createAsyncThunk<TSwiperCard, FormDa
     }
 )
 
+export const deleteCardSliderSessionThunk = createAsyncThunk<TSwiperCard, {id: number}, {rejectValue: string}>(
+    'delete_item_card_slider_session_toolkit', 
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/cardSlider/delete.php/${payload.id}/delete`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }  ,
+            })
+            if(!response.ok){
+                throw new Error('message warning')
+            }
+            const data = await response.json();
+            return Array.isArray(data) ? data : []
+        }   
+        catch(error: any){
+            return rejectWithValue (`warning: ${error.message}`)
+        }
+    }
+)
+
+export const changeStatusCardSliderSessionThunk = createAsyncThunk<TSwiperCard, {id: number},{rejectValue: string}>(
+    'change_status_item_card_slider_session_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/cardSlider/status.php/${payload.id}/changeStatus`, {
+                method: 'GET', 
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },  
+
+            })
+            if(!response.ok){
+                throw new Error('warning: ');
+            }
+            const data = await response.json()
+            return Array.isArray(data) ? data : []
+        }
+        catch(error: any){
+            return rejectWithValue (`warning: ${error.message}`)
+        }
+    }
+)
+
+
 export const readingAllItemsCardSliderSessionThunk = createAsyncThunk<TSwiperCard, void, {rejectValue: string}>(
     'reading_all_items_status_card_slider_session_toolkit',
     async(_, {rejectWithValue}) => {

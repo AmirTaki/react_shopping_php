@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { useEffect } from "react"
 import { imgURL } from "../../../../../baseURL"
 import type { RooState, AppDispatch } from "../../../../../store"
-import { viewCardSliderSessionThunk } from "../redux/actionCard"
+import { viewCardSliderSessionThunk, deleteCardSliderSessionThunk, changeStatusCardSliderSessionThunk } from "../redux/actionCard"
 // import { changeStatusCardSliderSessionThunk, deleteCardSliderSessionThunk, viewCardSliderSessionThunk } from "./actionsCardSlider"
 
 
@@ -57,7 +57,7 @@ const CardSliderSessionPA = () => {
                                 <th>
                                     <div 
                                         onClick={() => {
-                                            // dispatch(changeStatusCardSliderSessionThunk({id: item.id}) );
+                                            dispatch(changeStatusCardSliderSessionThunk({id: item.id}) );
                                         }}
                                         className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 py-1 "
                                     >
@@ -72,7 +72,7 @@ const CardSliderSessionPA = () => {
                                     
                                     <div 
                                         onClick={() => {
-                                            // dispatch(deleteCardSliderSessionThunk({id: item.id}))                                            
+                                              window.confirm('Do you want it to be deleted ? ')  &&  dispatch(deleteCardSliderSessionThunk({id: item.id}))                                            
                                         }}
                                         className="text-rose-500 cursor-pointer duration-200 hover:text-red-700! py-1"
                                     >

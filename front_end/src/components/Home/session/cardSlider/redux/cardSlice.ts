@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { imgURL } from "../../../../../baseURL";
-import { createCardSliderSessionThunk, readingAllItemsCardSliderSessionThunk, viewCardSliderSessionThunk } from "./actionCard";
+import { deleteCardSliderSessionThunk,  changeStatusCardSliderSessionThunk, createCardSliderSessionThunk, readingAllItemsCardSliderSessionThunk, viewCardSliderSessionThunk } from "./actionCard";
 
 export type TSwiperCard = Array<{id: number, image: string, title: string, status: number, created_at: string, updated_at: string}> | string | boolean
 export type TSwiperCardObject = {id: number, image: string, title: string, status: number, created_at: string, updated_at: string}
@@ -190,6 +190,37 @@ const cardSlice = createSlice({
             state.addItems = action.payload == true ? true : false
             state.callback= false
             state.warningMessage = ''
+        })
+
+
+           // delete item card slider
+        builder.addCase(deleteCardSliderSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.loading = true
+        })
+        builder.addCase(deleteCardSliderSessionThunk.rejected, (state, action) => {
+            state.loading = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(deleteCardSliderSessionThunk.fulfilled, (state, action) => {
+            state.loading = false
+            state.warningMessage = ''
+            state.sliders = action.payload
+        })
+
+        // change status item card slider
+        builder.addCase(changeStatusCardSliderSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.loading = true
+        })
+        builder.addCase(changeStatusCardSliderSessionThunk.rejected, (state, action) => {
+            state.loading = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(changeStatusCardSliderSessionThunk.fulfilled, (state, action) => {
+            state.loading = false
+            state.warningMessage = ''
+            state.sliders = action.payload
         })
 
         // reading all items card slider
