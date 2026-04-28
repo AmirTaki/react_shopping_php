@@ -4,6 +4,8 @@ import type { RooState, AppDispatch } from "../../../../store";
 import { buttonCircle, handlerActiveButton, handlerDownSlide, handlerExtractSliders, handlerMoveSlide, handlerUpSlide, handlerWidthContainer, nextSlide, prevSlide, transitionEnd } from "./redux/cardSlice";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
+import { readingAllItemsCardSliderSessionThunk } from "./redux/actionCard";
+import { imgURL } from "../../../../baseURL";
 
 const CardSlider = () => {
     const dispatch = useDispatch<AppDispatch>()
@@ -11,9 +13,17 @@ const CardSlider = () => {
     // swiper => imageSlider
     const {sliders, extractSliders, slide, isTransition, widthContiner, isDrag, dragOffset, activeIndicatore} = useSelector((state: RooState) => state.card)
     const containerRef =  useRef<HTMLDivElement>(null)
+    
+    useEffect(() => {
+        dispatch(readingAllItemsCardSliderSessionThunk())
+    }, [])
  
     useEffect(() => {
-        dispatch(handlerExtractSliders())
+        const timer =  setInterval(() => {
+            dispatch(handlerExtractSliders())
+            dispatch(handlerActiveButton())
+        }, 100)
+        return () => clearInterval(timer)
     }, [])
  
     useEffect(() => {
@@ -67,7 +77,7 @@ const CardSlider = () => {
                 >
 
                     {/* item */}
-                    {extractSliders.map((img, index) => {
+                    {Array.isArray(extractSliders) && extractSliders.map((img, index) => {
                         const isActive = index == slide
                         return(
                             <div 
@@ -78,12 +88,12 @@ const CardSlider = () => {
                                     transition: isTransition ? 'transform 500ms cubic-bezier(0.25, 1, 0.5, 1)' : 'none'
                                 }}
                                 className={`
-                                    border-2 w-[95%] mx-[2.5%] h-[95%] flex justify-center items-center text-6xl rounded-4xl overflow-hidden
+                                     w-[95%] mx-[2.5%] h-[95%] flex justify-center items-center text-6xl rounded-4xl overflow-hidden select-none
                                  
                                 `}
                                 onTransitionEnd={() => {dispatch(transitionEnd())}}
                             >
-                                <img draggable = {false} src={img} 
+                                <img draggable = {false} src={imgURL + img.image} 
                                     className={`  `} 
                                     alt="" 
                                 />
@@ -99,11 +109,11 @@ const CardSlider = () => {
             </div>
             {/* button circle */}
             <div className="flex gap-4 -mt-10">
-                {sliders.map((_, index) => {
+                {Array.isArray(sliders) && sliders.map((_, index) => {
                     return(
                         <div 
-                            style={{backgroundColor: activeIndicatore == index ? 'blue': ""}}
-                            className={`w-4 h-4 rounded-full border border-white cursor-pointer duration-200
+                            style={{backgroundColor: activeIndicatore == index ? 'silver': ""}}
+                            className={`w-4 h-4 rounded-full border border-[silver] cursor-pointer duration-200
                                 ${activeIndicatore == index ? 'scale-200 ' : 'scale-100'}    
                             `} 
                             key = {index}

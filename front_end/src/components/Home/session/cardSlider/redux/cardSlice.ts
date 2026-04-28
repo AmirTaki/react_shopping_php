@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { imgURL } from "../../../../../baseURL";
-import { viewCardSliderSessionThunk } from "./actionCard";
+import { readingAllItemsCardSliderSessionThunk, viewCardSliderSessionThunk } from "./actionCard";
 
 export type TSwiperCard = Array<{id: number, image: string, title: string, status: number, created_at: string, updated_at: string}> | string | boolean
 export type TSwiperCardObject = {id: number, image: string, title: string, status: number, created_at: string, updated_at: string}
@@ -130,6 +130,18 @@ const cardSlice = createSlice({
             state.warningMessage = action.payload as string
         })
         builder.addCase(viewCardSliderSessionThunk.fulfilled, (state, action) => {
+            state.sliders = action.payload
+            state.warningMessage = ''
+        })
+        
+        // 
+        builder.addCase(readingAllItemsCardSliderSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(readingAllItemsCardSliderSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(readingAllItemsCardSliderSessionThunk.fulfilled, (state, action) => {
             state.sliders = action.payload
             state.warningMessage = ''
         })
