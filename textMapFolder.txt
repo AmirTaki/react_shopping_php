@@ -29,7 +29,8 @@
                 2. scrollSlider -> curd
                 3. resourceImage -> curd & reading
                 4. sliderPage -> curd & reading
-
+                5. imageAdvert -> curd & reading
+                
 // front end 
     component -> 
                 1- Auth 
@@ -114,8 +115,11 @@
                             b. redux 
                             c. index.tsx
 
-                        5. 
-                        
+                        5. imageAdvert
+                            a. PanelAdmin
+                            b. redux
+                            c. index.tsx
+
                     d. index
 
                 4- PanelAdmin 

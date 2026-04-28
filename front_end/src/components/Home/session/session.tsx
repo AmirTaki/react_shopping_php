@@ -1,4 +1,5 @@
 import SwiperSlide from "./backGroundSlider"
+import CardSlider from "./cardSlider"
 import ImageAdvert from "./imageAdvert"
 import ResourceImage from "./resourseImage"
 import PayloarSlider from "./scrollSlider"
@@ -21,6 +22,9 @@ const Session = () => {
 
             {/* image advert -> slider scroll */}
             <ImageAdvert />
+
+            {/* card slider -> card swiper */}
+            <CardSlider />
         </div>
     )
 }

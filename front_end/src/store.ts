@@ -17,6 +17,7 @@ import scrollSliderSlice from "./components/Home/session/scrollSlider/redux/acti
 import resourceImageSlice from "./components/Home/session/resourseImage/redux/resourceSlice";
 import GridSwiperSlice from "./components/Home/session/sliderPage/redux/gridSliderSlice";
 import advertSlice from "./components/Home/session/imageAdvert/redux/advertSlice";
+import cardSlice from "./components/Home/session/cardSlider/redux/cardSlice";
 
 const reducers = combineReducers({
 
@@ -67,7 +68,9 @@ const reducers = combineReducers({
     // slider page -> grid Swiper -> grid slider
     gridSlider: GridSwiperSlice.reducer,                    // grid slider -> grid swiper -> image slider 
     // image advert
-    advert: advertSlice.reducer,            // image advert -> scroll sldider not loop       
+    advert: advertSlice.reducer,            // image advert -> scroll sldider not loop
+    // card slider
+    card: cardSlice.reducer  ,          // card slider -> card swiper in panel admin
 
 
  })
