@@ -59,6 +59,7 @@ import CircleSliderSessionPA from "../Home/session/circleSlider/panelAdmin"
 import CreateCircleSliderSessionPA from "../Home/session/circleSlider/panelAdmin/create"
 import EditCircleSliderSessionPA from "../Home/session/circleSlider/panelAdmin/edit"
 import ViewImageSliderLoopSessionPA from "../Home/session/imageSlider/panelAdmin/view"
+import ImageSliderSessionLoopPA from "../Home/session/imageSlider/panelAdmin"
 
 const Routh = () => {
     return (
@@ -185,7 +186,7 @@ const Routh = () => {
 
                         {/* session -> imageSlider loop ->  background loop */}
                         <Route path="sessionImageSliderLoop" element = {<ViewImageSliderLoopSessionPA />}>
-                            {/* <Route path = "" element = {< />}/> */}
+                            <Route path = "" element = {<ImageSliderSessionLoopPA />}/>
                             {/* <Route path = "create" element = {< />}/> */}
                             {/* <Route path = "edit/:id" element = {< />}/> */}
                         </Route>

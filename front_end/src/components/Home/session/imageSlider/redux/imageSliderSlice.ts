@@ -1,19 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { viewImageSliderLoopSessionThunk } from "./actionsImageSlider";
+export type TImageSliderLoop = Array<{id: number, image: string, title: string, status: number, created_at: string, updated_at: string}> | boolean | string
+export type TImageSliderLoopObject = {id: number, image: string, title: string, status: number, created_at: string, updated_at: string}
 
 interface IScrollSlider {
-    items: Array<string>,
-    extra: Array<string>,
+    items: TImageSliderLoop,
+    extra: TImageSliderLoop,
     counter: number,
     smooth: boolean,
-    activeIndicatore: number
+    activeIndicatore: number,
+
+    // panelAdmin
+    warningMessage: string
 }
 
 const initialState: IScrollSlider = {
-    items: ['silver','blue', 'pink', 'green', 'red', 'white', 'yellow', 'pink', 'gray', 'orange', 'silver','blue', 'pink', 'green', 'red', 'white', 'yellow', 'pink', 'gray', 'orange', 'green'],
-    extra: [''],
+    items: [],
+    extra: [],
     counter: 0,
     smooth: false,
-    activeIndicatore: 0
+    activeIndicatore: 0,
+
+    // panelAdmin
+    warningMessage: ''
+
 }
  
 const imageSliderLoopSlice =  createSlice({
@@ -21,6 +31,7 @@ const imageSliderLoopSlice =  createSlice({
     initialState: initialState,
     reducers: {
         extract: (state, ) => {
+            if(Array.isArray(state.items))
             state.extra = [...state.items.slice(-2), ...state.items, ...state.items.slice(0, 2)]
         },
         handlerScrollTo: (state, action) => {
@@ -31,22 +42,40 @@ const imageSliderLoopSlice =  createSlice({
             state.smooth = smooth
         },
         handlerScrollEnd: (state) => {
-            if(state.counter > state.extra.length - 2 ){
-                state.counter = state.counter - state.items.length
-                state.smooth = false
-            }
-            else if (state.counter < 2){
-                state.counter = state.counter + state.items.length 
-                state.smooth = false
+            if(Array.isArray(state.items) && Array.isArray(state.extra)){
+
+                if(state.counter > state.extra.length - 2 ){
+                    state.counter = state.counter - state.items.length
+                    state.smooth = false
+                }
+                else if (state.counter < 2){
+                    state.counter = state.counter + state.items.length 
+                    state.smooth = false
+                }
             }
         },
  
         handlerActiveIndicatore: (state) => {
-            state.activeIndicatore = (state.counter - 2) % state.items.length
-            if(state.activeIndicatore < 0) state.activeIndicatore += state.items.length
+            if(Array.isArray(state.items)){
+                state.activeIndicatore = (state.counter - 2) % state.items.length
+                if(state.activeIndicatore < 0) state.activeIndicatore += state.items.length
+            }
         },
 
 
+        // panel admin
+    },
+    extraReducers: (builder) => {
+        builder.addCase(viewImageSliderLoopSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(viewImageSliderLoopSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(viewImageSliderLoopSessionThunk.fulfilled, (state, action) => {
+            state.items = action.payload
+            state.warningMessage = ''
+        })
     }
 })
 
