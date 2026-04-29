@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteItemImageSliderLoopSessionThunk, changeStatusItemImageSliderLoopSessionThunk, createItemsImageSliderLoopSessionThunk, viewImageSliderLoopSessionThunk, readingAllItemsImageSliderLoopSessionThunk } from "./actionsImageSlider";
+import { eidtItemImageSliderLoopSessionThunk, readingItemImageSliderLoopSessionThunk, deleteItemImageSliderLoopSessionThunk, changeStatusItemImageSliderLoopSessionThunk, createItemsImageSliderLoopSessionThunk, viewImageSliderLoopSessionThunk, readingAllItemsImageSliderLoopSessionThunk } from "./actionsImageSlider";
+import { imgURL } from "../../../../../baseURL";
 export type TImageSliderLoop = Array<{id: number, image: string, title: string, status: number, created_at: string, updated_at: string}> | boolean | string
 export type TImageSliderLoopObject = {id: number, image: string, title: string, status: number, created_at: string, updated_at: string}
 
@@ -166,7 +167,33 @@ const imageSliderLoopSlice =  createSlice({
            state.items = action.payload
         })
 
-
+        // reading item image slider loop
+        builder.addCase(readingItemImageSliderLoopSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(readingItemImageSliderLoopSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(readingItemImageSliderLoopSessionThunk.fulfilled, (state, action) => {
+            const object = action.payload as TImageSliderLoopObject
+            state.title = {name: object.title, warning: ''}
+            state.urlImage = imgURL + object.image
+        })
+        
+        // edit item image slider loop
+        builder.addCase(eidtItemImageSliderLoopSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.callback = false
+        })
+        builder.addCase(eidtItemImageSliderLoopSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.callback = false
+        })
+        builder.addCase(eidtItemImageSliderLoopSessionThunk.fulfilled, (state, action) => {
+            state.addItems = action.payload === true ? true : false
+            state.callback = false
+            state.warningMessage = ''
+        })
 
         // reading all items image slider looop 
         builder.addCase(readingAllItemsImageSliderLoopSessionThunk.pending, (state) => {

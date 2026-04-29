@@ -103,6 +103,72 @@ export const deleteItemImageSliderLoopSessionThunk = createAsyncThunk<TImageSlid
         }
     }
 ) 
+
+
+export const readingItemImageSliderLoopSessionThunk =  createAsyncThunk<TImageSliderLoopObject, {id: number}, {rejectValue: string}>(
+    `reading_item_image_slider_loop_session_toolkit`,
+    async (payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/imageSliderLoop/slider.php/${payload.id}`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            if(!response.ok){
+                throw new Error ('warning : ')
+            }
+            const data = await response.json()
+            return data
+        }
+        catch(err: any){
+            return rejectWithValue (`warning: ${err.message}`)
+        }
+    }
+)
+
+
+export const eidtItemImageSliderLoopSessionThunk = createAsyncThunk<TImageSliderLoop, {formData: FormData, id: number}, {rejectValue: string}>(
+    'edit_item_image_slider_loop_session_toolkit',
+    async(payload, reject) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/imageSliderLoop/edit.php/${payload.id}`, {
+                method: 'POST',
+                credentials: 'include',
+                body: payload.formData
+            })
+            if(!response.ok){
+                 if(response.status === 422){
+                    reject.dispatch(onWarningSwiperLoop({
+                        title: 'title is requierd!',    
+                        image: 'image is requierd! '  
+                    }))
+                }
+                else if (response.status === 405){
+                    reject.dispatch(onCallBackSwiperLoop())
+                }
+
+                else if (response.status === 404){
+                        reject.dispatch(onWarningSwiperLoop({
+                        image: 'not upload image ?? repeat again !!',                        
+                    }))
+                }
+                
+                else {
+                    throw new Error ('warning ');
+                }
+            }
+            const data = await response.json()
+            return data
+        }
+        catch(err: any){
+            return (`warning: ${err.message}`)
+        }
+    }
+
+) 
+
 export const readingAllItemsImageSliderLoopSessionThunk =  createAsyncThunk<TImageSliderLoop, void, {rejectValue: string}>(
     `reading_all_items_image_slider_loop_session_toolkit`,
     async (_, {rejectWithValue}) => {
