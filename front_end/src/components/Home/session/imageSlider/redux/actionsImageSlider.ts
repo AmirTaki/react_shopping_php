@@ -83,6 +83,26 @@ export const changeStatusItemImageSliderLoopSessionThunk = createAsyncThunk<TIma
         }
     }
 ) 
+
+export const deleteItemImageSliderLoopSessionThunk = createAsyncThunk<TImageSliderLoop, {id: number}, {rejectValue: string}>(
+    'delete_item_image_slider_loop_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{    
+            const response = await fetch (baseURL + `tables/session/imageSliderLoop/delete.php/${payload.id}/changeStatus`, {
+                method: 'DELETE',
+                // credentials: 'include'
+            })
+            if(!response.ok){
+                throw new Error (`warning: ...`)
+            }
+            const data = await response.json()
+            return Array.isArray(data) ? data : []
+        }
+        catch(err: any){
+            return rejectWithValue(`warning: ${err.message}`)
+        }
+    }
+) 
 export const readingAllItemsImageSliderLoopSessionThunk =  createAsyncThunk<TImageSliderLoop, void, {rejectValue: string}>(
     `reading_all_items_image_slider_loop_session_toolkit`,
     async (_, {rejectWithValue}) => {

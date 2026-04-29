@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { changeStatusItemImageSliderLoopSessionThunk, createItemsImageSliderLoopSessionThunk, viewImageSliderLoopSessionThunk, readingAllItemsImageSliderLoopSessionThunk } from "./actionsImageSlider";
+import { deleteItemImageSliderLoopSessionThunk, changeStatusItemImageSliderLoopSessionThunk, createItemsImageSliderLoopSessionThunk, viewImageSliderLoopSessionThunk, readingAllItemsImageSliderLoopSessionThunk } from "./actionsImageSlider";
 export type TImageSliderLoop = Array<{id: number, image: string, title: string, status: number, created_at: string, updated_at: string}> | boolean | string
 export type TImageSliderLoopObject = {id: number, image: string, title: string, status: number, created_at: string, updated_at: string}
 
@@ -150,6 +150,22 @@ const imageSliderLoopSlice =  createSlice({
            state.warningMessage = ''
            state.items = action.payload
         })
+        
+        // delete item image slider
+        builder.addCase(deleteItemImageSliderLoopSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.loading = true
+        })
+        builder.addCase(deleteItemImageSliderLoopSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.loading = false
+        })
+        builder.addCase(deleteItemImageSliderLoopSessionThunk.fulfilled, (state, action) => {
+           state.loading = false
+           state.warningMessage = ''
+           state.items = action.payload
+        })
+
 
 
         // reading all items image slider looop 

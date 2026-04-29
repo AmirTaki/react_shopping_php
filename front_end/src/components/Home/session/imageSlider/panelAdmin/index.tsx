@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { useEffect } from "react"
 import type { RooState, AppDispatch } from "../../../../../store"
 import { imgURL } from "../../../../../baseURL"
-import { viewImageSliderLoopSessionThunk,changeStatusItemImageSliderLoopSessionThunk } from "../redux/actionsImageSlider"
+import { deleteItemImageSliderLoopSessionThunk, viewImageSliderLoopSessionThunk,changeStatusItemImageSliderLoopSessionThunk } from "../redux/actionsImageSlider"
 
 const ImageSliderSessionLoopPA = () => {
     const {items, loading} = useSelector((state: RooState) => state.imageSlider);
@@ -71,7 +71,7 @@ const ImageSliderSessionLoopPA = () => {
                                         
                                         <div 
                                             onClick={() => {
-                                            //    window.confirm('Do you want it to be deleted ? ')  &&   dispatch(deleteImageSliderSessionThunk({id: item.id}))
+                                               window.confirm('Do you want it to be deleted ? ')  &&   dispatch(deleteItemImageSliderLoopSessionThunk({id: item.id}))
                                             }}
                                             className="text-rose-500 cursor-pointer duration-200 hover:text-red-700! py-1"
                                         >
