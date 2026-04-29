@@ -39,6 +39,8 @@ const initialState: IPanelAdminNavar = {
         {id: 11, name: 'session image advert', link: 'sessionImageAdvert'},
         {id: 12, name: 'session card slider', link: 'sessionCardSlider'},
         {id: 13, name: 'session circle slider', link: 'sessionCircleSlider'},
+        {id: 14, name: 'session image slider loop', link: 'sessionImageSliderLoop'},
+
 
 
 
