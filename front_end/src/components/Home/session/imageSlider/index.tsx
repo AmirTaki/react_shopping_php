@@ -5,17 +5,19 @@ import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import { extract, handlerScrollTo, handlerActiveIndicatore, handlerScrollEnd } from "./redux/imageSliderSlice";
 import { readingAllItemsImageSliderLoopSessionThunk } from "./redux/actionsImageSlider";
+import { imgURL } from "../../../../baseURL";
 
 const ImageSliderLoop = () => {
     const dispatch  = useDispatch<AppDispatch>()
 
     useEffect(() => {
         dispatch(readingAllItemsImageSliderLoopSessionThunk())
+        dispatch(handlerScrollTo({number: 2, smooth: true}))
     }, [])
 
     // source code 
     const {items,extra ,counter, smooth, activeIndicatore} =  useSelector((state: RooState) => state.imageSlider)
-   
+
     const containerRef =  useRef<HTMLDivElement>(null)
     const [isDrag, setIsDrag] = useState<boolean>(false)
     const startX = useRef<number>(0)
@@ -38,8 +40,10 @@ const ImageSliderLoop = () => {
     }, [counter])
     
     useEffect(() => {
-        dispatch(extract())
-        dispatch(handlerScrollTo({number: 2, smooth: true}))
+        const timer = setInterval(() => {
+            dispatch(extract())
+        }, 30)
+        return () => clearInterval (timer)
     }, [])
 
 
@@ -103,13 +107,12 @@ const ImageSliderLoop = () => {
                     return(
                         <div 
                             key = {index} 
-                            className={`w-full h-[90%]   flex justify-center items-center text-4xl duration-500
+                            className={`w-full h-[90%]   flex justify-center items-center text-4xl duration-500 select-none
                                `}
                             style={{
-                                border: `1px solid ${item}`,
                             }}
                         >
-                            {index}
+                            <img src={imgURL + item.image} draggable = {false} className="w-full h-full" alt="" />
                         </div>
                     )
                 })}

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import type { TImageSliderLoop, TImageSliderLoopObject } from "./imageSliderSlice";
+import { onCallBackSwiperLoop, onWarningSwiperLoop, type TImageSliderLoop, type TImageSliderLoopObject } from "./imageSliderSlice";
 import { baseURL } from "../../../../../baseURL";
 
 export const viewImageSliderLoopSessionThunk =  createAsyncThunk<TImageSliderLoop, void, {rejectValue: string}>(
@@ -24,6 +24,47 @@ export const viewImageSliderLoopSessionThunk =  createAsyncThunk<TImageSliderLoo
         }
     }
 )
+
+export const createItemsImageSliderLoopSessionThunk = createAsyncThunk<TImageSliderLoop, FormData, {rejectValue: string}>(
+    'create_item_image_slider_loop_toolkit',
+    async(payload, reject) => {
+        try{
+            const response = await fetch (baseURL + 'tables/session/imageSliderLoop/add.php', {
+                method: 'POST',
+                credentials: 'include',
+                body: payload
+            })
+            if(!response.ok){
+                 if(response.status === 422){
+                    reject.dispatch(onWarningSwiperLoop({
+                        title: 'title is requierd!',    
+                        image: 'image is requierd! '  
+                    }))
+                }
+                else if (response.status === 405){
+                    reject.dispatch(onCallBackSwiperLoop())
+                }
+
+                else if (response.status === 404){
+                        reject.dispatch(onWarningSwiperLoop({
+                        image: 'not upload image ?? repeat again !!',                        
+                    }))
+                }
+                
+                else {
+                    throw new Error ('warning ');
+                }
+            }
+            const data = await response.json()
+            return data
+        }
+        catch(err: any){
+            return (`warning: ${err.message}`)
+        }
+    }
+
+) 
+
 export const readingAllItemsImageSliderLoopSessionThunk =  createAsyncThunk<TImageSliderLoop, void, {rejectValue: string}>(
     `reading_all_items_image_slider_loop_session_toolkit`,
     async (_, {rejectWithValue}) => {

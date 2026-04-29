@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewImageSliderLoopSessionThunk, readingAllItemsImageSliderLoopSessionThunk } from "./actionsImageSlider";
+import { createItemsImageSliderLoopSessionThunk, viewImageSliderLoopSessionThunk, readingAllItemsImageSliderLoopSessionThunk } from "./actionsImageSlider";
 export type TImageSliderLoop = Array<{id: number, image: string, title: string, status: number, created_at: string, updated_at: string}> | boolean | string
 export type TImageSliderLoopObject = {id: number, image: string, title: string, status: number, created_at: string, updated_at: string}
 
@@ -11,7 +11,17 @@ interface IScrollSlider {
     activeIndicatore: number,
 
     // panelAdmin
-    warningMessage: string
+    warningMessage: string,
+    
+    // create & edit
+    urlImage: string   // save image url
+    image: {name: string, warning: string},
+    title: {name: string, warning: string},
+    callback: boolean, 
+    addItems: boolean,
+
+    // status & delete
+    loading: boolean
 }
 
 const initialState: IScrollSlider = {
@@ -22,7 +32,18 @@ const initialState: IScrollSlider = {
     activeIndicatore: 0,
 
     // panelAdmin
-    warningMessage: ''
+    warningMessage: '',
+    
+    // create & edit
+    urlImage: '', // save image url
+    image: {name: '', warning: ''},
+    title: {name: '', warning: ''},
+
+    callback: false, 
+    addItems: false,
+
+    // status & delete
+    loading: false
 
 }
  
@@ -62,8 +83,29 @@ const imageSliderLoopSlice =  createSlice({
             }
         },
 
-
+        
         // panel admin
+        onTitleSwiperLoop: (state, action) => {
+            state.title = {name: action.payload.title, warning : ''}
+        },
+        onSetURLSwiperLoop: (state, action) => {
+            state.urlImage = action.payload.result
+        },
+        onLoadingSwiperLoop: (state) => {
+            state.urlImage = ''
+            state.image = {name: '', warning: ''},
+            state.title = {name: '', warning: ''}
+        },
+        onWarningSwiperLoop: (state, action) => {
+            state.image = {name: state.image.name,  warning: action.payload.image}
+            state.title ={ name: state.title.name,  warning: action.payload.title}
+        },
+        onCallBackSwiperLoop: (state) => {
+            state.callback = true
+        },
+        onSetItemsSwiperLoop: (state) => {
+            state.addItems = false
+        }
     },
     extraReducers: (builder) => {
         //  view image slider loop
@@ -76,6 +118,22 @@ const imageSliderLoopSlice =  createSlice({
         builder.addCase(viewImageSliderLoopSessionThunk.fulfilled, (state, action) => {
             state.items = action.payload
             state.warningMessage = ''
+        })
+        
+        // create itme image slider loop
+        builder.addCase(createItemsImageSliderLoopSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.callback = false
+            state.addItems = false
+        })
+        builder.addCase(createItemsImageSliderLoopSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.callback = false
+            state.addItems = false
+        })
+        builder.addCase(createItemsImageSliderLoopSessionThunk.fulfilled, (state, action) => {
+            state.addItems = action.payload === true ? true : false
+            state.callback = false
         })
         
 
@@ -94,4 +152,6 @@ const imageSliderLoopSlice =  createSlice({
 })
 
 export default imageSliderLoopSlice
-export const {extract, handlerScrollTo, handlerActiveIndicatore, handlerScrollEnd} = imageSliderLoopSlice.actions
+export const {extract, handlerScrollTo, handlerActiveIndicatore, handlerScrollEnd,
+    onCallBackSwiperLoop, onLoadingSwiperLoop,  onSetItemsSwiperLoop, onSetURLSwiperLoop, onTitleSwiperLoop, onWarningSwiperLoop
+} = imageSliderLoopSlice.actions
