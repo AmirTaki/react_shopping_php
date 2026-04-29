@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewImageSliderLoopSessionThunk } from "./actionsImageSlider";
+import { viewImageSliderLoopSessionThunk, readingAllItemsImageSliderLoopSessionThunk } from "./actionsImageSlider";
 export type TImageSliderLoop = Array<{id: number, image: string, title: string, status: number, created_at: string, updated_at: string}> | boolean | string
 export type TImageSliderLoopObject = {id: number, image: string, title: string, status: number, created_at: string, updated_at: string}
 
@@ -66,6 +66,7 @@ const imageSliderLoopSlice =  createSlice({
         // panel admin
     },
     extraReducers: (builder) => {
+        //  view image slider loop
         builder.addCase(viewImageSliderLoopSessionThunk.pending, (state) => {
             state.warningMessage = ''
         })
@@ -73,6 +74,19 @@ const imageSliderLoopSlice =  createSlice({
             state.warningMessage = action.payload as string
         })
         builder.addCase(viewImageSliderLoopSessionThunk.fulfilled, (state, action) => {
+            state.items = action.payload
+            state.warningMessage = ''
+        })
+        
+
+        // reading all items image slider looop 
+        builder.addCase(readingAllItemsImageSliderLoopSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(readingAllItemsImageSliderLoopSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(readingAllItemsImageSliderLoopSessionThunk.fulfilled, (state, action) => {
             state.items = action.payload
             state.warningMessage = ''
         })
