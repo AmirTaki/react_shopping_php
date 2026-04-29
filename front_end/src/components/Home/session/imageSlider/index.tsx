@@ -16,7 +16,7 @@ const ImageSliderLoop = () => {
     }, [])
 
     // source code 
-    const {items,extra ,counter, smooth, activeIndicatore} =  useSelector((state: RooState) => state.imageSlider)
+    const {extra ,counter, smooth, } =  useSelector((state: RooState) => state.imageSlider)
 
     const containerRef =  useRef<HTMLDivElement>(null)
     const [isDrag, setIsDrag] = useState<boolean>(false)
@@ -29,7 +29,7 @@ const ImageSliderLoop = () => {
             if(containerRef.current){
                 containerRef.current.style.scrollBehavior =  smooth ? 'smooth' : 'auto'
                 containerRef.current.scrollLeft = counter * containerRef.current.offsetWidth 
-                dispatch(handlerActiveIndicatore())
+                // dispatch(handlerActiveIndicatore())
                 dispatch(handlerScrollEnd())
             }
         }
@@ -103,7 +103,6 @@ const ImageSliderLoop = () => {
             >
                 {/* items     ${isActive ? 'scale-100 opacity-100' : 'scale-75 opacity-70'}*/}
                 {Array.isArray(extra) && extra.map((item, index) => {
-                    const isActive = index === counter
                     return(
                         <div 
                             key = {index} 
@@ -132,24 +131,7 @@ const ImageSliderLoop = () => {
                 <FaAngleDoubleLeft />
             </button>
 
-            <div className="absolute flex gap-2 bottom-4">
-                {Array.isArray(items) && items.map((_, index) => {
-                    return(
-                        <div  
-                            key = {index}
-                            onClick={() => (dispatch(handlerScrollTo({number: index + 2 , smooth: true})))}
-                            style={{
-                                border: `1px solid ${_}`,
-                                // background: index  === activeIndicatore  ? _ : ''
-                            }}
-                            className={`
-                                w-3 h-3 duration-200 rounded-full hover:cursor-pointer hover:scale-200
-                                ${index  === activeIndicatore   ? "w-14 hover:scale-100!" : ""}    
-                            `} 
-                        ></div>
-                    )
-                })}
-            </div>
+        
         </div>
     )
 }

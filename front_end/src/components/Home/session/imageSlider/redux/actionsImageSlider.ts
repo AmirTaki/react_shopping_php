@@ -64,7 +64,25 @@ export const createItemsImageSliderLoopSessionThunk = createAsyncThunk<TImageSli
     }
 
 ) 
-
+export const changeStatusItemImageSliderLoopSessionThunk = createAsyncThunk<TImageSliderLoop, {id: number}, {rejectValue: string}>(
+    'change_status_item_image_slider_loop_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{    
+            const response = await fetch (baseURL + `tables/session/imageSliderLoop/status.php/${payload.id}/changeStatus`, {
+                method: 'GET',
+                credentials: 'include'
+            })
+            if(!response.ok){
+                throw new Error (`warning: ...`)
+            }
+            const data = await response.json()
+            return Array.isArray(data) ? data : []
+        }
+        catch(err: any){
+            return rejectWithValue(`warning: ${err.message}`)
+        }
+    }
+) 
 export const readingAllItemsImageSliderLoopSessionThunk =  createAsyncThunk<TImageSliderLoop, void, {rejectValue: string}>(
     `reading_all_items_image_slider_loop_session_toolkit`,
     async (_, {rejectWithValue}) => {

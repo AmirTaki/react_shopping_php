@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { useEffect } from "react"
 import type { RooState, AppDispatch } from "../../../../../store"
 import { imgURL } from "../../../../../baseURL"
-import { viewImageSliderLoopSessionThunk } from "../redux/actionsImageSlider"
+import { viewImageSliderLoopSessionThunk,changeStatusItemImageSliderLoopSessionThunk } from "../redux/actionsImageSlider"
 
 const ImageSliderSessionLoopPA = () => {
     const {items, loading} = useSelector((state: RooState) => state.imageSlider);
@@ -56,7 +56,7 @@ const ImageSliderSessionLoopPA = () => {
                                         
                                         <div 
                                             onClick={() => {
-                                                // dispatch(changeStatusImageSliderSessionThunk({id: item.id}) );
+                                                dispatch(changeStatusItemImageSliderLoopSessionThunk({id: item.id}) );
                                             }}
                                             className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 py-1 "
                                         >
