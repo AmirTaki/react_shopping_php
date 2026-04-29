@@ -182,6 +182,13 @@ const Routh = () => {
                             <Route path = "edit/:id" element = {<EditCircleSliderSessionPA />}/>
                         </Route>
 
+                        {/* session -> imageSlider loop ->  background loop */}
+                        <Route path="sessionCircleSlider" element = {<ViewCircleSliderSessionPA />}>
+                            {/* <Route path = "" element = {<CircleSliderSessionPA />}/> */}
+                            {/* <Route path = "create" element = {<CreateCircleSliderSessionPA />}/> */}
+                            {/* <Route path = "edit/:id" element = {<EditCircleSliderSessionPA />}/> */}
+                        </Route>
+
 
                     </Route>
 

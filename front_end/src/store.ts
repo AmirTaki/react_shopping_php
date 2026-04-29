@@ -19,6 +19,7 @@ import GridSwiperSlice from "./components/Home/session/sliderPage/redux/gridSlid
 import advertSlice from "./components/Home/session/imageAdvert/redux/advertSlice";
 import cardSlice from "./components/Home/session/cardSlider/redux/cardSlice";
 import circleSlicer from "./components/Home/session/circleSlider/redux/circleSlice";
+import imageSliderLoopSlice from "./components/Home/session/imageSlider/redux/imageSliderSlice";
 
 const reducers = combineReducers({
 
@@ -74,6 +75,8 @@ const reducers = combineReducers({
     card: cardSlice.reducer  ,          // card slider -> card swiper in panel admin
     // circle slider
     circle: circleSlicer.reducer,        // circle slider -> cirle swiper
+    // image slider loop
+    imageSlider: imageSliderLoopSlice.reducer,       // image slider loop
 
  })
 

@@ -33,7 +33,7 @@ const CircleSlider = () => {
     }
     // circle swiper 
     return(
-        <div className="text-rose-400">
+        <div className="text-rose-400 my-5 min-w-full ">
             <div className={`w-full h-[700px]  flex justify-center items-center relative overflow-hidden  ${isDrag && 'active:cursor-grabbing'}`}
                 onMouseMove={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {dispatch(circleMove({client: e.clientX}))}}
                 onMouseUp={() => {dispatch(circleUp())}}
@@ -57,7 +57,7 @@ const CircleSlider = () => {
                                 <div 
                                     key = {item.id} 
                                     style={{
-                                        border: `1px solid blue`,
+                                        // border: `1px solid blue`,
                                         backgroundColor : "#242424",
                                         transform: `rotateY(${rotate(index + conter)}deg) translateZ(${translateZ()}px)`
                                     }}
