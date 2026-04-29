@@ -52,7 +52,8 @@ const imageSliderLoopSlice =  createSlice({
     name: 'scroll_slider_loop_toolkit',
     initialState: initialState,
     reducers: {
-        extract: (state, ) => {
+        extract: (state, action) => {
+            state.items = action.payload
             if(Array.isArray(state.items))
             state.extra = [...state.items.slice(-2), ...state.items, ...state.items.slice(0, 2)]
         },

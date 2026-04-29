@@ -32,6 +32,7 @@
                 5. imageAdvert -> curd & reading
                 6. cardSlider -> curd & reading
                 7. circleSlider -> curd & reading
+                8. imageSliderLoop -> curd & reading
 
 // front end 
     component -> 
@@ -129,6 +130,11 @@
                         
                         7. circleSlider
                             a. PanelAdmin
+                            b. redux
+                            c. index.tsx
+
+                        8. imageSliderLoop
+                            a. panelAdmin
                             b. redux
                             c. index.tsx
 

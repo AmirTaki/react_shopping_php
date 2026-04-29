@@ -4,19 +4,40 @@ import React, { useEffect, useRef, useState } from "react";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import { extract, handlerScrollTo, handlerActiveIndicatore, handlerScrollEnd } from "./redux/imageSliderSlice";
-import { readingAllItemsImageSliderLoopSessionThunk } from "./redux/actionsImageSlider";
-import { imgURL } from "../../../../baseURL";
+import { baseURL, imgURL } from "../../../../baseURL";
 
 const ImageSliderLoop = () => {
     const dispatch  = useDispatch<AppDispatch>()
 
-    useEffect(() => {
-        dispatch(readingAllItemsImageSliderLoopSessionThunk())
-        dispatch(handlerScrollTo({number: 2, smooth: true}))
-    }, [])
 
     // source code 
-    const {extra ,counter, smooth, } =  useSelector((state: RooState) => state.imageSlider)
+ const {items,extra ,counter, smooth, activeIndicatore} =  useSelector((state: RooState) => state.imageSlider)
+   
+
+    const requestApi = async() => {
+        try{
+            const response = await fetch (baseURL + `tables/session/imageSliderLoop/reading.php`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            if(!response.ok){
+                throw new Error(`warning: `)
+            }
+            const data = await response.json()
+            dispatch(extract(data))
+            dispatch(handlerScrollTo({number: 2, smooth: true}))
+
+        }
+        catch(err: any){
+            console.error (`warning: ${err.message}`)
+        }
+    }
+
+    useEffect(() => {
+        requestApi()
+    }, [])
 
     const containerRef =  useRef<HTMLDivElement>(null)
     const [isDrag, setIsDrag] = useState<boolean>(false)
@@ -29,7 +50,7 @@ const ImageSliderLoop = () => {
             if(containerRef.current){
                 containerRef.current.style.scrollBehavior =  smooth ? 'smooth' : 'auto'
                 containerRef.current.scrollLeft = counter * containerRef.current.offsetWidth 
-                // dispatch(handlerActiveIndicatore())
+                dispatch(handlerActiveIndicatore())
                 dispatch(handlerScrollEnd())
             }
         }
@@ -40,10 +61,7 @@ const ImageSliderLoop = () => {
     }, [counter])
     
     useEffect(() => {
-        const timer = setInterval(() => {
-            dispatch(extract())
-        }, 30)
-        return () => clearInterval (timer)
+        // dispatch(extract())
     }, [])
 
 
@@ -84,14 +102,12 @@ const ImageSliderLoop = () => {
             currentX.current = 0
         }
     }
-
-
     return(
         <div className="text-sky-400 w-full h-[600px]  flex items-center justify-center relative">
             {/* container */}
             <div 
                 ref = {containerRef}
-                className="w-[100%] h-[90%] flex flex-col justify-center items-center flex-wrap overflow-x-hidden relative select-none cursor-grab active:cursor-grabbing"
+                className="w-full h-[90%] flex flex-col justify-center items-center flex-wrap overflow-x-hidden relative select-none cursor-grab active:cursor-grabbing"
                 onMouseDown={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {scrollDown(e.clientX)}}
                 onMouseMove={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {scrollMove(e.clientX)}}
                 onMouseUp={() => {scrollUp()}}
@@ -106,12 +122,13 @@ const ImageSliderLoop = () => {
                     return(
                         <div 
                             key = {index} 
-                            className={`w-full h-[90%]   flex justify-center items-center text-4xl duration-500 select-none
-                               `}
+                            className={`w-full h-[90%]  rounded-3xl flex justify-center items-center text-4xl duration-500 select-none
+                                `}
                             style={{
+                                // border: `1px solid blue`,
                             }}
                         >
-                            <img src={imgURL + item.image} draggable = {false} className="w-full h-full" alt="" />
+                            <img src={imgURL + item.image} className="w-full h-full" draggable = {false} alt="" />
                         </div>
                     )
                 })}
@@ -131,7 +148,24 @@ const ImageSliderLoop = () => {
                 <FaAngleDoubleLeft />
             </button>
 
-        
+            <div className="absolute flex gap-2 bottom-4 hidden">
+                {Array.isArray(items) && items.map((_, index) => {
+                    return(
+                        <div  
+                            key = {index}
+                            onClick={() => (dispatch(handlerScrollTo({number: index + 2 , smooth: true})))}
+                            style={{
+                                border: `1px solid blue`,
+                                background: index  === activeIndicatore  ? 'white' : ''
+                            }}
+                            className={`
+                                w-3 h-3 duration-200 rounded-full hover:cursor-pointer hover:scale-200
+                                ${index  === activeIndicatore   ? "w-14 hover:scale-100!" : ""}    
+                            `} 
+                        ></div>
+                    )
+                })}
+            </div>
         </div>
     )
 }
