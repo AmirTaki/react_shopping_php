@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { changeStatusItemCubeSessionThunk, createItemCubeSessionThunk, deleteItemCubeSessionThunk, viewCubeSessionThunk } from "./actionsCube";
+import { editItemCubeSessionThunk, changeStatusItemCubeSessionThunk, createItemCubeSessionThunk, deleteItemCubeSessionThunk, readingItemCubeSessionThunk, viewCubeSessionThunk } from "./actionsCube";
+import { imgURL } from "../../../../../baseURL";
 
 export type TCube = Array<{id: number, degree: number, status: number, image: string, created_at: string, updated_at: string}> | string | boolean
 export type TCubeObject = {id: number, degree: number, status: number, image: string, created_at: string, updated_at: string}
@@ -196,6 +197,36 @@ const cubeSlicer =  createSlice({
             state.items = action.payload
         })
 
+        // reading item cube session
+        builder.addCase(readingItemCubeSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(readingItemCubeSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(readingItemCubeSessionThunk.fulfilled, (state, action) => {
+            const object = action.payload as TCubeObject
+            state.urlImage = imgURL + object.image
+            state.angle = {deg: object.degree, warning: ''}
+            state.warningMessage = ''
+
+        })
+
+        // edit item cube session
+        builder.addCase(editItemCubeSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.callback = false
+            state.addItems = false
+        })
+        builder.addCase(editItemCubeSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.callback = false
+        })
+        builder.addCase(editItemCubeSessionThunk.fulfilled, (state, action) => {
+            state.addItems = action.payload === true ? true : false
+            state.callback = false
+            state.warningMessage = ''
+        })
     }
 })
 export default cubeSlicer;
