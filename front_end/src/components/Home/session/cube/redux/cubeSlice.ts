@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewCubeSessionThunk } from "./actionsCube";
+import { createItemCubeSessionThunk, viewCubeSessionThunk } from "./actionsCube";
 
 export type TCube = Array<{id: number, degree: number, status: number, image: string, created_at: string, updated_at: string}> | string | boolean
 export type TCubeObject = {id: number, degree: number, status: number, image: string, created_at: string, updated_at: string}
@@ -21,6 +21,9 @@ interface ICube {
     urlImage: string   // save image url
     image: {url: string, warning: string},
     angle: {deg: number, warning: string},
+    
+    ListAngle: [0, 90, 180, 270],
+    
     callback: boolean, 
     addItems: boolean,
 
@@ -46,6 +49,8 @@ const initialState: ICube = {
     urlImage: '', // save image url
     image: {url: '', warning: ''},
     angle: {deg: 0, warning: ''},
+
+    ListAngle: [0, 90, 180, 270],
 
     callback: false, 
     addItems: false,
@@ -131,15 +136,33 @@ const cubeSlicer =  createSlice({
         }
     },
     extraReducers: (builder) => {
+        // view cube session
         builder.addCase(viewCubeSessionThunk.pending, (state) => {
             state.warningMessage = ''
+            state.addItems = false
+            state.callback = false
         } )
         builder.addCase(viewCubeSessionThunk.rejected, (state, action) => {
             state.warningMessage = action.payload as string
+            state.callback = false  
         })
         builder.addCase(viewCubeSessionThunk.fulfilled, (state, action) => {
             state.warningMessage = ''
             state.items = action.payload
+        })
+
+        // create item cube session
+        builder.addCase(createItemCubeSessionThunk.pending, (state) => {
+
+        })
+        builder.addCase(createItemCubeSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.callback = false
+        })
+        builder.addCase(createItemCubeSessionThunk.fulfilled, (state, action) => {
+            state.addItems = action.payload === true ? true : false
+            state.callback = false
+            state.warningMessage = ''
         })
     }
 })

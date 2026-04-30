@@ -64,6 +64,7 @@ import CreateSessionImageSliderLoopPA from "../Home/session/imageSlider/panelAdm
 import EditSessionImageSliderLoopPA from "../Home/session/imageSlider/panelAdmin/edit"
 import ViewCubeSessionPA from "../Home/session/cube/panelAdmin/view"
 import CubeSliderSessionPA from "../Home/session/cube/panelAdmin"
+import CreateCubeSliderPA from "../Home/session/cube/panelAdmin/create"
 
 const Routh = () => {
     return (
@@ -198,7 +199,7 @@ const Routh = () => {
                         {/* session -> cube swiper slider */}
                         <Route path="sessionCubeSlider" element = {<ViewCubeSessionPA />}>
                             <Route path = "" element = {<CubeSliderSessionPA />}/>
-                            {/* <Route path = "create" element = {< />}/> */}
+                            <Route path = "create" element = {<CreateCubeSliderPA />}/>
                             {/* <Route path = "edit/:id" element = {< />}/> */}
                         </Route>
 

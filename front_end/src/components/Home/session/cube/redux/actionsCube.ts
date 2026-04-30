@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import type { TCube, TCubeObject } from "./cubeSlice";
+import { onCallBackCube, onWarningCube, type TCube, type TCubeObject } from "./cubeSlice";
 import { baseURL } from "../../../../../baseURL";
 
 export const viewCubeSessionThunk = createAsyncThunk<TCube, void, {rejectValue: string}>(
@@ -21,6 +21,45 @@ export const viewCubeSessionThunk = createAsyncThunk<TCube, void, {rejectValue: 
         }
         catch(err: any) {
             return rejectWithValue (`warning: ${err.message}`)
+        }
+    }
+)
+
+
+export const createItemCubeSessionThunk = createAsyncThunk<TCube, FormData, {rejectValue: string}>(
+    'create_item_cube_session_toolkit',
+    async(payload, reject) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/cube/add.php`, {
+                method: 'POST',
+                credentials: 'include',
+                body: payload
+            })
+            if(!response.ok){
+                if(response.status === 422){
+                    reject.dispatch(onWarningCube({
+                        image: 'image is requierd!',
+                        deg: 'deg is requierd!'
+                    }))
+                }
+                else if (response.status === 405){
+                    reject.dispatch(onCallBackCube())
+                }
+           
+                else if (response.status === 404){
+                        reject.dispatch(onWarningCube({
+                        image: 'not upload image ?? repeat again !!',
+                    }))
+                }
+                else {
+                    throw new Error ('warning....')
+                }
+            }
+            const data = await response.json()
+            return data
+        }
+        catch(err: any){
+            return (`warning ${err.message}`)
         }
     }
 )
