@@ -20,6 +20,7 @@ import advertSlice from "./components/Home/session/imageAdvert/redux/advertSlice
 import cardSlice from "./components/Home/session/cardSlider/redux/cardSlice";
 import circleSlicer from "./components/Home/session/circleSlider/redux/circleSlice";
 import imageSliderLoopSlice from "./components/Home/session/imageSlider/redux/imageSliderSlice";
+import cubeSlicer from "./components/Home/session/cube/redux/cubeSlice";
 
 const reducers = combineReducers({
 
@@ -77,6 +78,8 @@ const reducers = combineReducers({
     circle: circleSlicer.reducer,        // circle slider -> cirle swiper
     // image slider loop
     imageSlider: imageSliderLoopSlice.reducer,       // image slider loop
+    // cube swiper loop
+    cube: cubeSlicer.reducer,                   // cube slider loop in panel admin
 
  })
 

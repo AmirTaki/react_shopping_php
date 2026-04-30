@@ -1,6 +1,7 @@
 import SwiperSlide from "./backGroundSlider"
 import CardSlider from "./cardSlider"
 import CircleSlider from "./circleSlider"
+import Cube from "./cube"
 import ImageAdvert from "./imageAdvert"
 import ImageSliderLoop from "./imageSlider"
 import ResourceImage from "./resourseImage"
@@ -33,6 +34,9 @@ const Session = () => {
 
             {/* image slider loop  */}
             <ImageSliderLoop />
+
+            {/* cube slider loop*/}
+            <Cube />
         </div>
     )
 }

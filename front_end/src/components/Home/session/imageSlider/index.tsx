@@ -11,7 +11,7 @@ const ImageSliderLoop = () => {
 
 
     // source code 
- const {items,extra ,counter, smooth, activeIndicatore} =  useSelector((state: RooState) => state.imageSlider)
+    const {items,extra ,counter, smooth, activeIndicatore} =  useSelector((state: RooState) => state.imageSlider)
    
 
     const requestApi = async() => {
@@ -27,7 +27,7 @@ const ImageSliderLoop = () => {
             }
             const data = await response.json()
             dispatch(extract(data))
-            dispatch(handlerScrollTo({number: 2, smooth: true}))
+            dispatch(handlerScrollTo({number: 4, smooth: true}))
 
         }
         catch(err: any){
@@ -60,10 +60,6 @@ const ImageSliderLoop = () => {
         return () => window.removeEventListener('resize', handlerResize)
     }, [counter])
     
-    useEffect(() => {
-        // dispatch(extract())
-    }, [])
-
 
     const scrollDown = (client: number) => {
         setIsDrag(true)
