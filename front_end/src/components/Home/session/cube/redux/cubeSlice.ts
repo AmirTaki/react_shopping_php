@@ -16,6 +16,18 @@ interface ICube {
     // panel admin
     warningMessage: string,
 
+    
+    // create & edit
+    urlImage: string   // save image url
+    image: {url: string, warning: string},
+    angle: {deg: number, warning: string},
+    callback: boolean, 
+    addItems: boolean,
+
+    // status & delete
+    loading: boolean
+    
+
 }
 
 const initialState: ICube = {
@@ -28,7 +40,18 @@ const initialState: ICube = {
     dragOffset: 0,
 
     // panel admin
-    warningMessage: ''
+    warningMessage: '',
+    
+    // create & edit
+    urlImage: '', // save image url
+    image: {url: '', warning: ''},
+    angle: {deg: 0, warning: ''},
+
+    callback: false, 
+    addItems: false,
+
+    // status & delete
+    loading: false
 }
 
 const cubeSlicer =  createSlice({
@@ -82,10 +105,30 @@ const cubeSlicer =  createSlice({
                 }
                 state.dragOffset = 0
             }
-        }
+        },
 
         // panel admin
-
+        onAngleCube: (state, action) => {
+            state.angle = {deg: action.payload.deg, warning: ''}
+        },
+        onSetURLCube: (state, action) => {
+            state.urlImage = action.payload.result
+        },
+        onLoadingCube: (state) => {
+            state.urlImage = ''
+            state.image = {url: '', warning: ''},
+            state.angle = {deg: 0, warning: ''}
+        },
+        onWarningCube: (state, action) => {
+            state.image = {url: state.image.url, warning: action.payload.image}
+            state.angle = {deg: state.angle.deg, warning: action.payload.deg}
+        },
+        onCallBackCube: (state) => {
+            state.callback = true
+        },
+        onSetItemsCube: (state) => {
+            state.addItems = false
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(viewCubeSessionThunk.pending, (state) => {
@@ -101,4 +144,6 @@ const cubeSlicer =  createSlice({
     }
 })
 export default cubeSlicer;
-export const {clickRight, clickLeft, endTransitionEnd, downCube, moveCube, upCube} = cubeSlicer.actions
+export const {clickRight, clickLeft, endTransitionEnd, downCube, moveCube, upCube,
+    onAngleCube, onCallBackCube, onLoadingCube, onSetItemsCube, onSetURLCube, onWarningCube
+} = cubeSlicer.actions
