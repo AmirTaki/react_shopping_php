@@ -63,3 +63,45 @@ export const createItemCubeSessionThunk = createAsyncThunk<TCube, FormData, {rej
         }
     }
 )
+
+export const changeStatusItemCubeSessionThunk = createAsyncThunk<TCube, {id: number}, {rejectValue: string}>(
+    'change_status_item_cube_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+
+            const response = await fetch (baseURL + `tables/session/cube/status.php/${payload.id}/changeStatus`, {
+                method: 'GET',
+                credentials: 'include',
+            })
+            if(!response.ok){
+                throw new Error ('warning: ... ')
+            }
+            const data = response.json()
+            return Array.isArray(data) ? data : []
+        }
+        catch(err: any){
+            return rejectWithValue (`warning ${err.message}`)
+        }
+    
+    }
+)
+export const deleteItemCubeSessionThunk = createAsyncThunk<TCube, {id: number}, {rejectValue: string}>(
+    'delete_item_cube_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+
+            const response = await fetch (baseURL + `tables/session/cube/delete.php/${payload.id}/changeStatus`, {
+                method: 'DELETE',
+            })
+            if(!response.ok){
+                throw new Error ('warning: ... ')
+            }
+            const data = response.json()
+            return Array.isArray(data) ? data : []
+        }
+        catch(err: any){
+            return rejectWithValue (`warning ${err.message}`)
+        }
+    
+    }
+)

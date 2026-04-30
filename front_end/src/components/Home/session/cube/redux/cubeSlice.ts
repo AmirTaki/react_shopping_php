@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createItemCubeSessionThunk, viewCubeSessionThunk } from "./actionsCube";
+import { changeStatusItemCubeSessionThunk, createItemCubeSessionThunk, deleteItemCubeSessionThunk, viewCubeSessionThunk } from "./actionsCube";
 
 export type TCube = Array<{id: number, degree: number, status: number, image: string, created_at: string, updated_at: string}> | string | boolean
 export type TCubeObject = {id: number, degree: number, status: number, image: string, created_at: string, updated_at: string}
@@ -153,7 +153,9 @@ const cubeSlicer =  createSlice({
 
         // create item cube session
         builder.addCase(createItemCubeSessionThunk.pending, (state) => {
-
+            state.warningMessage = ''
+            state.callback = false
+            state.addItems = false
         })
         builder.addCase(createItemCubeSessionThunk.rejected, (state, action) => {
             state.warningMessage = action.payload as string
@@ -164,6 +166,36 @@ const cubeSlicer =  createSlice({
             state.callback = false
             state.warningMessage = ''
         })
+
+        // change status item cube session
+        builder.addCase(changeStatusItemCubeSessionThunk.pending, (state) => {
+            state.loading = true
+            state.warningMessage = ''
+        })
+        builder.addCase(changeStatusItemCubeSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.loading = false
+        })
+        builder.addCase(changeStatusItemCubeSessionThunk.fulfilled, (state, action) => {
+            state.loading = false
+            state.warningMessage = ''
+            state.items = action.payload
+        })
+        // delete item cube session
+        builder.addCase(deleteItemCubeSessionThunk.pending, (state) => {
+            state.loading = true
+            state.warningMessage = ''
+        })
+        builder.addCase(deleteItemCubeSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.loading = false
+        })
+        builder.addCase(deleteItemCubeSessionThunk.fulfilled, (state, action) => {
+            state.loading = false
+            state.warningMessage = ''
+            state.items = action.payload
+        })
+
     }
 })
 export default cubeSlicer;
