@@ -1,7 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { viewCubeSessionThunk } from "./actionsCube";
+
+export type TCube = Array<{id: number, degree: number, status: number, image: string, created_at: string, updated_at: string}> | string | boolean
+export type TCubeObject = {id: number, degree: number, status: number, image: string, created_at: string, updated_at: string}
 
 interface ICube {
-    items: Array<{id: number, color: string, deg: number}>,
+    items: TCube,
     degree: number, 
     isTransition: boolean,
     isDrag: boolean,
@@ -9,16 +13,22 @@ interface ICube {
     currentX: number, 
     dragOffset: number
 
+    // panel admin
+    warningMessage: string,
+
 }
 
 const initialState: ICube = {
-    items: [{id: 0, color: 'blue', deg: 0 }, {id: 1, color: 'red', deg: 90 },{id: 2, color: 'green', deg: 180 }, {id: 3, color: 'yellow', deg: 270 }],
+    items: [],
     degree: 0,
     isTransition: false,
     isDrag: false,
     startX: 0,
     currentX: 0, 
-    dragOffset: 0
+    dragOffset: 0,
+
+    // panel admin
+    warningMessage: ''
 }
 
 const cubeSlicer =  createSlice({
@@ -73,6 +83,21 @@ const cubeSlicer =  createSlice({
                 state.dragOffset = 0
             }
         }
+
+        // panel admin
+
+    },
+    extraReducers: (builder) => {
+        builder.addCase(viewCubeSessionThunk.pending, (state) => {
+            state.warningMessage = ''
+        } )
+        builder.addCase(viewCubeSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(viewCubeSessionThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            state.items = action.payload
+        })
     }
 })
 export default cubeSlicer;

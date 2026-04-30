@@ -4,6 +4,7 @@ import type { RooState, AppDispatch } from "../../../../store";
 import { clickRight, clickLeft, endTransitionEnd, downCube, moveCube, upCube} from "./redux/cubeSlice"
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
+import { imgURL } from "../../../../baseURL";
 
 
 const Cube = () => {
@@ -54,15 +55,17 @@ const Cube = () => {
                         onTouchStart={(e: React.TouchEvent<HTMLDivElement>) => {dispatch(downCube({client: e.touches[0].clientY}))}}
                     >
 
-                        {items.map((item) => {
+                        {Array.isArray(items) && items.map((item) => {
                             return(
                                 <div 
                                     key = {item.id} 
-                                    className="w-[300px] h-[300px]  flex justify-center items-center backface-hidden bg-center bg-cover absolute "
-                                    style={{border: `1px solid ${item.color}`,
-                                    transform: `rotateY(${item.deg}deg) translateZ(150px)`
+                                    className="w-[300px] h-[300px]  flex justify-center items-center backface-hidden bg-center bg-cover absolute select-none"
+                                    style={{border: `1px solid blue`,
+                                    transform: `rotateY(${item.degree}deg) translateZ(150px)`
                                 }}
-                                >{item.color}</div>
+                                >
+                                    <img src={imgURL + item.image} className="w-full h-full" draggable = {false} alt="" />
+                                </div>
                             )
                         })}   
                     </div>
