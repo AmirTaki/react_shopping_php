@@ -1,16 +1,21 @@
-import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import type { RooState, AppDispatch } from "../../../../store";
 import { clickRight, clickLeft, endTransitionEnd, downCube, moveCube, upCube} from "./redux/cubeSlice"
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import { imgURL } from "../../../../baseURL";
+import { useEffect } from "react";
+import { viewCubeSessionThunk } from "./redux/actionsCube";
 
 
 const Cube = () => {
     const dispatch = useDispatch<AppDispatch>()
     const {items, degree, isTransition, isDrag, dragOffset} =  useSelector((state: RooState) => state.cube)
     
+    useEffect(() => {
+        dispatch(viewCubeSessionThunk())
+    }, [])
+
     const rotateY = () => {
         if(isDrag){
             return dragOffset + degree
@@ -20,7 +25,7 @@ const Cube = () => {
   
     return (
         <div 
-            className = {`w-full h-[500px]  border-sky-600 flex justify-center items-center my-10 `}
+            className = {`w-full h-[500px]  text-rose-500 bg-transparent border-0 flex justify-center items-center my-10 `}
         
         >
             
@@ -56,17 +61,19 @@ const Cube = () => {
                     >
 
                         {Array.isArray(items) && items.map((item) => {
-                            return(
-                                <div 
-                                    key = {item.id} 
-                                    className="w-[300px] h-[300px]  flex justify-center items-center backface-hidden bg-center bg-cover absolute select-none"
-                                    style={{border: `1px solid blue`,
-                                    transform: `rotateY(${item.degree}deg) translateZ(150px)`
-                                }}
-                                >
-                                    <img src={imgURL + item.image} className="w-full h-full" draggable = {false} alt="" />
-                                </div>
-                            )
+                            if(item.status == 10){
+                                return(
+                                    <div 
+                                        key = {item.id} 
+                                        className="w-[300px] h-[300px]  flex justify-center items-center backface-hidden bg-center bg-cover absolute select-none"
+                                        style={{border: ``,
+                                        transform: `rotateY(${item.degree}deg) translateZ(150px)`
+                                    }}
+                                    >
+                                        <img src={imgURL + item.image} className="w-full h-full" draggable = {false} alt="" />
+                                    </div>
+                                )
+                            }
                         })}   
                     </div>
                 </div>
