@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { RooState, AppDispatch } from "../../../../../store";
 import { imgURL } from "../../../../../baseURL";
-import { viewWebkitScrollSessionThunk } from "../redux/actionsWebkit";
+import { viewWebkitScrollSessionThunk, changeStatusWebkitScrollSessionThunk, deleteWebkitScrollSessionThunk } from "../redux/actionsWebkit";
 
 const WebkitScrollSessionPA = ()  => {
 
@@ -60,7 +60,7 @@ const WebkitScrollSessionPA = ()  => {
                                         
                                         <div 
                                             onClick={() => {
-                                                // dispatch(changeStatusScrollSliderSessionThunk({id: item.id}) );
+                                                dispatch(changeStatusWebkitScrollSessionThunk({id: item.id}) );
                                             }}
                                             className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 py-1 "
                                         >
@@ -75,7 +75,7 @@ const WebkitScrollSessionPA = ()  => {
                                         
                                         <div 
                                             onClick={() => {
-                                                // window.confirm('Do you want it to be deleted ? ')  && dispatch(deleteScrollSliderSessionThunk({id: item.id}))
+                                                window.confirm('Do you want it to be deleted ? ')  && dispatch(deleteWebkitScrollSessionThunk({id: item.id}))
                                             }}
                                             className="text-rose-500 cursor-pointer duration-200 hover:text-red-700! py-1"
                                         >

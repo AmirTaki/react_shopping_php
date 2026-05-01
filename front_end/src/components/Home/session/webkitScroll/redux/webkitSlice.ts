@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { viewWebkitScrollSessionThunk, createWebkitScrollSessionThunk } from "./actionsWebkit"
+import { viewWebkitScrollSessionThunk, createWebkitScrollSessionThunk, deleteWebkitScrollSessionThunk, changeStatusWebkitScrollSessionThunk } from "./actionsWebkit"
 
 export type TWebkit = Array<{id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}> | string | boolean
 export type TWebkitObject = {id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}
@@ -106,6 +106,36 @@ const webkitScrollSlice = createSlice({
             state.addItems = action.payload === true ? true : false
             state.callback = false
             state.warningMessage = ''
+        })
+
+        // delete item reosurce image
+        builder.addCase(deleteWebkitScrollSessionThunk.pending, (state) => {
+            state.loading = true
+            state.warningMessage = ''
+        })
+        builder.addCase(deleteWebkitScrollSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload  as string
+            state.loading = false
+        })
+        builder.addCase(deleteWebkitScrollSessionThunk.fulfilled, (state, action) => {
+            state.loading = false
+            state.warningMessage = ''
+            state.items = action.payload
+        })
+
+        // change status item resource image 
+        builder.addCase(changeStatusWebkitScrollSessionThunk.pending, (state) => {
+            state.loading = true
+            state.warningMessage = ''
+        })
+        builder.addCase(changeStatusWebkitScrollSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload  as string
+            state.loading = false
+        })
+        builder.addCase(changeStatusWebkitScrollSessionThunk.fulfilled, (state, action) => {
+            state.loading = false
+            state.warningMessage = ''
+            state.items = action.payload
         })
     }
 })
