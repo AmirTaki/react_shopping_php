@@ -99,7 +99,7 @@ const ImageSliderLoop = () => {
         }
     }
     return(
-        <div className="text-sky-400 w-full h-[600px]  flex items-center justify-center relative">
+        <div className="text-sky-400 w-full h-[700px]  flex items-center justify-center relative">
             {/* container */}
             <div 
                 ref = {containerRef}
@@ -118,7 +118,7 @@ const ImageSliderLoop = () => {
                     return(
                         <div 
                             key = {index} 
-                            className={`w-full h-[90%]  rounded-3xl flex justify-center items-center text-4xl duration-500 select-none
+                            className={`w-full h-full  rounded-3xl flex justify-center items-center text-4xl duration-500 select-none
                                 `}
                             style={{
                                 // border: `1px solid blue`,

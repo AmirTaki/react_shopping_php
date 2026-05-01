@@ -7,6 +7,7 @@ import ImageSliderLoop from "./imageSlider"
 import ResourceImage from "./resourseImage"
 import PayloarSlider from "./scrollSlider"
 import GridSwiper from "./sliderPage"
+import WibkitScroll from "./webkitScroll"
 
 const Session = () => {
     return(
@@ -37,6 +38,11 @@ const Session = () => {
 
             {/* cube slider loop*/}
             <Cube />
+
+            {/* scroll slider ->  */}
+            <WibkitScroll />
+        
+            
         </div>
     )
 }

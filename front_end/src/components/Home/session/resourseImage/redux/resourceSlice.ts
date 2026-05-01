@@ -83,6 +83,7 @@ const resourceImageSlice = createSlice({
     name: 'payloar_toolkit',
     initialState: initialState,
     reducers: {
+   
         handlerSizeContainer: (state) => {
             if(Array.isArray(state.items)){
                 const sizeRef = (state.items.length * 350) + (state.items.length * 20)
@@ -341,6 +342,6 @@ const resourceImageSlice = createSlice({
 
 export default resourceImageSlice
 export const {rightClick, endTranistion, leftClick, handlerWidthContainer, payloarDown, payloarMove, payloarUp, handlerSizeContainer, handlerContainerScroll ,sizeThumbe, scrollStart, scrollMove, scrollUp, handlerTranslateThumble, 
-
+ 
     onBodyResource, onCallBackResource, onImageResource, onLoadingResource, onSetItemsResource, onSetURLResource, onTitleResource, onWarningResource
 } = resourceImageSlice.actions

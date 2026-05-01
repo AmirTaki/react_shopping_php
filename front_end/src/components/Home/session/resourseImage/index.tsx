@@ -2,12 +2,11 @@ import React, { useEffect, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import type { RooState, AppDispatch } from "../../../../store";
 import { rightClick, endTranistion, leftClick, handlerWidthContainer,  payloarDown, payloarMove, payloarUp, handlerSizeContainer, handlerContainerScroll, sizeThumbe
-,scrollStart, scrollMove, scrollUp, handlerTranslateThumble, 
-} from "./redux/resourceSlice"
+,scrollStart, scrollMove, scrollUp, handlerTranslateThumble,} from "./redux/resourceSlice"
 
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
-import { imgURL } from "../../../../baseURL";
+import {  imgURL } from "../../../../baseURL";
 import { readingAllResourceImageSessionThnk } from "./redux/actionsResourse";
 
 const ResourceImage = () => {
@@ -15,9 +14,13 @@ const ResourceImage = () => {
     const {items, translateX, isTransition, isDrag, dragOffset, sizeContainer, widthContainer, sizeThumble, isScroll, dragScroll, widthScroll, translateThumble} =  useSelector((state: RooState) => state.resourceImage)
     const containerRef = useRef<HTMLDivElement>(null)
     const scrollRef = useRef<HTMLDivElement>(null)
-   
+ 
+    
+
     useEffect(() => {
+ 
         disptach(readingAllResourceImageSessionThnk())
+
     }, [])
 
     const getTranslateX = () => {
@@ -145,7 +148,7 @@ const ResourceImage = () => {
                         <FaAngleDoubleLeft />
                     </button>
               
-                    <div className="w-[98%]  mx-auto  absolute -bottom-20 h-24 bg-transparent flex items-center hidden ">
+                    <div className="w-[98%]  mx-auto  absolute -bottom-20 h-24 bg-transparent flex items-center  ">
                         <div 
                             onClick={(e) => {clickScroll(e.clientX)}}
                             ref = {scrollRef}
