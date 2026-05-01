@@ -49,8 +49,8 @@ const SidetoSide = ({list, sideToSide, dispatchSideToSide, index, menu}: SideToS
         <div 
             className={`${response ? 
                 `fixed w-full min-h-screen  top-0
-                    dark:bg-[#242424]! bg-white
-                    flex flex-col
+                    flex flex-col 
+                    ${dark ? 'bg-[#323232]' : 'bg-white'}
                     ${sideToSide.hasInteracted === null && 'hidden!'}
                     ${ (sideToSide.SideToSide as any)[index] ? `openSideToSide` : `closeSideToSide`}
                 ` 
@@ -94,7 +94,7 @@ const SidetoSide = ({list, sideToSide, dispatchSideToSide, index, menu}: SideToS
             <div className={`${response ? `flex flex-wrap flex-col h-screen` : `w-full group-hover/list:flex hidden sideToSideContainer`}`}>
               
                 {/* category */}
-                <div className={`${response ? `w-[50%]  h-[50%]  ` : `w-[33.3%] py-3  border-r flex flex-col dark:bg-[#474747] bg-[#efefef] category`}`}>
+                <div className={`${response ? `w-[50%]  h-[50%]  ` : `w-[33.3%] py-3  border-r flex flex-col dark:bg-[#474747]! bg-[#efefef]! category`}`}>
                     <div className=" bg-[silver] text-gray-950 h-10 flex justify-center items-center">category</div>
                     
                     {Array.isArray(categories) && categories.map((item) => {
@@ -108,7 +108,7 @@ const SidetoSide = ({list, sideToSide, dispatchSideToSide, index, menu}: SideToS
                 </div>
 
                 {/* series product */}
-                <div className={`${response ? `w-[50%]  h-[50%] border-t ` : `w-[33.3%] py-3 dark:bg-[#474747] bg-[#efefef]  border-r flex flex-col `}`}>
+                <div className={`${response ? `w-[50%]  h-[50%] border-t ` : `w-[33.3%] py-3 dark:bg-[#474747]! bg-[#efefef]!  border-r flex flex-col `}`}>
                     <div className=" bg-[silver] text-gray-950 h-10 flex justify-center items-center">series</div>
 
                     {Array.isArray(products) && products.map((item) => {
@@ -123,7 +123,7 @@ const SidetoSide = ({list, sideToSide, dispatchSideToSide, index, menu}: SideToS
 
 
                 {/* image */}
-                <div className={`${response ? `w-[50%]  h-full border-l ` : `w-[33.3%]  dark:bg-[#474747] bg-[#efefef]   `}`}>
+                <div className={`${response ? `w-[50%]  h-full border-l ` : `w-[33.3%]  dark:bg-[#474747]! bg-[#efefef]!   `}`}>
                     {Array.isArray(images) && images.map((item) => {
                         if(item.list === list.list && item.status == 10 && item.title == menu.title){
                             return(

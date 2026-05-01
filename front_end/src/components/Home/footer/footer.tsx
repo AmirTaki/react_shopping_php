@@ -1,7 +1,9 @@
+import BoardWhite from "./boardWhite"
+
 const Footer = () => {
     return(
         <div className="flex justify-center items-center h-50">
-            footer 
+            <BoardWhite />
         </div>
     )
 }

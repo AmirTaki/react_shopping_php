@@ -26,7 +26,7 @@ const Sidebar = () => {
                 style={{animation: `${sidebar ? `openSidebar 1.5s linear forwards` : `closeSidebar 1.5s linear forwards`}`}}
                 className={`${response ? `
                     ${sidebar === null ?  `hidden!` : ''}
-                    fixed w-full min-h-screen dark:bg-[#242424]! bg-white top-0 left-0 z-10` 
+                    fixed w-full min-h-screen dark:bg-[#242424]! bg-white! top-0 left-0 z-10` 
                     : 
                     ` `}
                 `}

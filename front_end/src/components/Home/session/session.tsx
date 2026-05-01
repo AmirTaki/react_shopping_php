@@ -40,9 +40,7 @@ const Session = () => {
             <Cube />
 
             {/* scroll slider ->  */}
-            <WibkitScroll />
-        
-            
+            <WibkitScroll />            
         </div>
     )
 }
