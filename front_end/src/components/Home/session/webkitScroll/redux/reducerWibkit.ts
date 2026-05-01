@@ -1,6 +1,12 @@
+import type { TWebkitObject, TWebkit } from "./webkitSlice"
+
 const RedcuerWibkit = (state: typeof initialWibkit, action:ActionType ): typeof initialWibkit => {
     switch(action.type){
     
+
+        case "RequestAPI":
+            return {...state, items: action.payload.items}
+
         case "handlerScroll": 
             return {...state, scroll: action.payload.offset}
 
@@ -29,8 +35,11 @@ const RedcuerWibkit = (state: typeof initialWibkit, action:ActionType ): typeof 
             return {...state, widthContainer: action.payload.offset}
 
         case "sizeHandler": 
-            const size = (state.items.length * 300) + (state.items.length * 20)
-            return {...state, sizeItems: size}
+            if(Array.isArray(state.items)){
+                const size = (state.items.length * 300) + (state.items.length * 20)
+                return {...state, sizeItems: size}
+            }
+            return state
 
         case "mouseDown" : 
             var {container} = action.payload
@@ -88,11 +97,12 @@ type ActionType =
  {type: 'mouseDown', payload: {client: number, container: HTMLDivElement | null}} |
  {type: 'mouseMove', payload: {client: number, container: HTMLDivElement | null} } |
  {type: 'mouseUp', payload: {container: HTMLDivElement | null}} |
- {type: 'handlerScroll', payload: {offset: number}}
+ {type: 'handlerScroll', payload: {offset: number}} |
+ {type: 'RequestAPI', payload: {items: TWebkit }} 
 
 
-interface IPayloar {
-    items: Array<string>,
+interface IWebkitReducer {
+    items: TWebkit,
     scroll: number,
     sizeItems: number, 
     widthContainer: number,
@@ -103,8 +113,8 @@ interface IPayloar {
 
 }
 
-export const initialWibkit: IPayloar = {
-    items : ['blue', 'red', 'yellow', 'pink', 'brown', 'green', 'gray', 'orange', 'silver','blue', 'red', 'yellow', 'pink', 'brown', 'green', 'gray', 'orange', 'silver',],
+export const initialWibkit: IWebkitReducer = {
+    items : [],
     scroll: 0,
     sizeItems: 0,
     widthContainer: 0,

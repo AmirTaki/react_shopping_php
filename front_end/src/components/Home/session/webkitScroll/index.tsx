@@ -4,6 +4,7 @@ import type { AppDispatch, RooState } from "../../../../store";
 import { FaAngleDoubleRight } from "react-icons/fa";
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import RedcuerWibkit, { initialWibkit } from "./redux/reducerWibkit";
+import { baseURL, imgURL } from "../../../../baseURL";
 
 const WibkitScroll = () => {
     const disptach = useDispatch<AppDispatch>()
@@ -12,6 +13,30 @@ const WibkitScroll = () => {
     const containerRef = useRef<HTMLDivElement>(null)
 
     const [state, dispatchReducer] =  useReducer (RedcuerWibkit, initialWibkit)
+
+    const getRequestApi = async () => {
+        try{
+            const response = await fetch (baseURL + "tables/session/webkitScroll/webkit.php", {
+                method: 'GET', 
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            const data = await response.json();
+            dispatchReducer({type: 'RequestAPI', payload: {items: data}})
+        }
+        catch(err){
+            console.error('message: ', err)
+        }
+    }
+
+    useEffect(() => {
+        getRequestApi()
+        const timer =  setInterval(() => {
+            dispatchReducer({type: 'sizeHandler'})
+        }, 40)
+        return () => clearInterval(timer)
+    }, [])
 
     useEffect(() => {
         const resize = () => {
@@ -56,14 +81,17 @@ const WibkitScroll = () => {
                 onTouchEnd={() => {dispatchReducer({type: 'mouseUp', payload: {container: containerRef.current}})}}
             >
                 {/* item */}
-                {state.items.map((item, index) => {
-                    return(
-                        <div 
-                            key = {index}
-                            className="w-[310px] mx-[10px] h-[200%] text-4xl flex justify-center items-center rounded"
-                            style={{border: `1px solid ${item}`}}
-                        >{index}</div>
-                    )
+                {Array.isArray(state.items) && state.items.map((item, index) => {
+                    if(item.status == 10){
+                        return(
+                            <div 
+                                key = {index}
+                                className="w-[310px] mx-[10px] h-[200%] text-4xl flex justify-center items-center rounded select-none"
+                            >
+                                <img src={imgURL + item.image} className="w-full h-full " draggable = {false} alt="" />
+                            </div>
+                        )
+                    }
                 })}
             </div>
 
