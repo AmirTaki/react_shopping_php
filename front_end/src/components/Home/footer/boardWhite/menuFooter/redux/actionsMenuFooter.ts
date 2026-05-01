@@ -105,3 +105,67 @@ export const changeStatusMenuFooterThunk = createAsyncThunk<TMenuFooter, {id: nu
         }
     }
 )
+
+
+export const readingMenuFooterThunk = createAsyncThunk <TMenuFooterObject, {id: number},{rejectValue: string}>(
+    'reading_menu_footer_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/footer/menuFooter/menu.php/${payload.id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                } ,
+                // credentials: 'include',
+            })
+            if(!response.ok){
+                throw new Error('message');
+            }
+
+            const data =  await response.json()
+            return data
+   
+        }
+        catch(err: any){
+            return rejectWithValue (`warning ${err.message}`)
+        }
+    }
+)
+
+
+export const editMenuFooterThunk = createAsyncThunk<TMenuFooter, {id: number, title: string}, {rejectValue: string}>(
+    'edit_menu_footer_toolkit',
+    async(payload, rejectValue) => {
+        try{
+            const response = await fetch (baseURL + `tables/footer/menuFooter/edit.php/${payload.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({title : payload.title})
+            });
+
+            if(!response.ok){
+                if(response.status === 400){
+                    rejectValue.dispatch(onWarningMenuBoard({
+                        title : "title not is empty!!"
+                    }))
+                }
+                else if(response.status === 409){
+                    rejectValue.dispatch(onWarningMenuBoard({
+                        title : "change name title !!"
+                    }))
+                }
+                else {
+                    throw new Error('warning')
+                }
+            }
+
+            const data = await response.json()
+            return data
+        }
+        catch(err: any){
+            return `warning ${err.message}`
+        }
+    }
+)

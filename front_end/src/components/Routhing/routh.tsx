@@ -73,6 +73,7 @@ import EditSessionWebkitScrollPA from "../Home/session/webkitScroll/panelAdmin/e
 import ViewMenuFooterPA from "../Home/footer/boardWhite/menuFooter/panelAdmin/view"
 import MenusFooterPanelAdmin from "../Home/footer/boardWhite/menuFooter/panelAdmin"
 import CreateMenuFooterPA from "../Home/footer/boardWhite/menuFooter/panelAdmin/create"
+import EditMenuFooterPA from "../Home/footer/boardWhite/menuFooter/panelAdmin/edit"
 
 const Routh = () => {
     return (
@@ -222,7 +223,7 @@ const Routh = () => {
                         <Route path="footerMenu" element = {<ViewMenuFooterPA />}>
                             <Route path = "" element = {<MenusFooterPanelAdmin />}/>
                             <Route path = "create" element = {<CreateMenuFooterPA />}/>
-                            {/* <Route path = "edit/:id" element = {<EditSessionWebkitScrollPA />}/> */}
+                            <Route path = "edit/:id" element = {<EditMenuFooterPA />}/>
                         </Route>
                       
 
