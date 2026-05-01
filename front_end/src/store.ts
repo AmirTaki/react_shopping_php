@@ -21,6 +21,7 @@ import cardSlice from "./components/Home/session/cardSlider/redux/cardSlice";
 import circleSlicer from "./components/Home/session/circleSlider/redux/circleSlice";
 import imageSliderLoopSlice from "./components/Home/session/imageSlider/redux/imageSliderSlice";
 import cubeSlicer from "./components/Home/session/cube/redux/cubeSlice";
+import webkitScrollSlice from "./components/Home/session/webkitScroll/redux/webkitSlice";
 
 const reducers = combineReducers({
 
@@ -80,7 +81,9 @@ const reducers = combineReducers({
     imageSlider: imageSliderLoopSlice.reducer,       // image slider loop
     // cube swiper loop
     cube: cubeSlicer.reducer,                   // cube slider loop in panel admin
-
+    // webkit scroll 
+    webkit: webkitScrollSlice.reducer,          // webkit scroll slider in panel admin
+    
  })
 
 const store =  configureStore({

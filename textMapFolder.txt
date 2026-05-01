@@ -34,6 +34,7 @@
                 7. circleSlider -> curd & reading
                 8. imageSliderLoop -> curd & reading
                 9. cube -> curd
+                10. webkitScroll -> curd
 
 // front end 
     component -> 
@@ -144,6 +145,12 @@
                             b. redux
                             c. index.tsx
 
+                        10. webkitScroll
+                            a. panelAdmin
+                            b. redux
+                            c. index.tsx
+
+                            
                     d. index
 
                 4- PanelAdmin 
