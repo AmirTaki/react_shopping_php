@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { createMenuFooterThunk, viewMenuFooterThunk } from "./actionsMenuFooter"
+import { changeStatusMenuFooterThunk, createMenuFooterThunk, deleteMenuFooterThunk, viewMenuFooterThunk } from "./actionsMenuFooter"
 
 export type TMenuFooter = Array<{id: number, title: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TMenuFooterObject  = {id: number, title: string, status: number, created_at: string, updated_at: string }
@@ -76,6 +76,36 @@ const menuFooterSlice =  createSlice({
         builder.addCase(createMenuFooterThunk.fulfilled, (state, action) => {
             state.warningMessage = ''
             state.addItems = action.payload == true ? true : false
+        })
+
+        // delete menu footer
+        builder.addCase(deleteMenuFooterThunk.pending, (state) => {
+            state.loading = true,
+            state.warningMessage = ''
+        })
+        builder.addCase(deleteMenuFooterThunk.rejected, (state, action) => {
+            state.loading = false,
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(deleteMenuFooterThunk.fulfilled, (state, action) => {
+            state.loading = false,
+            state.warningMessage = ''
+            state.menus = action.payload
+        })
+        
+        // change status menu footer
+        builder.addCase(changeStatusMenuFooterThunk.pending, (state) => {
+            state.loading = true,
+            state.warningMessage = ''
+        })
+        builder.addCase(changeStatusMenuFooterThunk.rejected, (state, action) => {
+            state.loading = false,
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(changeStatusMenuFooterThunk.fulfilled, (state, action) => {
+            state.loading = false,
+            state.warningMessage = ''
+            state.menus = action.payload
         })
     }
 })

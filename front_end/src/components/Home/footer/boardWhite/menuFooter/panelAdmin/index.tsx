@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { AppDispatch, RooState } from "../../../../../../store";
 import { useEffect } from "react";
-import { viewMenuFooterThunk } from "../redux/actionsMenuFooter";
+import { viewMenuFooterThunk, deleteMenuFooterThunk, changeStatusMenuFooterThunk } from "../redux/actionsMenuFooter";
 
 const MenusFooterPanelAdmin = () => {
     const dispatch =  useDispatch<AppDispatch>()
@@ -48,7 +48,7 @@ const MenusFooterPanelAdmin = () => {
                                         
                                         <div 
                                             onClick={() => {
-                                                // dispatch(changeStatusMenuHeaders({id: item.id}) );
+                                                dispatch(changeStatusMenuFooterThunk({id: item.id}) );
                                             }}
                                             className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 "
                                         >
@@ -63,7 +63,7 @@ const MenusFooterPanelAdmin = () => {
                                         
                                         <div 
                                             onClick={() => {
-                                                // window.confirm('Do you want it to be deleted ? ')  && dispatch(deleteItemMenusHeaders({id: item.id}))
+                                                window.confirm('Do you want it to be deleted ? ')  && dispatch(deleteMenuFooterThunk({id: item.id}))
                                             }}
                                             className="text-rose-500 cursor-pointer duration-200 hover:text-red-700!"
                                         >

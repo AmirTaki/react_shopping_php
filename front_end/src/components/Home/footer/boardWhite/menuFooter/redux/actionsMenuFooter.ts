@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { baseURL } from "../../../../../../baseURL";
 import { onWarningMenuBoard, type TMenuFooter, type TMenuFooterObject } from "./menuFooterSlice";
 
-
 export const viewMenuFooterThunk  = createAsyncThunk<TMenuFooter, void, {rejectValue: string}>(
     'view_menu_footer_toolkit', 
     async(_, {rejectWithValue}) => {
@@ -58,3 +57,51 @@ export const createMenuFooterThunk = createAsyncThunk<TMenuFooter, {title: strin
     }
 )
 
+export const deleteMenuFooterThunk = createAsyncThunk<TMenuFooter, {id: number}, {rejectValue: string}>(
+    'delete_menu_footer_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/footer/menuFooter/delete.php/${payload.id}/delete`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            if(!response.ok){
+                throw new Error;
+            }
+
+            const data = await response.json()
+            return Array.isArray(data) ? data : []
+        }
+        catch(err: any){
+            return rejectWithValue (`wanring ${err.message}`)
+        }
+    }
+)
+
+
+export const changeStatusMenuFooterThunk = createAsyncThunk<TMenuFooter, {id: number}, {rejectValue: string}>(
+    "chagne_status_menu_footer_toolkit",
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/footer/menuFooter/status.php/${payload.id}`, {
+                method: 'GET', 
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },  
+            })
+
+            if(!response.ok){
+                throw new Error('message : warning:')
+            }
+
+            const data = await response.json();
+            return Array.isArray(data) ? data : []
+        }
+        catch(err: any){
+            return rejectWithValue (`warning: ${err.message}`)
+        }
+    }
+)
