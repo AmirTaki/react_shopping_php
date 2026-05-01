@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { viewMenuFooterThunk } from "./actionsMenuFooter"
+import { createMenuFooterThunk, viewMenuFooterThunk } from "./actionsMenuFooter"
 
 export type TMenuFooter = Array<{id: number, title: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TMenuFooterObject  = {id: number, title: string, status: number, created_at: string, updated_at: string }
@@ -62,9 +62,24 @@ const menuFooterSlice =  createSlice({
             state.warningMessage = ''
             state.menus = action.payload
         })
+
+        
+        // create menuFooter
+        builder.addCase(createMenuFooterThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.addItems = false
+        })
+        builder.addCase(createMenuFooterThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.addItems = false
+        })
+        builder.addCase(createMenuFooterThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            state.addItems = action.payload == true ? true : false
+        })
     }
 })
 
 export default menuFooterSlice
 
-export const {} = menuFooterSlice.actions
+export const {onLoadingMenuBoard, onSetItemsMenuBoard, onTitleMenuBoard, onWarningMenuBoard} = menuFooterSlice.actions
