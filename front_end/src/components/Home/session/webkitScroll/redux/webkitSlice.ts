@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { viewWebkitScrollSessionThunk } from "./actionsWebkit"
+import { viewWebkitScrollSessionThunk, createWebkitScrollSessionThunk } from "./actionsWebkit"
 
 export type TWebkit = Array<{id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}> | string | boolean
 export type TWebkitObject = {id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}
@@ -89,6 +89,23 @@ const webkitScrollSlice = createSlice({
         builder.addCase(viewWebkitScrollSessionThunk.fulfilled, (state, action) => {
             state.warningMessage = ''
             state.items = action.payload
+        })
+
+        // create item resource image
+        builder.addCase(createWebkitScrollSessionThunk.pending, (state) => {
+            state.addItems = false
+            state.callback = false
+            state.warningMessage = ''
+        })
+        builder.addCase(createWebkitScrollSessionThunk.rejected, (state, action) => {
+            state.addItems = false
+            state.callback = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(createWebkitScrollSessionThunk.fulfilled, (state, action) => {
+            state.addItems = action.payload === true ? true : false
+            state.callback = false
+            state.warningMessage = ''
         })
     }
 })

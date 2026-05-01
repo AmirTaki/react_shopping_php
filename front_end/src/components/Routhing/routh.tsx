@@ -68,6 +68,7 @@ import CreateCubeSliderPA from "../Home/session/cube/panelAdmin/create"
 import EditSessionCubeSliderPA from "../Home/session/cube/panelAdmin/edit"
 import ViewWibketScrollSessionPA from "../Home/session/webkitScroll/panelAdmin/view"
 import WebkitScrollSessionPA from "../Home/session/webkitScroll/panelAdmin"
+import CreateSessionWebkitScrollPA from "../Home/session/webkitScroll/panelAdmin/create"
 
 const Routh = () => {
     return (
@@ -209,7 +210,7 @@ const Routh = () => {
                         {/* session -> webkit scroll */}
                         <Route path="sessionWebkitScroll" element = {<ViewWibketScrollSessionPA />}>
                             <Route path = "" element = {<WebkitScrollSessionPA />}/>
-                            {/* <Route path = "create" element = {<CreateCubeSliderPA />}/> */}
+                            <Route path = "create" element = {<CreateSessionWebkitScrollPA />}/>
                             {/* <Route path = "edit/:id" element = {<EditSessionCubeSliderPA />}/> */}
                         </Route>
 

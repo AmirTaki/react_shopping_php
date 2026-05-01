@@ -262,7 +262,7 @@ const resourceImageSlice = createSlice({
             state.warningMessage = ''
         })
 
-              // delete item reosurce image
+        // delete item reosurce image
         builder.addCase(deleteResourceImageSessionThunk.pending, (state) => {
             state.loading = true
             state.warningMessage = ''
