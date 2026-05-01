@@ -3,10 +3,12 @@ import { type AppDispatch, type RooState } from "../../../../store";
 import { useEffect, useReducer, useRef } from "react";
 import { initialBaord, reducerBoard } from "./redux/reducerBoard";
 import { FaCaretDown } from "react-icons/fa";
+import { viewMenuFooterThunk } from "./menuFooter/redux/actionsMenuFooter";
 
 const BoardWhite = () => {
     const {response} =  useSelector((state: RooState) => state.response)
-    const dispath = useDispatch<AppDispatch>()
+    const {menus} = useSelector((state: RooState) => state.menuFooter)
+    const dispatch = useDispatch<AppDispatch>()
 
     
     const [state, dispatchReducer] =  useReducer(reducerBoard, initialBaord)
@@ -14,7 +16,7 @@ const BoardWhite = () => {
    
     useEffect(() => {
 
-        // dispatch(viewMenusColumnSessionThunk())
+        dispatch(viewMenuFooterThunk())
         // dispatch(viewItemColumnSectionThunk())
         
         const handlerResize = () => {
@@ -50,7 +52,7 @@ const BoardWhite = () => {
             `w-[90%] h-[600px]  duration-500  justify-around mt-110  gap-10 bg-blue-500 dark:border-[gray]! mt-13`}
             overflow-hidden  mx-auto  flex 
             `}>
-            {/* {Array.isArray(menus) && menus?.map((menu, index) => {
+            {Array.isArray(menus) && menus?.map((menu, index) => {
                 if(menu.status == 10){
                 return(
                     <div ref = {(x: HTMLDivElement) => {menusRef.current[index] = x}} key = {menu.id} className={`flex flex-col ${response ? '' : 'gap-3'}`}>
@@ -68,7 +70,7 @@ const BoardWhite = () => {
                             </div>
                         </div>
 
-                        <div 
+                        {/* <div 
                             style={{height : `${response ? `${state.columnsRows[index]  ? `${findHightDynamic(index)}px` : '0'}` : ''}`}}
                             className={`${response ? `overflow-hidden duration-500! `  : 'px-2 '}  flex flex-col `}
                             >
@@ -86,12 +88,12 @@ const BoardWhite = () => {
                                     )
                                 }
                             })}
-                        </div>
+                        </div> */}
 
                         
                     </div>
                 )
-            }})} */}
+            }})}
         </div>
     )
 }

@@ -1,3 +1,5 @@
+road map folders project
+
 // back end 
     folders -> 
         1- auth    
@@ -36,6 +38,10 @@
                 9. cube -> curd
                 10. webkitScroll -> curd
 
+            4. footer
+                1. menuFooter -> curd
+                2. itemFooter -> curd
+ 
 // front end 
     component -> 
                 1- Auth 
@@ -60,7 +66,16 @@
 
                 3- Home
                     a. Footer
-    
+
+                        1. boardWhite
+                            1.menuFooter
+                                a. panelAdmin
+                            
+                            2.itemFooter
+                                a. panelAdmin
+
+                        a.footer.tsx
+                        
                     b. Header
                         a. header.tsx
                         b. sidebar.tsx
