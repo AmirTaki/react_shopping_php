@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { viewWebkitScrollSessionThunk, createWebkitScrollSessionThunk, deleteWebkitScrollSessionThunk, changeStatusWebkitScrollSessionThunk } from "./actionsWebkit"
+import { readingItemWebkitScrollSessionThunk, editItemWebkitScrollSessionThunk, viewWebkitScrollSessionThunk, createWebkitScrollSessionThunk, deleteWebkitScrollSessionThunk, changeStatusWebkitScrollSessionThunk } from "./actionsWebkit"
+import { imgURL } from "../../../../../baseURL"
 
 export type TWebkit = Array<{id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}> | string | boolean
 export type TWebkitObject = {id: number, image: string, title: string, body: string, status: number, created_at: string, updated_at: string}
@@ -136,6 +137,40 @@ const webkitScrollSlice = createSlice({
             state.loading = false
             state.warningMessage = ''
             state.items = action.payload
+        })
+
+        
+        // reading item resourc image
+        builder.addCase(readingItemWebkitScrollSessionThunk.pending, (state) => {
+            state.urlImage = ''
+            state.warningMessage = ''
+
+        })
+        builder.addCase(readingItemWebkitScrollSessionThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(readingItemWebkitScrollSessionThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            const answer = action.payload as TWebkitObject
+            state.body = {caption: answer.body, warning: ''}
+            state.title = {name: answer.title, warning: ''}
+            state.urlImage = imgURL + answer.image
+        })
+
+        // edit item resource image
+        builder.addCase(editItemWebkitScrollSessionThunk.pending, (state) => {
+            state.addItems = false
+            state.callback = false
+            state.warningMessage = ''
+        })
+        builder.addCase(editItemWebkitScrollSessionThunk.rejected, (state, action) => {
+            state.callback = false
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(editItemWebkitScrollSessionThunk.fulfilled, (state, action) => {
+            state.addItems = action.payload === true ? true : false
+            state.callback = false
+            state.warningMessage = ''
         })
     }
 })

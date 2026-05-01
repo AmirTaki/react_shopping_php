@@ -66,11 +66,11 @@ const WibkitScroll = () => {
 
 
     return(
-        <div className="text-rose-400 w-[95%]  mx-auto h-[300px] border-0 flex justify-center items-center relative  ">
+        <div className="text-rose-400 w-[95%]  mx-auto h-[330px] border-0 flex justify-center items-center relative  ">
             {/* container */}
             <div 
                 ref = {containerRef}
-                className="w-full h-[70%] flex flex-col flex-wrap overflow-x-scroll justify-center items-center select-none  cursor-grab active:cursor-grabbing wibkit scrollbar-hide"
+                className="w-full h-[70%] flex flex-col flex-wrap overflow-x-scroll overflow-y-hidden justify-center items-center select-none  cursor-grab active:cursor-grabbing wibkit"
                 onMouseDown={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {dispatchReducer({type :'mouseDown', payload : {client: e.clientX, container: containerRef?.current}})}}   
                 onMouseMove={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {dispatchReducer({type: 'mouseMove', payload: {client: e.clientX, container: containerRef?.current}})}}
                 onMouseUp={() => {dispatchReducer({type: 'mouseUp', payload: {container: containerRef.current}})}}
@@ -86,7 +86,7 @@ const WibkitScroll = () => {
                         return(
                             <div 
                                 key = {index}
-                                className="w-[310px] mx-[10px] h-[200%] text-4xl flex justify-center items-center rounded select-none"
+                                className="w-[420px] mx-[10px] h-[200%] text-4xl flex justify-center items-center rounded select-none"
                             >
                                 <img src={imgURL + item.image} className="w-full h-full " draggable = {false} alt="" />
                             </div>
@@ -99,7 +99,7 @@ const WibkitScroll = () => {
             <button 
 
                 onClick={() => {dispatchReducer({type : "right", payload: {container: containerRef?.current}})}}
-                className={`absolute right-0  ${state.scroll >= state.sizeItems - (state.widthContainer + 10)  ? 'hidden' : 'flex'}`}
+                className={`absolute right-0  ${state.scroll >= state.sizeItems - (state.widthContainer  + 10)  ? 'hidden' : 'flex'}`}
             >
                 <FaAngleDoubleRight />
             </button>

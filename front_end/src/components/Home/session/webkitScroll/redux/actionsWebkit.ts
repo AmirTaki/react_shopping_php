@@ -115,3 +115,72 @@ export const changeStatusWebkitScrollSessionThunk = createAsyncThunk<TWebkit, {i
         }
     }
 )
+
+
+export const readingItemWebkitScrollSessionThunk = createAsyncThunk<TWebkitObject, {id: number},{rejectValue: string}> (
+    'reading_item_webkit_scroll_Session_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/webkitScroll/webkit.php/${payload.id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                } ,
+                // credentials: 'include',
+            })
+            if(!response.ok){
+                throw new Error('message');
+            }
+
+            const data =  await response.json()
+            return data
+   
+        }
+        catch(err: any){
+            return rejectWithValue (`warning: ${err.message}`)
+        }
+    }
+)
+
+
+export const editItemWebkitScrollSessionThunk = createAsyncThunk<TWebkit,  {formData: FormData, id: number}, {rejectValue: string}>(
+    'edit_item_webkit_scroll_toolkit',
+    async(payload, reject) => {
+        try{
+            const response = await fetch (baseURL + `tables/session/webkitScroll/edit.php/${payload.id}`, {
+                method: 'POST', 
+                credentials: 'include',
+                body: payload.formData
+            })
+            
+            if (!response.ok){
+               if(response.status === 422){
+                    reject.dispatch(onWarningWebkit({
+                        title: 'title is requierd!',
+                        image: '',
+                        body: 'body is requierd!',
+
+                    }))
+                }
+                else if (response.status === 405){
+                    reject.dispatch(onCallBackWebkit())
+                }
+
+                else if (response.status === 404){
+                      reject.dispatch(onWarningWebkit({
+                        image: 'not upload image ?? repeat again !!',                        
+                    }))
+                }
+                
+                else {
+                    throw new Error ('warning ');
+                }
+            }
+            const data = await response.json()
+            return data
+        }
+        catch(err: any){
+            return (`warning: ${err.message}`)
+        }
+    }
+)

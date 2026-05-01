@@ -36,7 +36,7 @@ const RedcuerWibkit = (state: typeof initialWibkit, action:ActionType ): typeof 
 
         case "sizeHandler": 
             if(Array.isArray(state.items)){
-                const size = (state.items.length * 300) + (state.items.length * 20)
+                const size = (state.items.length * 420) + (state.items.length * 20)
                 return {...state, sizeItems: size}
             }
             return state
