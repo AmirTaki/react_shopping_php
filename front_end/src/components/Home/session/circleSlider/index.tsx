@@ -33,8 +33,8 @@ const CircleSlider = () => {
     }
     // circle swiper 
     return(
-        <div className="text-rose-400 my-5 min-w-full ">
-            <div className={`w-full h-[700px]  flex justify-center items-center relative overflow-hidden  ${isDrag && 'active:cursor-grabbing'}`}
+        <div className="text-rose-400  min-w-full  ">
+            <div className={`w-full h-[650px]  flex justify-center items-center relative overflow-hidden  ${isDrag && 'active:cursor-grabbing'}`}
                 onMouseMove={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {dispatch(circleMove({client: e.clientX}))}}
                 onMouseUp={() => {dispatch(circleUp())}}
                 onMouseLeave={() => {if(isDrag) {dispatch(circleUp())}}}

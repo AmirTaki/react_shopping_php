@@ -91,7 +91,7 @@ const ResourceImage = () => {
 
 
     return( 
-        <div className="text-sky-400 my-6  overflow-hidden w-[100%]">
+        <div className="text-sky-400 h-[400px]  overflow-hidden w-[100%] mt-6">
                 <div className={`w-[95%] mx-auto h-80  flex justify-center items-center  relative ${isScroll && 'active:cursor-pointer'}`}
                 
                     onMouseMove={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {disptach(scrollMove({client: e.clientX}))}}
@@ -148,7 +148,7 @@ const ResourceImage = () => {
                         <FaAngleDoubleLeft />
                     </button>
               
-                    <div className="w-[98%]  mx-auto  absolute -bottom-20 h-24 bg-transparent flex items-center  ">
+                    <div className="w-[98%]  mx-auto  absolute -bottom-20 h-24 bg-transparent flex items-center opacity-0  ">
                         <div 
                             onClick={(e) => {clickScroll(e.clientX)}}
                             ref = {scrollRef}

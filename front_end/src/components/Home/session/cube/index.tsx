@@ -25,7 +25,7 @@ const Cube = () => {
   
     return (
         <div 
-            className = {`w-full h-[500px]  text-rose-500 bg-transparent border-0 flex justify-center items-center my-10 `}
+            className = {`w-[95%] mx-auto h-[500px]  text-rose-500  border-0 flex justify-center items-center  `}
         
         >
             

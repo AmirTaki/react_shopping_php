@@ -29,8 +29,6 @@
 }
 
 
-
-
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -141,4 +139,9 @@ body::-webkit-scrollbar-thumb:hover {
     background-color: hsl(250, 93%, 30%);
     transition: all 2s;
     cursor: pointer;
+}
+
+
+.wibkit::-webkit-scrollbar {
+  opacity: 0;
 }

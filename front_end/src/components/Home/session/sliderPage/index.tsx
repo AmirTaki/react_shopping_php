@@ -126,7 +126,7 @@ const GridSwiper = () => {
     }
 
     return(
-        <div ref = {widthRef} className="text-sky-400 w-[100%] h-[300px] mx-auto my-15 relative  flex justify-center items-center  ">
+        <div ref = {widthRef} className="text-sky-400 w-[100%] h-[300px]  mx-auto my-15 mb-20 relative  flex justify-center items-center  ">
             <div 
                 ref = {containerRef}
                 className="w-[90%] h-[95%]  flex flex-col flex-wrap overflow-x-hidden select-none touch-pan-x cursor-grab active:cursor-grabbing"

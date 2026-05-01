@@ -99,11 +99,11 @@ const ImageSliderLoop = () => {
         }
     }
     return(
-        <div className="text-sky-400 w-full h-[700px]  flex items-center justify-center relative">
+        <div className="text-sky-400 w-full h-[600px]  bg-amber-300 flex items-center justify-center relative">
             {/* container */}
             <div 
                 ref = {containerRef}
-                className="w-full h-[90%] flex flex-col justify-center items-center flex-wrap overflow-x-hidden relative select-none cursor-grab active:cursor-grabbing"
+                className="w-full h-full flex flex-col justify-center items-center flex-wrap overflow-x-hidden relative select-none cursor-grab active:cursor-grabbing"
                 onMouseDown={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {scrollDown(e.clientX)}}
                 onMouseMove={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {scrollMove(e.clientX)}}
                 onMouseUp={() => {scrollUp()}}

@@ -41,11 +41,11 @@ const WibkitScroll = () => {
 
 
     return(
-        <div className="text-rose-400 w-[95%] mx-auto h-[500px] border-0 flex justify-center items-center relative ">
+        <div className="text-rose-400 w-[95%]  mx-auto h-[300px] border-0 flex justify-center items-center relative  ">
             {/* container */}
             <div 
                 ref = {containerRef}
-                className="w-full h-[70%] flex flex-col flex-wrap overflow-x-scroll justify-center items-center select-none scrollImage cursor-grab active:cursor-grabbing"
+                className="w-full h-[70%] flex flex-col flex-wrap overflow-x-scroll justify-center items-center select-none  cursor-grab active:cursor-grabbing wibkit scrollbar-hide"
                 onMouseDown={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {dispatchReducer({type :'mouseDown', payload : {client: e.clientX, container: containerRef?.current}})}}   
                 onMouseMove={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {dispatchReducer({type: 'mouseMove', payload: {client: e.clientX, container: containerRef?.current}})}}
                 onMouseUp={() => {dispatchReducer({type: 'mouseUp', payload: {container: containerRef.current}})}}
@@ -60,7 +60,7 @@ const WibkitScroll = () => {
                     return(
                         <div 
                             key = {index}
-                            className="w-[300px] mx-[10px] h-[70%] text-4xl flex justify-center items-center rounded-2xl"
+                            className="w-[310px] mx-[10px] h-[200%] text-4xl flex justify-center items-center rounded"
                             style={{border: `1px solid ${item}`}}
                         >{index}</div>
                     )

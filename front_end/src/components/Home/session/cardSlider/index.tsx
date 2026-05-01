@@ -51,10 +51,10 @@ const CardSlider = () => {
     }, [slide, ])
 
     return(
-        <div className="text-sky-400 relative flex flex-col items-center">
+        <div className="text-sky-400 relative flex flex-col items-center ">
 
             <div 
-                className={`w-full h-[700px]  flex justify-center items-center ${isDrag && 'active:cursor-grabbing '}`}
+                className={`w-full h-[640px]  flex justify-center items-center ${isDrag && 'active:cursor-grabbing '}`}
                 onMouseMove={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {dispatch(handlerMoveSlide({client: e.clientX}))}}
                 onMouseUp={() => {dispatch(handlerUpSlide())}}
                 onMouseLeave={() => {if(isDrag){dispatch(handlerUpSlide())}}}
@@ -108,7 +108,7 @@ const CardSlider = () => {
                 </button>
             </div>
             {/* button circle */}
-            <div className="flex gap-4 -mt-10">
+            <div className="flex gap-4  absolute bottom-6">
                 {Array.isArray(sliders) && sliders.map((_, index) => {
                     return(
                         <div 
