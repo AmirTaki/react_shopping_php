@@ -2,14 +2,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { AppDispatch, RooState } from "../../../../../../store";
 import { useEffect } from "react";
+import { viewMenuFooterThunk } from "../redux/actionsMenuFooter";
 
 const MenusFooterPanelAdmin = () => {
     const dispatch =  useDispatch<AppDispatch>()
     const {menus, loading} = useSelector((state: RooState) => (state.menuFooter))
     useEffect(() => {
-        // dispatch(viewMenusHeaders())
+        dispatch(viewMenuFooterThunk())
     }, [loading])
-
+    console.log(menus)
     return(
         <div className={`flex w-full flex-col gap-5`}>
             

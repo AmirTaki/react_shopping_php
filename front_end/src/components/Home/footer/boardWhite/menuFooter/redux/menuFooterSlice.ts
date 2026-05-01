@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { viewMenuFooterThunk } from "./actionsMenuFooter"
 
 export type TMenuFooter = Array<{id: number, title: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TMenuFooterObject  = {id: number, title: string, status: number, created_at: string, updated_at: string }
@@ -49,7 +50,18 @@ const menuFooterSlice =  createSlice({
         }
     },
     extraReducers: (builder) => {
-
+   
+        //view menu footer
+        builder.addCase(viewMenuFooterThunk.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(viewMenuFooterThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(viewMenuFooterThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            state.menus = action.payload
+        })
     }
 })
 
