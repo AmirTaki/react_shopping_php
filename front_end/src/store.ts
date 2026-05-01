@@ -22,6 +22,7 @@ import circleSlicer from "./components/Home/session/circleSlider/redux/circleSli
 import imageSliderLoopSlice from "./components/Home/session/imageSlider/redux/imageSliderSlice";
 import cubeSlicer from "./components/Home/session/cube/redux/cubeSlice";
 import webkitScrollSlice from "./components/Home/session/webkitScroll/redux/webkitSlice";
+import menuFooterSlice from "./components/Home/footer/boardWhite/menuFooter/redux/menuFooterSlice";
 
 const reducers = combineReducers({
 
@@ -83,6 +84,10 @@ const reducers = combineReducers({
     cube: cubeSlicer.reducer,                   // cube slider loop in panel admin
     // webkit scroll 
     webkit: webkitScrollSlice.reducer,          // webkit scroll slider in panel admin
+
+    // -------------------------------- footer ----------------------------------------------------
+    // menu footer 
+    menuFooter: menuFooterSlice.reducer,        /// menu (title) footer in panel admin
     
  })
 

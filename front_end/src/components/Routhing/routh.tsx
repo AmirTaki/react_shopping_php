@@ -71,6 +71,7 @@ import WebkitScrollSessionPA from "../Home/session/webkitScroll/panelAdmin"
 import CreateSessionWebkitScrollPA from "../Home/session/webkitScroll/panelAdmin/create"
 import EditSessionWebkitScrollPA from "../Home/session/webkitScroll/panelAdmin/edit"
 import ViewMenuFooterPA from "../Home/footer/boardWhite/menuFooter/panelAdmin/view"
+import MenusFooterPanelAdmin from "../Home/footer/boardWhite/menuFooter/panelAdmin"
 
 const Routh = () => {
     return (
@@ -218,7 +219,7 @@ const Routh = () => {
                         
                         {/* footer -> menu (title) */}
                         <Route path="footerMenu" element = {<ViewMenuFooterPA />}>
-                            {/* <Route path = "" element = {<WebkitScrollSessionPA />}/> */}
+                            <Route path = "" element = {<MenusFooterPanelAdmin />}/>
                             {/* <Route path = "create" element = {<CreateSessionWebkitScrollPA />}/> */}
                             {/* <Route path = "edit/:id" element = {<EditSessionWebkitScrollPA />}/> */}
                         </Route>
