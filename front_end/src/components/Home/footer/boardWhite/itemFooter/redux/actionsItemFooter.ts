@@ -68,3 +68,49 @@ export const createItemFooterThunk = createAsyncThunk<TItemFooter, {title: strin
         }
     }
 )
+
+export const deleteItemFooterThunk = createAsyncThunk<TItemFooter, {id: number},{rejectValue: string}>(
+    'delete_item_toolkit',
+    async (payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/footer/itemFooter/delete.php/${payload.id}/delete`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }  ,
+            })
+            if(!response.ok){
+                throw new Error('message Warning');
+            }
+            const data =  await response.json()
+            return Array.isArray(data) ? data : [];
+        }
+        catch(error: any){
+            return rejectWithValue (`warning: ${error.message}`)
+        }
+    }
+)
+
+export const changeStatusItemFooterThunk = createAsyncThunk<TItemFooter, {id: number},{rejectValue: string}>(
+    'change_status_item_footer_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/footer/itemFooter/status.php/${payload.id}/changeStatus`, {
+                method: 'GET', 
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },  
+
+            })
+            if(!response.ok){
+                throw new Error('warning: ');
+            }
+            const data = await response.json()
+            return Array.isArray(data) ? data : []
+        }
+        catch(error: any){
+            return rejectWithValue (`warning: ${error.message}`)
+        }
+    }
+)

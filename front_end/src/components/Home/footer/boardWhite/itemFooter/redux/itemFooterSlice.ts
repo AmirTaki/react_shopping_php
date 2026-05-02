@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createItemFooterThunk, viewItemFooterThunk } from "./actionsItemFooter";
+import { changeStatusItemFooterThunk, createItemFooterThunk, viewItemFooterThunk, deleteItemFooterThunk } from "./actionsItemFooter";
 
 export type TItemFooter = Array<{id: number,item: string, title: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TItemFooterObject = {id: number,item: string, title: string, status: number, created_at: string, updated_at: string }
@@ -88,35 +88,35 @@ const itemFooterSlice = createSlice({
             state.addItems = action.payload === true ? true : false
         })
 
-        // delete item white : footer white
-        // builder.addCase(deleteItemWhtieFooterThunk.pending, (state) => {
-        //     state.warningMessage = ''
-        //     state.loading = true
-        // })
-        // builder.addCase(deleteItemWhtieFooterThunk.rejected, (state, action) => {
-        //     state.warningMessage = action.payload as string
-        //     state.loading = false
-        // })
-        // builder.addCase(deleteItemWhtieFooterThunk.fulfilled, (state, action) => {
-        //     state.warningMessage = ''
-        //     state.items = action.payload
-        //     state.loading = false
-        // })
+        // delete item footer
+        builder.addCase(deleteItemFooterThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.loading = true
+        })
+        builder.addCase(deleteItemFooterThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.loading = false
+        })
+        builder.addCase(deleteItemFooterThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            state.items = action.payload
+            state.loading = false
+        })
 
-        // change ststus item white : footer white
-        // builder.addCase(changeStatusItemWhiteFooterThunk.pending, (state) => {
-        //     state.warningMessage = ''
-        //     state.loading = true
-        // })
-        // builder.addCase(changeStatusItemWhiteFooterThunk.rejected, (state, action) => {
-        //     state.warningMessage = action.payload as string
-        //     state.loading = false
-        // })
-        // builder.addCase(changeStatusItemWhiteFooterThunk.fulfilled, (state, action) => {
-        //     state.warningMessage = ''
-        //     state.items = action.payload
-        //     state.loading = false
-        // })
+        // change ststus item footer
+        builder.addCase(changeStatusItemFooterThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.loading = true
+        })
+        builder.addCase(changeStatusItemFooterThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+            state.loading = false
+        })
+        builder.addCase(changeStatusItemFooterThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            state.items = action.payload
+            state.loading = false
+        })
 
         // reading item white : footer white 
         // builder.addCase(readingItemWhiteFooterThunk.pending, (state) => {

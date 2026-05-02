@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { RooState, AppDispatch } from "../../../../../../store";
-import { viewItemFooterThunk } from "../redux/actionsItemFooter";
+import { viewItemFooterThunk, deleteItemFooterThunk, changeStatusItemFooterThunk } from "../redux/actionsItemFooter";
 
 const ItemFooterPA = ()  => {
     const dispatch =  useDispatch<AppDispatch>()
@@ -53,7 +53,7 @@ const ItemFooterPA = ()  => {
                                     <th>
                                         <div 
                                             onClick={() => {
-                                                // dispatch(changeStatusTitleWhiteFooterThunk({id: item.id}) );
+                                                dispatch(changeStatusItemFooterThunk({id: item.id}) );
                                             }}
                                             className="text-yellow-500 cursor-pointer duration-200 hover:text-yellow-300 py-1 "
                                         >
@@ -68,7 +68,7 @@ const ItemFooterPA = ()  => {
                                         
                                         <div 
                                             onClick={() => {
-                                                // dispatch(deleteTitleWhiteFooterThunk({id: item.id}))                                            
+                                               window.confirm('Do you want it to be deleted ? ')  &&   dispatch(deleteItemFooterThunk({id: item.id}))                                            
                                             }}
                                             className="text-rose-500 cursor-pointer duration-200 hover:text-red-700! py-1"
                                         >
