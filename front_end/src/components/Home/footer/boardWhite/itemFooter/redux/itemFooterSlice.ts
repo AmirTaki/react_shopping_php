@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { changeStatusItemFooterThunk, createItemFooterThunk, viewItemFooterThunk, deleteItemFooterThunk } from "./actionsItemFooter";
+import { readingItemFooterThunk, editItemFooterThunk, changeStatusItemFooterThunk, createItemFooterThunk, viewItemFooterThunk, deleteItemFooterThunk } from "./actionsItemFooter";
 
 export type TItemFooter = Array<{id: number,item: string, title: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TItemFooterObject = {id: number,item: string, title: string, status: number, created_at: string, updated_at: string }
@@ -118,35 +118,33 @@ const itemFooterSlice = createSlice({
             state.loading = false
         })
 
-        // reading item white : footer white 
-        // builder.addCase(readingItemWhiteFooterThunk.pending, (state) => {
-        //     state.warningMessage = ''
-        // })
-        // builder.addCase(readingItemWhiteFooterThunk.rejected, (state, action) => {
-        //     state.warningMessage = action.payload as string
-        // })
-        // builder.addCase(readingItemWhiteFooterThunk.fulfilled, (state, action) => {
-        //     const object = action.payload as TItemWhiteFooterObject
-        //     state.title = object.title
-        //     state.item = object.item
-        // })
+        // reading item footer
+        builder.addCase(readingItemFooterThunk.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(readingItemFooterThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(readingItemFooterThunk.fulfilled, (state, action) => {
+            const object = action.payload as TItemFooterObject
+            state.title = {name: object.title, warning: ''}
+            state.item = {name: object.item, warning: ''}
+        })
 
-        // edit item white : footer white 
-        // builder.addCase(editItemWhiteFooterThunk.pending, (state) => {
-        //     state.warningMessage = ''
-        //     state.callback = false
-        //     state.addItems = false
-        //     state.warningItem = ''
-        //     state.warningTitle = ''
-        // })
-        // builder.addCase(editItemWhiteFooterThunk.rejected, (state, action) => {
-        //     state.warningMessage = action.payload as string
-        // })
-        // builder.addCase(editItemWhiteFooterThunk.fulfilled, (state, action) => {
-        //     state.warningMessage = ''
-        //     state.callback = false
-        //     state.addItems = action.payload === true ? true : false
-        // })
+        // edit item footer
+        builder.addCase(editItemFooterThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.callback = false
+            state.addItems = false
+        })
+        builder.addCase(editItemFooterThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(editItemFooterThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            state.callback = false
+            state.addItems = action.payload === true ? true : false
+        })
     }
 })
 

@@ -114,3 +114,69 @@ export const changeStatusItemFooterThunk = createAsyncThunk<TItemFooter, {id: nu
         }
     }
 )
+
+export const readingItemFooterThunk = createAsyncThunk<TItemFooterObject, {id: number},{rejectValue: string}> (
+    'reading_item_footer_toolkit',
+    async(payload, {rejectWithValue}) => {
+        try{
+            const response = await fetch (baseURL + `tables/footer/itemFooter/item.php/${payload.id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                } ,
+                // credentials: 'include',
+            })
+            if(!response.ok){
+                throw new Error('message');
+            }
+
+            const data =  await response.json()
+            return data
+   
+        }
+        catch(err: any){
+            return rejectWithValue (`warning: ${err.message}`)
+        }
+    }
+)
+
+export const editItemFooterThunk = createAsyncThunk<TItemFooter, {id: number, title: string, item: string}, {rejectValue: string}>(
+    'edit_item_footer_toolkit',
+    async(payload, rejected) => {
+        try{
+            const response = await fetch (baseURL + `tables/footer/itemFooter/edit.php/${payload.id}`, {
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({title: payload.title, item: payload.item})
+            })
+            if(!response.ok){
+                if(response.status === 400){
+                    rejected.dispatch((onWarningItemBoard({
+                        title: 'title is requierd!',
+                        item: 'item is requierd!'
+                    })))
+                }
+                else if (response.status === 405){
+                    rejected.dispatch(onCallBackItemBoard())
+                }
+
+                else if (response.status === 415){
+                    rejected.dispatch((onWarningItemBoard({
+                        title: '',
+                        item: 'name item repeat ??? change name item !!!'
+                    })))                }
+
+                else {
+                    throw new Error(`warning: ...`)
+                }
+            }
+            const data = await response.json()
+            return data
+        }
+        catch(err: any){
+            return `warning: ${err.message}`
+        }
+    }
+)
