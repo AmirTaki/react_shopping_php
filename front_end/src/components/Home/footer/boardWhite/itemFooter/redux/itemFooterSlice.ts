@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { viewItemFooterThunk } from "./actionsItemFooter";
+import { createItemFooterThunk, viewItemFooterThunk } from "./actionsItemFooter";
 
 export type TItemFooter = Array<{id: number,item: string, title: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TItemFooterObject = {id: number,item: string, title: string, status: number, created_at: string, updated_at: string }
@@ -73,22 +73,20 @@ const itemFooterSlice = createSlice({
             state.items = action.payload
         })
 
-        // create item white : footer white
-        // builder.addCase(createItemWhiteFooterThunk.pending, (state) => {
-        //     state.warningMessage = ''
-        //     state.callback = false
-        //     state.addItems = false
-        //     state.warningItem = ''
-        //     state.warningTitle = ''
-        // })
-        // builder.addCase(createItemWhiteFooterThunk.rejected, (state, action) => {
-        //     state.warningMessage = action.payload as string
-        // })
-        // builder.addCase(createItemWhiteFooterThunk.fulfilled, (state, action) => {
-        //     state.warningMessage = ''
-        //     state.callback = false
-        //     state.addItems = action.payload === true ? true : false
-        // })
+        // create item  footer
+        builder.addCase(createItemFooterThunk.pending, (state) => {
+            state.warningMessage = ''
+            state.callback = false
+            state.addItems = false
+        })
+        builder.addCase(createItemFooterThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(createItemFooterThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            state.callback = false
+            state.addItems = action.payload === true ? true : false
+        })
 
         // delete item white : footer white
         // builder.addCase(deleteItemWhtieFooterThunk.pending, (state) => {
