@@ -23,6 +23,7 @@ import imageSliderLoopSlice from "./components/Home/session/imageSlider/redux/im
 import cubeSlicer from "./components/Home/session/cube/redux/cubeSlice";
 import webkitScrollSlice from "./components/Home/session/webkitScroll/redux/webkitSlice";
 import menuFooterSlice from "./components/Home/footer/boardWhite/menuFooter/redux/menuFooterSlice";
+import itemFooterSlice from "./components/Home/footer/boardWhite/itemFooter/redux/itemFooterSlice";
 
 const reducers = combineReducers({
 
@@ -88,7 +89,8 @@ const reducers = combineReducers({
     // -------------------------------- footer ----------------------------------------------------
     // menu footer 
     menuFooter: menuFooterSlice.reducer,        /// menu (title) footer in panel admin
-    
+    // item footer
+    itemFooter: itemFooterSlice.reducer         // item footer in panel admin
  })
 
 const store =  configureStore({

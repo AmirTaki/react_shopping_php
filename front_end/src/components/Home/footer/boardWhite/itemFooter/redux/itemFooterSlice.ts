@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { viewItemFooterThunk } from "./actionsItemFooter";
 
 export type TItemFooter = Array<{id: number,item: string, title: string, status: number, created_at: string, updated_at: string }> | boolean  | string
 export type TItemFooterObject = {id: number,item: string, title: string, status: number, created_at: string, updated_at: string }
@@ -32,8 +33,8 @@ const initialState: IItemFooter = {
     // delete & status
     loading: false
 }
-const itemWhiteReducer = createSlice({
-    name: 'footerWhite-item-Toolkit',
+const itemFooterSlice = createSlice({
+    name: 'item_footer_toolkit_slice',
     initialState: initialState, 
     reducers: {
         onTitleItemBoard: (state, action) => {
@@ -60,17 +61,17 @@ const itemWhiteReducer = createSlice({
 
     }, 
     extraReducers: (builder) => {
-      // view item white : footer white
-        // builder.addCase(viewItemWhiteFooterThunk.pending, (state) => {
-        //     state.warningMessage = ''
-        // })
-        // builder.addCase(viewItemWhiteFooterThunk.rejected, (state, action) => {
-        //     state.warningMessage = action.payload as string
-        // })
-        // builder.addCase(viewItemWhiteFooterThunk.fulfilled, (state, action) => {
-        //     state.warningMessage = ''
-        //     state.items = action.payload
-        // })
+       // view item footer
+        builder.addCase(viewItemFooterThunk.pending, (state) => {
+            state.warningMessage = ''
+        })
+        builder.addCase(viewItemFooterThunk.rejected, (state, action) => {
+            state.warningMessage = action.payload as string
+        })
+        builder.addCase(viewItemFooterThunk.fulfilled, (state, action) => {
+            state.warningMessage = ''
+            state.items = action.payload
+        })
 
         // create item white : footer white
         // builder.addCase(createItemWhiteFooterThunk.pending, (state) => {
@@ -151,5 +152,5 @@ const itemWhiteReducer = createSlice({
     }
 })
 
-export default itemWhiteReducer
-export const {onCallBackItemBoard, onItemBoard, onLoadingItemBoard, onSetItemsBoard, onTitleItemBoard, onWarningItemBoard} = itemWhiteReducer.actions
+export default itemFooterSlice
+export const {onCallBackItemBoard, onItemBoard, onLoadingItemBoard, onSetItemsBoard, onTitleItemBoard, onWarningItemBoard} = itemFooterSlice.actions
