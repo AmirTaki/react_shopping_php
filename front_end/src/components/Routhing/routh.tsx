@@ -74,6 +74,7 @@ import ViewMenuFooterPA from "../Home/footer/boardWhite/menuFooter/panelAdmin/vi
 import MenusFooterPanelAdmin from "../Home/footer/boardWhite/menuFooter/panelAdmin"
 import CreateMenuFooterPA from "../Home/footer/boardWhite/menuFooter/panelAdmin/create"
 import EditMenuFooterPA from "../Home/footer/boardWhite/menuFooter/panelAdmin/edit"
+import ViewItemFooterPA from "../Home/footer/boardWhite/itemFooter/panelAdmin/view"
 
 const Routh = () => {
     return (
@@ -224,6 +225,13 @@ const Routh = () => {
                             <Route path = "" element = {<MenusFooterPanelAdmin />}/>
                             <Route path = "create" element = {<CreateMenuFooterPA />}/>
                             <Route path = "edit/:id" element = {<EditMenuFooterPA />}/>
+                        </Route>
+                      
+                        {/* footer -> item */}
+                        <Route path="footerItem" element = {<ViewItemFooterPA />}>
+                            {/* <Route path = "" element = {<MenusFooterPanelAdmin />}/> */}
+                            {/* <Route path = "create" element = {<CreateMenuFooterPA />}/> */}
+                            {/* <Route path = "edit/:id" element = {<EditMenuFooterPA />}/> */}
                         </Route>
                       
 

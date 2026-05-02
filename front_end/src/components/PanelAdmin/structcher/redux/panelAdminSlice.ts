@@ -43,6 +43,7 @@ const initialState: IPanelAdminNavar = {
         {id: 15, name: 'session cube image', link: 'sessionCubeSlider'},
         {id: 16, name: 'session webkit scroll', link: 'sessionWebkitScroll'},
         {id: 17, name: 'footer menu', link: 'footerMenu'},
+        {id: 18, name: 'footer item', link: 'footerItem'},
 
 
 

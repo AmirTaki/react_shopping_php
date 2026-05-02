@@ -70,12 +70,15 @@ road map folders project
                         1. boardWhite
                             1.menuFooter
                                 a. panelAdmin
+                                b. redux
                             
                             2.itemFooter
                                 a. panelAdmin
+                                b. redux
 
                         a.footer.tsx
-                        
+                        b. redux -> use reducer
+
                     b. Header
                         a. header.tsx
                         b. sidebar.tsx

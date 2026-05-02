@@ -49,7 +49,7 @@ const BoardWhite = () => {
     return(
           <div className={`${response ?
             'w-[90%] h-full mx-auto flex-col justify-around py-5 mt-10 bg-red-500' : 
-            `w-[90%] h-[600px]  duration-500  justify-around mt-110  gap-10 bg-blue-500 dark:border-[gray]! mt-13`}
+            `w-[90%] h-[600px]  duration-500  justify-around mt-10  gap-10 bg-blue-500 dark:border-[gray]! mt-13`}
             overflow-hidden  mx-auto  flex 
             `}>
             {Array.isArray(menus) && menus?.map((menu, index) => {
