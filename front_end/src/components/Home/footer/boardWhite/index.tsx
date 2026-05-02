@@ -4,10 +4,12 @@ import { useEffect, useReducer, useRef } from "react";
 import { initialBaord, reducerBoard } from "./redux/reducerBoard";
 import { FaCaretDown } from "react-icons/fa";
 import { viewMenuFooterThunk } from "./menuFooter/redux/actionsMenuFooter";
+import { viewItemFooterThunk } from "./itemFooter/redux/actionsItemFooter";
 
 const BoardWhite = () => {
     const {response} =  useSelector((state: RooState) => state.response)
     const {menus} = useSelector((state: RooState) => state.menuFooter)
+    const {items} = useSelector((state: RooState) => state.itemFooter)
     const dispatch = useDispatch<AppDispatch>()
 
     
@@ -17,7 +19,7 @@ const BoardWhite = () => {
     useEffect(() => {
 
         dispatch(viewMenuFooterThunk())
-        // dispatch(viewItemColumnSectionThunk())
+        dispatch(viewItemFooterThunk())
         
         const handlerResize = () => {
             dispatchReducer({type: 'closeAll'})
@@ -48,9 +50,9 @@ const BoardWhite = () => {
 
     return(
           <div className={`${response ?
-            'w-[90%] h-full mx-auto flex-col justify-around py-5 mt-10 bg-red-500' : 
-            `w-[90%] h-[600px]  duration-500  justify-around mt-10  gap-10 bg-blue-500 dark:border-[gray]! mt-13`}
-            overflow-hidden  mx-auto  flex 
+            'w-full h-full  mx-auto flex-col justify-around py-5 mt-0 pb-15 ' : 
+            `w-full h-full  p-3 py-10 duration-500  justify-around mt-10  gap-10  dark:border-[gray]! mt-13`}
+            overflow-hidden  mx-auto  flex  bg-[#b0b0b0]!   dark:bg-[rgba(45,45,45,1)]!
             `}>
             {Array.isArray(menus) && menus?.map((menu, index) => {
                 if(menu.status == 10){
@@ -70,7 +72,7 @@ const BoardWhite = () => {
                             </div>
                         </div>
 
-                        {/* <div 
+                        <div 
                             style={{height : `${response ? `${state.columnsRows[index]  ? `${findHightDynamic(index)}px` : '0'}` : ''}`}}
                             className={`${response ? `overflow-hidden duration-500! `  : 'px-2 '}  flex flex-col `}
                             >
@@ -88,7 +90,7 @@ const BoardWhite = () => {
                                     )
                                 }
                             })}
-                        </div> */}
+                        </div>
 
                         
                     </div>
