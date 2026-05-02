@@ -1,5 +1,5 @@
 import BoardWhite from "./boardWhite"
-import FooterBootom from "./footerBottm"
+import FooterBootom from "./footerBottom"
 
 const Footer = () => {
     return(

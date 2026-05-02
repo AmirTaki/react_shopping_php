@@ -76,6 +76,9 @@ road map folders project
                                 a. panelAdmin
                                 b. redux
 
+                        2. footerBootom
+                            a. index.tsx
+                       
                         a.footer.tsx
                         b. redux -> use reducer
 
