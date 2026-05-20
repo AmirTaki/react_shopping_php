@@ -5,86 +5,120 @@ import { type AppDispatch, type RooState } from "../../../../store"
 import { viewListHeadersThunk } from "./menuList/redux/actionsMenuList"
 import { FaChevronDown } from "react-icons/fa";
 import ListSidebar from "./menuList/list"
+import { closeSideToSideMegaMenu, openSideToSide } from "./menuList/sideToSide/redux/sideToSideSlice"
+import { closeAllMegeMenu, closeMegaMenu, openMegaMenu } from "./redux/megaMenuSlice"
 
-const MenusSidebar = ({menu, index }: {menu: TMenusHeaderObject, index: number} ) => {
+const MenusSidebar = ({menu, indexMenu }: {menu: TMenusHeaderObject, indexMenu: number} ) => {
+    
     const dispatch = useDispatch<AppDispatch>()
     const menusRef =  useRef<Array<HTMLElement | null>>([])    
+    const ListsRef = useRef<Array<HTMLElement >>([])
     const {response} = useSelector((state: RooState) => state.response) // response ?  mobile : desktop
     const {Lists} = useSelector((state: RooState) => state.lists)
-    const {dark} = useSelector((state: RooState) => state.darkMode)
+    const {megaMenu, InteractedMegaMenu} = useSelector((state: RooState) => state.megaMenu)
+    const {side} = useSelector((state: RooState) => state.sideToSide)
+
 
     useEffect(() => {
         dispatch(viewListHeadersThunk())
     }, [])
 
-    const findHightDynamic = (h: number) => {  
-        if(menusRef){  
+    const findHightDynamic = (h: number) => {
+        if (menusRef){
             const menuElement = menusRef.current
             const specificMenu = menuElement && menuElement[h] as HTMLElement
-            if(specificMenu ) {
-                const listElement =  specificMenu.querySelectorAll<HTMLElement>('.listElement')
+            if(specificMenu) {
+                const listElement = specificMenu.querySelectorAll<HTMLElement>('.listElement')
                 return listElement.length * 44
             }
-        }   
-    }
 
-    const handlerMouseEnter = (index: number) => {
-        if(window.innerWidth > 750){
+        }
+    } 
+    
+    const handlerMouseEnterMegaMenu = (index: number) => {
+        const menuElement = menusRef.current
+        const specificMenu  = menuElement && menuElement[index] as HTMLElement
 
-            if(menusRef){  
-                const menuElement = menusRef.current
-                const specificMenu = menuElement && menuElement[index] as HTMLElement
-            
-                if(specificMenu ) {
-                    const listMouseEnter = specificMenu.querySelectorAll<HTMLElement>('.listMouseEnter')
-                    const specificList = listMouseEnter[0] as HTMLElement;
-                    if(specificList){
-                        const sideToMegaMenu  = specificList.querySelectorAll<HTMLElement>('.SideToMegaMenu')
-                        if(sideToMegaMenu){
-                            const special = sideToMegaMenu[0] as HTMLElement;   
-                            const continaerSide = sideToMegaMenu[0].querySelector<HTMLElement>('.sideToSideContainer') as HTMLElement
-                        
-                            if(special){
-                                special.style.display = 'flex'
-                                continaerSide.style.display = "flex"
-                            }
-                        }
+        if(specificMenu) {
+            const listElement =  specificMenu.querySelectorAll<HTMLElement>('.listElement')
+            const list =  listElement[0] 
+            if(ListsRef.current){
+                for(let i = 0; i < ListsRef.current.length; i++){
+                    if(ListsRef.current[i] == list){
+                        dispatch(openSideToSide({id: i}))
+                        break;
+    
                     }
                 }
-            }  
+            }
+            
         }
     }
 
     return(
         <div
-            ref = {(x: HTMLDivElement | null) => {menusRef.current[index] = x}} 
-            onMouseMove={() => {handlerMouseEnter(index)}}
-            className={`${response ? `  overflow-hidden` : ``} group/menu `}
+            ref = {(x: HTMLDivElement | null) => {menusRef.current[indexMenu] = x}}  
+            className={`${response ? `` : ` `} group/menu`}
+            onMouseLeave={() => {
+                response ? '' : dispatch(closeMegaMenu({id: indexMenu}))
+            }}
         >
-            <div className={`${response ? `h-10 flex items-center justify-between px-5 ` : `h-14 flex justify-center items-center px-2 cursor-pointer  group-hover/menu:border-b-1 duration-200 `}`}>
-                <div className=""> {menu.title}</div>
-                <div className={`${response ? `text-[silver] group-hover/menu:rotate-180 duration-300` : `hidden`}`}> <FaChevronDown/></div>
+            <div 
+                onMouseEnter={(e) => {
+                    e.stopPropagation();
+                    if(response === false){
+                        dispatch(closeSideToSideMegaMenu({id: side}));
+                        dispatch(openMegaMenu({id: indexMenu})) ;
+                        handlerMouseEnterMegaMenu(indexMenu); 
+                    }
+                }}
+         
+                onClick={() => {
+                    if(response){
+                        if(megaMenu[indexMenu] == true){
+                            dispatch(closeMegaMenu({id: indexMenu}))
+                        }
+                        else {
+                            dispatch(closeAllMegeMenu()) ;
+                            dispatch(openMegaMenu({id: indexMenu})) 
+                        }
+                    }
+                    else {
+                        dispatch(closeAllMegeMenu()) ;
+                        dispatch(openMegaMenu({id: indexMenu}))
+                    }
+                }}
+                
+                className={`${response ? ``: `group-hover/menu:border-b-3  group-hover/menu:border-[red] ${(megaMenu as any)[indexMenu] == true ? 'border-b-3! border-[red]!' : ''} px-3  h-[57px] border-b-3 border-b-transparent  flex justify-center items-center cursor-pointer`}`}
+            >
+                <div className={`${response ? 'w-full  flex h-9 items-center justify-between px-5' : ''}`}>
+                    <div className=""> {menu.title}</div>
+                    <div className={`${response ? `${(megaMenu as any)[indexMenu] == true ? 'rotate-180 text-rose-500' : 'text-[silver]'} duration-150` : "hidden"} `}><FaChevronDown/></div>
+               
+                </div>
             </div>
 
-            {/* list */}
+            {/* megaMenu*/}
             <div 
-                style={{'--dynamic-height' : `${findHightDynamic(index)}px`} as React.CSSProperties} 
-                className={`${response ? `h-0 group-hover/menu:h-[var(--dynamic-height)] duration-400  ${dark ? 'bg-[rgba(224,227,222,0.11)]!' : 'bg-[rgba(222,222,222,.6)]!'} `
-                    : 
-                    `fixed w-full h-110 left-0 top-14 group-hover/menu:flex  hidden  px-[5%]   ${dark ?  "bg-[#474747]! " : "bg-[#efefef]!"} `}
-                    
-                    
-                `}
-            >   
-                <div className={`${response ? `` : `flex flex-col h-full w-[23%]  border-r py-4   `}`}>
-                    {Array.isArray(Lists) && Lists.map((item, index) => {
-                        if(item.title == menu.title && item.status == 10){
-                            return(
-                                <ListSidebar key = {item.id} list = {item} index = {index} menu = {menu}/>
-                        
-                            )
-                        }
-                    })}
+                style={{ "--dynamic-height" : `${findHightDynamic(indexMenu)}px`} as React.CSSProperties} 
+                className={`${response ?
+                `h-0 overflow-hidden ${(megaMenu as any)[indexMenu] == true ? 'h-[var(--dynamic-height)]  ' : 'h-0 '}  duration-300` :
+                `${(megaMenu as any)[indexMenu] == true ? 'flex ' : 'hidden'}  ${InteractedMegaMenu === null && 'hidden'}  fixed  w-full  h-110 top-[57px] left-0 border-b-1 border-[silver] dark:border-gray-400 dark:bg-[#313131]! bg-[rgba(222,222,222,1)]! `}`}
+            >
+
+                <div className={`${response ? 'overflow-hidden' : ' h-full  max-lg:w-full w-[78%] mx-auto  '}`}>
+                 
+                    <div className={`${response ? `dark:bg-[#383737] bg-[#e5e5e5] py-2  ` : ' full h-full  '}`}>
+                        <div className={`${response ? `` : `w-[25%] h-full  flex flex-col border-r-1 border-[silver] dark:border-gray-400  pt-2`} `}>
+                            {Array.isArray(Lists) && Lists.map((li, index) => {
+                                if(li.status == 10 && li.title == menu.title)
+                                return (
+                                    <ListSidebar key = {li.id} li = {li} indexList = {index} menu = {menu} ListsRef  = {ListsRef} />                      
+                                )
+                            })}
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

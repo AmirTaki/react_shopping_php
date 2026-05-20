@@ -24,6 +24,8 @@ import cubeSlicer from "./components/Home/session/cube/redux/cubeSlice";
 import webkitScrollSlice from "./components/Home/session/webkitScroll/redux/webkitSlice";
 import menuFooterSlice from "./components/Home/footer/boardWhite/menuFooter/redux/menuFooterSlice";
 import itemFooterSlice from "./components/Home/footer/boardWhite/itemFooter/redux/itemFooterSlice";
+import sideToSideSlice from "./components/Home/header/menus/menuList/sideToSide/redux/sideToSideSlice";
+import megaMenuSlice from "./components/Home/header/menus/redux/megaMenuSlice";
 
 const reducers = combineReducers({
 
@@ -63,6 +65,11 @@ const reducers = combineReducers({
     sereies: sereisSlice.reducer,   // sereis (products) menus header in panel admin
     // images 
     imagesMenus: imageMenuSlice.reducer,     // images menus header in panel Admin
+    // side to side
+    sideToSide:  sideToSideSlice.reducer,  // side to side megaMenu & sidebar 
+    // mega Menu
+    megaMenu: megaMenuSlice.reducer,       // mega menu  
+
 
     // ---------------------------- session -----------------------------------------
     // backgroud slider

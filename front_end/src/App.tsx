@@ -4,22 +4,27 @@ import Routh from './components/Routhing/routh'
 import {type AppDispatch, type RooState } from './store'
 import { useEffect } from 'react'
 import { onSetResponse } from './components/Response/redux/responseSlice'
-import { onCloseSideToSide } from './components/Home/header/redux/headerSlice'
+import { onCloseSideToSide, onSidebarHandler } from './components/Home/header/redux/headerSlice'
+import { closeAllMegeMenu } from './components/Home/header/menus/redux/megaMenuSlice'
+import { nullSideToSide } from './components/Home/header/menus/menuList/sideToSide/redux/sideToSideSlice'
 
 function App() {
   const {dark} =  useSelector((state: RooState) => state.darkMode)  // dark mode
   const {sidebar} =  useSelector((state: RooState) => state.header) // header : sidebar
   const dispatch = useDispatch<AppDispatch>()
-
+  // test
 
   useEffect(() => {
     const handlerResize = () => {
       // hander resize while response inner width
       dispatch(onSetResponse())
+      dispatch(nullSideToSide())
 
       // close sidebar with resize inner width
       if(window.innerWidth > 750 ){
         dispatch(onCloseSideToSide())
+        dispatch(closeAllMegeMenu())
+        dispatch(onSidebarHandler({sidebar: null}))
       }
 
     }

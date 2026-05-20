@@ -1,4 +1,5 @@
-
+/* ----------------------------------- for pieces -----------------------------------------  */
+/* ---------------- background header ----------------- */
 .navbarDark {
     background: rgba(224, 227, 222, 0.11);
     box-shadow: 0 5px 10px rgba(155, 152, 152, 0.1);
@@ -7,14 +8,39 @@
 }
 
 .navbarWhite{
-    background: rgb(222, 222, 222, .11);
-    box-shadow: 10px 14px 30px rgba(70, 69, 69, 0.1);
+    background: rgba(128, 127, 127, 0.3);
+    box-shadow: 10px 14px 30px rgba(166, 114, 114, 0.2);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(13px);
 }
 
+/* ---------------- dark mode animation ----------------- */
+.MoonAnimation {
+    animation: moveMoonAnimation.5s linear forwards ;
+}
 
+@keyframes moveMoonAnimation {
+    0%{
+        rotate: 0deg;
+    }   
+    100%{
+        rotate: 360deg;
+    }
+}
+.SunAnimation {
+    animation: moveSunAnimation.5s linear forwards ;
+}
 
+@keyframes moveSunAnimation {
+    0%{
+        rotate: 0deg;
+    }   
+    100%{
+        rotate: 180deg;
+    }
+}
+
+/* ---------------- search animation ----------------- */
 .openSearch {
     animation: openSearch 1s linear forwards;
 }
@@ -43,61 +69,86 @@
     }
 }
 
+/* ------------------------ sidebar animation ------------------------ */
 
-@media screen and (max-width: 750px) {
-    /* open & close side */
-    .openSidebar {
-        animation: openSidebar 1s linear forwards;
-    }
-    @keyframes openSidebar {
-        0%{
-            left: -100%
-        }
-        100%{
-            left: 0
-        }   
-    }
-    .closeSidebar {
-        animation:closeSidebar 1s linear forwards ;
-    }
-    @keyframes closeSidebar {
-        0%{
-            left: 0
-        }   
-        99%{
-        }
-        100%{
-            left: -100%
-        }
-    }
+/* open & close side */
 
-    /* open & close side to side */
-    .openSideToSide {
-        display: flex;
-        animation: openSideToSide .5s linear forwards;
-    }
-    .closeSideToSide {
-        display: flex ;
-        animation: closeSideToSide .5s linear forwards;
-    }
-    @keyframes openSideToSide {
-        0%{ 
-            left: 100%
-        }
-        100%{
-            left: 0
-        }
-    }
-    @keyframes closeSideToSide {
-        0%{
-            left: 0
-        }
-        99%{
-            left: 100%
-        }
-        100%{
-            display: none;
-        }
-    }
 
+@keyframes openSidebar {
+
+    0%{
+        left: -100%
+    }
+    100%{
+        left: 0%
+    }   
 }
+
+@keyframes closeSidebar {
+    0%{
+        left: 0
+    }   
+  
+    100%{
+        left: -100%
+    }
+}
+
+@keyframes openSidebarSM {
+
+    0%{
+        left: -50%
+    }
+    100%{
+        left: 0%
+    }   
+}
+
+@keyframes closeSidebarSM {
+    0%{
+        left: 0
+    }   
+  
+    100%{
+        left: -50%
+    }
+}
+
+/* ------------------------ side to side animation ------------------------ */
+
+@keyframes openSideToSide {
+    0%{ 
+        left: 100%
+    }
+    100%{
+        left: 0
+    }
+}
+@keyframes closeSideToSide {
+    0%{
+        left: 0
+    }
+   
+    100%{
+        left: 100%
+    }
+}
+
+@keyframes openSideToSideSM {
+    0%{ 
+        left: 100%
+    }
+    100%{
+        left: 50%
+    }
+}
+@keyframes closeSideToSideSM {
+    0%{
+        left: 50%
+    }
+   
+    100%{
+        left: 100%
+    }
+}
+

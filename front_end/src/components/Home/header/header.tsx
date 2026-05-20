@@ -44,7 +44,7 @@ const Header = () => {
 
     return(
         <div className={` 
-            ${dark ? "navbarDark" : "navbarWhite"} 
+            ${dark ? "bg-[blue]" : "bg-[red]"} 
             ${scrollHide ?   'translate-y-0' : 'translate-y-[-100%]'}    
             dark:text-white text-black  fixed w-full duration-1000   z-100 `}
         >
